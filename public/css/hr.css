@@ -1,0 +1,311 @@
+body{
+    font-family: "Roboto",sans-serif;
+}
+html{
+    overflow-x: hidden;
+}
+#header_hr_view{
+    background-color: #212f3f!important;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.logo_hr_view{
+    width: 60%;
+    background-size: contain; 
+    margin-left: -90px;
+}
+.menu a{
+    font-size: 16px;
+}
+.menu a i{
+    margin-right: 5px;
+}
+.menu{
+    background-color:#424e5c;
+    border-radius: 30px;
+}
+.nav_hr_view{
+    padding: 5px;
+    background-color: white;
+    border-right: 1px solid #ddd;
+    box-shadow: 0px 0px 5px 0px rgb(150, 149, 149);
+    position: -webkit-sticky;
+    position: sticky;
+    overflow: hidden;
+    top: 0;
+    bottom: 0;
+
+}
+.infor_hr{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #ddd;
+}
+.infor_hr img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.hr_infor_basic{
+    padding: 10px;
+    font-size: 12px;
+}
+.hr_name{
+    font-weight: 600;
+}
+.hr_infor_basic p{
+    margin: 3px 0;
+}
+.list_nav_hr_view{
+    list-style: none;
+    padding: 10px;
+}
+.list_nav_hr_view_item{
+    font-size: 17px;
+    margin: 20px 0px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+.list_nav_hr_view_item a{
+    text-decoration: none;
+    color: #333;
+    font-size: 15px;
+}
+.list_nav_hr_view_item a i {
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 50%;
+}
+.list_nav_hr_view_item:hover a{
+    color:#01b14f;
+}
+.list_nav_hr_view_item:hover i{
+    background-color: #e5f7ee;
+    color: #01b14f;
+}
+.author{
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 90px;
+}
+.content_hr_view{
+    padding: 20px;
+    margin-left: -24px;
+    background-color: #f1f2f6;
+}
+.compete_text{
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+    border-left: 5px solid #de8700;
+}
+.compete_text i{
+    color: orange;
+    margin-right: 10px;
+}
+.compete_text span{
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+}
+.compete_text span b{
+    color: #de8700!important;
+}
+.main_content_hr_view{
+    margin-top: 30px;
+}
+.main_content_hr_view h5{
+    margin-bottom: 15px;
+}
+.banner_hr_view img{
+    width: 100%;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.banner_hr_view img:hover{
+    opacity: 0.8;
+}
+.statistical{
+    padding: 15px;
+    background-color: white;
+    margin-top: 15px;
+}
+.statistical span{
+    font-size: 17px;
+    color: #333;
+    font-weight: 500;
+}
+.data_statistical{
+    padding: 15px;
+    border-radius: 10px;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.data_statistical:hover{
+    opacity: 0.7;
+}
+.data_statistical i{
+    margin-right: 20px;
+    padding: 15px;
+    border-radius: 50%;
+}
+.campaign{
+    background-color: #d8f4f9!important;
+    color: #0f7182!important;
+}
+.campaign i{
+    background-color: #95e9f8;
+}
+
+.post_hr{
+    background-color: #f9eed3!important;
+    color: #8e6a0f;
+}
+.post_hr i{
+    background-color: #f5d78d;
+}
+.cv_receive{
+    background-color: #e5f7ed!important;
+    color: #126f3c;
+}
+.cv_receive i{
+    background-color: #a8f0c1;
+}
+.cv_new{
+    background-color: #f9e3e3!important;
+    color: #8e0f0f;
+}
+.cv_new i{
+    background-color: #f8b5b5;
+}
+.account_hr{
+    padding: 15px;
+    padding-top: 0;
+    background-color: white;
+    margin-top: 15px;
+}
+.avatar_infor_hr{
+    display: flex;
+    align-items: center;
+}
+.avatar_infor_hr img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.avatar_infor_hr span{
+    color: #333;
+    font-weight: 500;
+    font-size: 15px;
+}
+.avatar_infor_hr p{
+    font-size: .857rem;
+    font-weight: 400;
+    color: #6c757d!important;
+}
+.infor_account_hr{
+    margin-top: 12px;
+}
+.required_up_acctount{
+    display: flex;
+    align-items: center;
+}
+.required_up_acctount i{
+    padding: 15px;
+    background-color: #e2f7e9;
+    border-radius: 50%;
+    color: #01b14f;
+}
+.required_up_acctount i:hover{
+    opacity: 0.8;
+}
+.required_up_acctount p{
+    margin-top: 13px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+.current_level{
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+.button_confirm_up_account{
+    margin-top: 20px;
+}
+.btn_update_infor{
+    padding: .6rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .214rem;
+    color: #fff;
+    background-color: #00b14f;
+    border: 1px solid #00b14f;
+}
+.btn_update_infor:hover{
+    color: #fff;
+    background-color: #008b3e;
+    border: 1px solid #007e38;
+}
+.more_infor{
+    padding: .6rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .214rem;
+    color: #00b14f;
+    background-color: white;
+    border: 1px solid #00b14f;
+    margin-left: 10px;
+}
+.more_infor:hover{
+    background-color: #00b14f;
+    color: white;
+}
+
+.service span{
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+.service p{
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+}
+.max_setting i{
+    padding: 15px;
+    background-color: #e2f7e9;
+    border-radius: 50%;
+    color: #007e38;
+    margin-right: 10px;
+}
+.max_setting span{
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+}
+.service{
+    margin-top: 15px;
+    padding: 15px;
+    background-color: white;
+}
+.max_setting a{
+    color: #007e38;
+    text-decoration: none;
+    margin-left: 5px;
+}
+.max_setting a:hover{
+    color: #007e38;
+}
+
+
