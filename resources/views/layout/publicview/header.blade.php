@@ -58,7 +58,7 @@
                                    <a href="#">Việc làm IT</a>
                                </li>
                                <li class="menu">
-                                   <a href="#">Tạo CV</a>
+                                   <a href="{{route('applicantView')}}">Tạo CV</a>
                                </li>
                                <li class="menu">
                                    <a href="#">Công Ty IT</a>
@@ -76,10 +76,10 @@
                        <div class="right">
                            <ul class="list-menu">
                                <li class="menu">
-                                   <a href="{{asset('login')}}" class="login-button">Đăng nhập</a>
+                                   <a href="{{route('login')}}" class="login-button">Đăng nhập</a>
                                </li>
                                <li class="menu">
-                                   <a href="{{asset('sigup')}}" class="signin-button">Đăng ký</a>
+                                   <a href="{{route('signup')}}" class="signin-button">Đăng ký</a>
                                </li>
                                <li class="menu">
                                    <a href="../hr_view/index.html" class="post-button">Đăng Tuyển & Tìm Hồ Sơ</a>

@@ -1,32 +1,27 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ApplicantController;
-use  App\Models\Applicant;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\HrController;
+use App\Http\Controllers\loginController;
+use App\Models\Applicant;
+use App\Http\Middleware\loginApplicant;
 
 Route::get('/home', function () {
-    session()->flush();
     return view('publicView.index');
 })->name('home');
 Route::get('/login',function(){
     return view('form.login');
 })->name('login');
-Route::get('/signup',function(){
-    return view('form.resignation');
+Route::get('/choice-actor',function(){
+    return view('form.choice_actor');
 })->name('signup');
- 
+Route::get('/signup-applicant',function(){
+    return view('form.resignation_applicant');
+})->name('signup.applicant');
+Route::get('/signup-hr',function(){
+    return view('form.resignation_hr');
+})->name('signup.hr');
 Route::get('/auth/redirect/{provider}', function ($provider) {
     return Socialite::driver($provider)->redirect();
 })->name('auth.github');
@@ -64,10 +59,21 @@ Route::get('/logout', function () {
     session()->flush();
     return redirect()->route('home');
 })->name('logout');
-Route::get('/cv-Applicant-view.html',[ApplicantController::class,'edit_cv_view'])->name('applicantView');
-Route::put('/update/infor/applicant/{user_id}.html',[ApplicantController::class,'update_infor'])->name('update.infor.applicant');
-Route::put('/update/introdeyourself/applicant/{user_id}.html',[ApplicantController::class,'update_introdeyourself'])->name('update.introdeyourself');
-Route::put('/update/degree/applicant/{user_id}.html',[ApplicantController::class,'update_degree'])->name('update.degree');
-Route::put('/update/exp/applicant/{user_id}.html',[ApplicantController::class,'update_exp'])->name('update.exp');
-Route::put('/update/languague-skill/applicant/{user_id}.html',[ApplicantController::class,'update_languae_skill'])->name('update.language.skill');
-Route::get('/applicant/view/{user_id}.html',[ApplicantController::class,'index'])->name('applicant.index.view');
+
+
+Route::group([
+    'middleware'=>loginApplicant::class,
+],function(){
+    Route::get('/cv-Applicant-view.html',[ApplicantController::class,'edit_cv_view'])->name('applicantView');
+    Route::put('/update/infor/applicant/{user_id}.html',[ApplicantController::class,'update_infor'])->name('update.infor.applicant');
+    Route::put('/update/introdeyourself/applicant/{user_id}.html',[ApplicantController::class,'update_introdeyourself'])->name('update.introdeyourself');
+    Route::put('/update/degree/applicant/{user_id}.html',[ApplicantController::class,'update_degree'])->name('update.degree');
+    Route::put('/update/exp/applicant/{user_id}.html',[ApplicantController::class,'update_exp'])->name('update.exp');
+    Route::put('/update/languague-skill/applicant/{user_id}.html',[ApplicantController::class,'update_languae_skill'])->name('update.language.skill');
+    Route::get('/applicant/view/{user_id}.html',[ApplicantController::class,'index'])->name('applicant.index.view');
+});
+Route::put('/check/resigntion/hr',[HrController::class,'resigntion'])->name('resignation.hr');
+Route::get('/active_account/{token}/{hr_id}',[HrController::class,'active_account'])->name('active_account');
+Route::post('/check/login',[loginController::class,'check_login'])->name('check.login');
+
+

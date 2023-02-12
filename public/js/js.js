@@ -8,6 +8,7 @@ function show_apply_form(){
     
 }
 
+
 $(document).ready(function(){
     var checked = true;
     $('#check_allow').click(function(){

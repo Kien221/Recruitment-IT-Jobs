@@ -5,7 +5,8 @@
     margin-right: 20px;
 }
 .profile img{
-    width: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     margin-right: 10px;
 }
@@ -460,6 +461,10 @@ input[type="text"]:focus{
 }
 .introduce_yourself_form form textarea{
     width: 100%;
+}
+.introduce_yourself{
+    line-height: 1.2;
+    font-size: 14px;
 }
 
 

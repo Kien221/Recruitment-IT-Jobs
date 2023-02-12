@@ -40,7 +40,7 @@
                                 </a>
                             </li>
                             <li class="menu">
-                                <a href="">Việc làm IT</a>
+                                <a href="{{route('home')}}">Việc làm IT</a>
                             </li>
                             <li class="menu">
                                 <a href="{{route('applicantView')}}">Tạo CV</a>

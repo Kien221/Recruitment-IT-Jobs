@@ -9,6 +9,6 @@ class applicant extends Model
 {
     public $fillable = ['id','name','avatar','email','password','gender','phoneNumber','address',
                         'city_id','filecv','links','introduce_yourself','study_degree',
-                        'experience','hobby','certificate'];
+                        'experience','hobby','certificate','perfection_level'];
     use HasFactory;
 }

@@ -34,6 +34,16 @@
         </div>
         <div class="container-fluid">
             <div class="row">
+                 @if($user->perfection_level < 40)
+                 <div class="col-md-9">
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Thông báo!</h4>
+                        <p>CV của bạn chưa hoàn thiện, vui lòng điều chỉnh CV để có thể ứng tuyển công việc.</p>
+                        <hr>
+                        <p class="mb-0">Hoàn thành CV <a href="{{route('applicantView')}}">tại đây</a></p>
+                     </div>
+                </div>
+                @else
                 <div class="col-md-9">
                     <div class="header_profile">
                         <div class="row">
@@ -45,7 +55,7 @@
                             <div class="col-md-9">
                                 <div class="header_text">
                                     <h4>NỀN TẢNG TUYỂN DỤNG NHÂN SỰ HÀNG ĐẦU VIỆT NAM</h4>
-                                    <span>Ứng viên Chế Thanh Kiên | Nguồn tuyendung.topcv.vn</span>
+                                    <span>Ứng viên {{$user->name}} | Nguồn tuyendung.topcv.vn</span>
                                  </div> 
                             </div>
                         </div>
@@ -54,24 +64,28 @@
                        <div class="col-md-4" id="avatar_prefer_name">
                             <div class="avatar_prefer_name">
                                 <div class="avatar_name">
-                                    <img src="{{asset('storage/images/applicant/'.$user->avatar)}}" alt="">
+                                    <img src="{{asset('storage/'.$user->avatar)}}" alt="">
                                     <h5>{{$user->name}}</h5>
                                 </div>
                                 <div class="base_infor">
                                     <div class="infor_applicant">
                                         <i class="fa-solid fa-user"></i>
-                                        <span>Chế Thanh Kiên</span>
+                                        <span>{{$user->name}}</span>
                                     </div>
                                     <div class="infor_applicant">
                                         <i class="fa-sharp fa-solid fa-phone"></i>
-                                        <span>0395004764</span>
+                                        <span>{{$user->phoneNumber}}</span>
                                     </div>
                                     <div class="infor_applicant email_applicant">
                                         <i class="fa-solid fa-envelope"></i>
-                                        <span>kienb1910088@student.ctu.edu.vn</span>
+                                        <span>{{$user->email}}</span>
                                     </div>
                                     <div class="introduce_yourself">
                                         <h5>GIỚI THIỆU BẢN THÂN</h5>
+                                        @if($user->introduce_yourself !== null)
+                                        <div class="introduce_yourself">{!!$user->introduce_yourself!!}</div>
+                                        @else
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -176,6 +190,7 @@
                        </div>
                    </div>
                 </div>
+                @endif
                 <div class="col-md-3">
                     <div class="manager_status_cv">
                         <div class="form-check form-switch">
@@ -455,6 +470,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
+
     var checked = true;
     $('#check_allow').click(function(){
         if(checked == true){

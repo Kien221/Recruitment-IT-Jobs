@@ -108,7 +108,7 @@
                                                 <span class="required">(*)</span>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="text" placeholder="{{$cv_user->email}}">
+                                                <input type="text" placeholder="{{$cv_user->email}}" id="email_applicant" disabled>
                                             </div>
                                         </div>
                                         <div class="infor_input">
@@ -127,8 +127,8 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <select name="gender" id="" class="gender_select" value="{{$cv_user->gender}}">
-                                                    <option value="">Nam</option>
-                                                    <option value="">Nữ</option>
+                                                    <option value="Nam">Nam</option>
+                                                    <option value="Nữ">Nữ</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -292,8 +292,10 @@
                             <form action="{{route('update.introdeyourself',$cv_user->id)}}" method="post">
                                 @csrf
                                 @method('PUT')
-                                <textarea name="editor1" id="editor1" rows="10" placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
-                                
+                                <textarea name="introdeyourself" id="editor1" rows="10"  placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
+                                    <div>
+                                    {{$cv_user->introduce_yourself}}
+                                    </div>
                                 </textarea>
                                 <script>
                                     CKEDITOR.replace( 'editor1' );
@@ -301,8 +303,7 @@
                                  <div class="row">
                                     <div class="col-md-12 btn_save">
                                         <div class="btn_save_edit">
-                                            <button type="submit">Lưu</button>
-    
+                                            <button type="submit" id="introduce_yourself">Lưu</button>
                                         </div>
                                     </div>
                                 </div>
@@ -556,6 +557,17 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="../assets/js.js"></script>
+    <script >
+        $(document).ready(function(){
+
+            $('#introduce_yourself').submit(function(){
+                var introduce_yourself= $('#editor1').val();
+                if(introduce_yourself.length == 0){
+                    alert('Bạn chưa nhập mô tả về bản thân');
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

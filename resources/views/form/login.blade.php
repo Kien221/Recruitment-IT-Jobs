@@ -15,6 +15,22 @@
     <div class="sign_up_form">
         <div class="row">
             <div class="col-md-6">
+                @if(session('success'))
+                    <div class="alert alert-danger text-center" style="margin-left:50px;margin-top:20px">
+                        {{session('success')}}
+                    </div>
+                @endif
+
+                @if(session('error_login'))
+                    <div class="alert alert-danger text-center" style="margin-left:50px;margin-top:20px">
+                        {{session('error_login')}}
+                    </div>
+                @endif
+                @if(session('active_account_success'))
+                    <div class="alert alert-success text-center" style="margin-left:50px;margin-top:20px">
+                        {{session('active_account_success')}}
+                    </div>
+                @endif
                 <div class="main_form_signup">
                     <div class="sign_up_logo">
                         <a href="{{asset('home')}}">
@@ -24,22 +40,24 @@
                     </div>
                     <h6>Chào mừng bạn trở lại với TopCV</h6>
                     <span class="sign_up_intro">Cùng xây dựng một hồ sơ nổi bật và nhận được các cơ hội sự nghiệp lý tưởng</span>
-                    <div class="form">
-                        <div class="input">
-                            <span>Email</span>
-                            <br>
-                            <input type="email" placeholder="Nhập email của bạn">
+                    <form action="{{route('check.login')}}" method="post">
+                        @csrf
+                        <div class="form">
+                            <div class="input">
+                                <span>Email</span>
+                                <br>
+                                <input type="email" placeholder="Nhập email của bạn" name="email">
+                            </div>
+                            <div class="input">
+                                <span>Mật khẩu</span>
+                                <br>
+                                <input type="password" placeholder="Nhập mật khẩu" name="password">
+                            </div>
                         </div>
-                        <div class="input">
-                            <span>Mật khẩu</span>
-                            <br>
-                            <input type="password" placeholder="Nhập mật khẩu">
+                        <div class="sign_up_button">
+                            <button type="submit">Đăng nhập</button>
                         </div>
-                    </div>
-                    
-                    <div class="sign_up_button">
-                        <button type="submit">Đăng nhập</button>
-                    </div>
+                    </form>
                     <div class="different">Hoặc</div>
                     <div class="login_social">
                         <div class="social github">
@@ -63,7 +81,7 @@
                     </div>
                     <div class="sign_up_footer">
                         <span>Bạn chưa tài khoản? 
-                            <a href="resignation.html"> Đăng kí ngay</a>
+                            <a href="{{route('signup')}}"> Đăng kí ngay</a>
                             <a href="#" class="forget_password">Quên mật khẩu</a>
                         </span>
                     </div>
@@ -118,8 +136,6 @@
         </div>
 
     </div>
-
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
