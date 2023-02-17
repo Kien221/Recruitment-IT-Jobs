@@ -4,6 +4,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\HrController;
 use App\Http\Controllers\loginController;
+use App\Http\Controllers\CompaniesController;
 use App\Models\Applicant;
 use App\Http\Middleware\loginApplicant;
 
@@ -13,9 +14,7 @@ Route::get('/home', function () {
 Route::get('/login',function(){
     return view('form.login');
 })->name('login');
-Route::get('/choice-actor',function(){
-    return view('form.choice_actor');
-})->name('signup');
+
 Route::get('/signup-applicant',function(){
     return view('form.resignation_applicant');
 })->name('signup.applicant');
@@ -49,9 +48,9 @@ Route::get('/auth/callback/{provider}', function ($provider) {
         $new_user->fill($data);
         $new_user->save();
         session()->put('success_login','success_login');
-        session()->put('id_aplicant',$call_user->id);
-        session()->put('applicant_name',$call_user->name);
-        session()->put('avatar',$call_user->avatar);
+        session()->put('id_aplicant',$new_user->id);
+        session()->put('applicant_name',$new_user->name);
+        session()->put('avatar_newuser',$new_user->avatar);
         return view('publicView.index');
     }
 });
@@ -75,5 +74,8 @@ Route::group([
 Route::put('/check/resigntion/hr',[HrController::class,'resigntion'])->name('resignation.hr');
 Route::get('/active_account/{token}/{hr_id}',[HrController::class,'active_account'])->name('active_account');
 Route::post('/check/login',[loginController::class,'check_login'])->name('check.login');
+Route::get('hr/create_post/view',[HrController::class,'create_Post_View'])->name('hr.create_post.view');
+Route::get('hr/create_company/view',[CompaniesController::class,'create_Company_View'])->name('create.company');
+Route::put('hr/store_company',[CompaniesController::class,'store'])->name('store.company');
 
 

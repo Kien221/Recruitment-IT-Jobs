@@ -21,9 +21,9 @@
                     </div>
                 @endif
 
-                @if(session('error_login'))
+                @if(session('error_active_account'))
                     <div class="alert alert-danger text-center" style="margin-left:50px;margin-top:20px">
-                        {{session('error_login')}}
+                        {{session('error_active_account')}}
                     </div>
                 @endif
                 @if(session('active_account_success'))
@@ -81,7 +81,7 @@
                     </div>
                     <div class="sign_up_footer">
                         <span>Bạn chưa tài khoản? 
-                            <a href="{{route('signup')}}"> Đăng kí ngay</a>
+                            <a href="#"> Đăng kí ngay</a>
                             <a href="#" class="forget_password">Quên mật khẩu</a>
                         </span>
                     </div>

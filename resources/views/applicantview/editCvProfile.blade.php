@@ -150,11 +150,11 @@
                                         <h6 class="choice_img_text">CHỌN ẢNH ĐẠI DIỆN</h6>
                                         <div class="upload_img_avatar">
                                             <div class="avatar_upload">
-                                                <img src="{{asset('storage/'.$cv_user->avatar)}}" alt="" name="avatar">
+                                                <img src="{{asset('storage/'.$cv_user->avatar)}}" alt="" name="avatar" id="avatar">
                                             </div>
                                             <div class="">
-                                                <input type="file" name="avatar" id="avatar">
-                                                <label for="avatar" class="lable_upload_avatar">Tải ảnh lên</label>
+                                                <input type="file" name="avatar" id="avatar_upload">
+                                                <label for="avatar_upload" class="lable_upload_avatar">Tải ảnh lên</label>
                                             </div>
 
                                         </div>
@@ -566,6 +566,14 @@
                     alert('Bạn chưa nhập mô tả về bản thân');
                 }
             });
+            $('#avatar_upload').change(function(){
+            let file = $(this).prop('files')[0];
+            let reader = new FileReader();
+            reader.onload = function(){
+                $('#avatar').attr('src',reader.result);
+            }
+            reader.readAsDataURL(file);
+        })
         });
     </script>
 

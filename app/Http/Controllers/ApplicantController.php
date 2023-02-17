@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 class ApplicantController extends Controller
 {
-    public function index_hr(){
-        return view('hr_view.index');
-    }
     public function index($user_id){
         $user = applicant::find($user_id);
         return view('applicantview.index',compact('user'));
@@ -32,12 +29,13 @@ class ApplicantController extends Controller
                 $avatar = $request->file('avatar')->store('applicant','public');
                 $input['avatar'] = $avatar;
                 session()->put('update_avatar','update_avatar');
-                session()->forget('avatar');
+                session()->forget('avatar_newuser');
                 session()->put('avatar',$avatar);
             }
             else{
                 $avatar = $request->file('avatar')->store('applicant','public');
                 $input['avatar'] = $avatar;
+                
                 session()->put('update_avatar','update_avatar');
                 session()->forget('avatar');
                 session()->put('avatar',$avatar);

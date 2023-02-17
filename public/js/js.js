@@ -7,6 +7,14 @@ function show_apply_form(){
     document.getElementById("form-apply").style.display = "block";
     
 }
+function close_choice_role_form(){
+    document.getElementById("choice_role").style.display = "none";
+}
+
+function show_choice_role_form(event){
+    var choice_role = document.getElementById("choice_role");
+    choice_role.style.display = "block"; 
+}
 
 
 $(document).ready(function(){

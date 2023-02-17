@@ -308,4 +308,169 @@ html{
     color: #007e38;
 }
 
+.setting-text{
+    font-size: 17px;
+    color: #333;
+    font-weight: bold;
+    padding: 20px 10px;
+    background-color: white;
+}
+
+.about_your_account{
+    margin: 0 -22px;
+}
+.company-text{
+    font-size: 14px;
+}
+.main_setting{
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #ebebeb;
+}
+.main_setting_account{
+    background-color: white;
+    padding: 7px 0 0 0;
+}
+.infor-company{
+    border: 1px solid rgba(0,0,0,.125);
+    padding: 20px 35px;
+}
+.list_setting{
+   padding: 7px 0 0 14px;
+   margin: -7px -12px -12px 0;
+   background-color: #f5f7f9;
+   height: 100%;
+}
+.list_setting ul{
+    list-style: none;
+    padding: 0;
+}
+.list_setting ul li{
+    margin-bottom: 10px;
+}
+.list_setting ul li a{
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+.list_setting ul li a:hover{
+    color: #007e38;
+}
+.list_setting ul li a i{
+    margin-right: 15px;
+}
+.logo{
+    font-size: 14px;
+    color: #303030;
+}
+.logo img{
+    width: 40px;
+    height: auto;
+    border-radius: 50%;
+}
+.custom-file-upload-logo{
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #eee;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.custom-file-upload-logo:hover{
+    background-color: #b9b8b8;
+}
+.company_name_input{
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background-color: #eee;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+    width: 100%;
+}
+.company_info label{
+    font-size: 14px;
+    color: #303030;
+    margin-top: 10px;
+}
+.tax_input{
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background-color: white;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+    width: 50%;
+}
+.major_company_input{
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background-color: white;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+    width: 50%;
+}
+.address_input{
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background-color: white;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+    width: 100%;
+}
+.submit_button{
+    margin-top: 30px;
+    text-align: center;
+}
+.btn_save{
+    padding: 7px 30px;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .214rem;
+    color: #fff;
+    background-color: #00b14f;
+    border: 1px solid #00b14f;
+}
+.add_major{
+    font-size: 14px;
+    color: white;
+    padding: 7px;
+    background-color: #00b14f;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+#company_info{
+    margin-top: 43px;
+}
+.custom-file-upload-img-company{
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #eee;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+.custom-file-upload-img-company:hover{
+    background-color: #b9b8b8;
+}
 

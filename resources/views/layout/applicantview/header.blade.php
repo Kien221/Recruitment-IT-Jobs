@@ -72,8 +72,9 @@
                                 <div class="profile">
                                     @if(session('avatar') != null)
                                     <img src="{{asset('storage/'.session('avatar'))}}" alt="">
-                                    @else
-                                    <img src="{{session('avatar')}}" alt="">
+                                    @endif
+                                    @if(session('avatar_newuser') !== null)
+                                    <img src="{{session('avatar_newuser')}}" alt="">
                                     @endif
                                     <span class="name_user">{{session('applicant_name')}}</span>
                                     <i class="fa-solid fa-chevron-down"></i>

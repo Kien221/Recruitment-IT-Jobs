@@ -1267,7 +1267,93 @@ input[type="file"]{
 .forget_password{
     margin-left: 100px;
 }
-
+.choice_role{
+    position:fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    background-color: rgba(0,0,0,0.5);
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    display: none;
+    animation: form ease-in 0.4s;
+}
+.form_choice_role{
+    position: relative;
+    box-sizing: border-box;
+    margin: 30px auto;
+    overflow: auto;
+    background-color: white;
+    display: block;
+    width: 800px;
+    border-radius: 5px;
+    padding: 50px 30px;
+    text-align: center;
+}
+.close_form_choice_role{
+    float: right;
+    margin-top: -30px;
+}
+.close_form_choice_role i{
+    font-size: 26px;
+    cursor: pointer;
+    
+}
+.form_choice_role h6{
+    font-size: 23px;
+    color: #000;
+}
+.form_choice_role span{
+    color: #555;
+    font-weight: 600;
+    font-size: 15px;
+}
+.hr_or_applicant{
+    padding: 20px;
+    margin-top: 30px;
+    background-color: #e5f7ed;
+    margin-left: -30px;
+    margin-right: -30px;
+    margin-bottom: -50px;
+    text-align: center;
+    padding-bottom: 30px;
+}
+.applicant_role img{
+    height: 304px;
+    width: 287px;
+}
+.hr_or_applicant_text{
+    padding: 0 140px;
+}
+.hr_or_applicant span{
+    color: #333;
+    font-weight: 500;
+    font-size: 19px;
+}
+.role{
+    margin: 0 50px;
+}
+.applicant_role{
+    margin-right: 25px;
+}
+.btn-role{
+    padding: 10px 50px;
+    width: 100%;
+    background-color: #00b14f;
+    border-radius: 10px;
+}
+.btn-role a{
+    color: white;
+    text-decoration: none;
+}
+.btn-role a:hover{
+    color: white;
+}
+.btn-role:hover{
+    opacity: 0.8;
+}
 
 
 

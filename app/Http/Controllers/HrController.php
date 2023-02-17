@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\hr;
+use App\Models\companies;
 use Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Http\Requests\StorehrRequest;
 use App\Http\Requests\UpdatehrRequest;
@@ -17,16 +19,19 @@ class HrController extends Controller
      */
     public function index()
     {
-        //
+       
     }
 
     public function resigntion(Request $request){
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
         ]);
+        if($validator->fails()){
+            return redirect()->route('signup.hr')->with('fails_password','Mật khẩu không khớp');
+        }
         $input = $request->all();
         $check_email = hr::where('email',$input['email'])->first();
         if($check_email){
@@ -62,6 +67,18 @@ class HrController extends Controller
             return redirect()->route('login')->with('error','Kích hoạt tài khoản thất bại');
         }
     }
+
+    public function create_Post_View(){
+        $hr = hr::find(session()->get('id_hr'));
+        $check_create_company = companies::where('hr_id',$hr->id)->first();
+        if($check_create_company){
+            return view('hr_view.create_post',compact('hr'));
+        }
+        else{
+            return redirect()->route('create.company')->with('error','Vui lòng tạo công ty trước khi đăng tin tuyển dụng');
+        }  
+    }
+
 
     public function create()
     {
