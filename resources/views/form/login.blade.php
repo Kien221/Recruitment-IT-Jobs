@@ -81,7 +81,7 @@
                     </div>
                     <div class="sign_up_footer">
                         <span>Bạn chưa tài khoản? 
-                            <a href="#"> Đăng kí ngay</a>
+                            <a href="{{route('signup.hr')}}"> Đăng kí ngay</a>
                             <a href="#" class="forget_password">Quên mật khẩu</a>
                         </span>
                     </div>

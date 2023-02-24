@@ -16,7 +16,7 @@ class ApplicantController extends Controller
         return view('applicantview.index',compact('user'));
     }
     public function edit_cv_view(Request $request){
-        $cv_user = applicant::find(session::get('id_aplicant'));
+        $cv_user = applicant::find(session::get('id_applicant'));
         return view('applicantview.editCvProfile',compact('cv_user'));
     }
     

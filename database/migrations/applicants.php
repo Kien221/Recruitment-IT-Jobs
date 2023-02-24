@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('phoneNumber',15)->nullable();
             $table->string('address',255)->nullable();
             $table->foreignId('city_id')->constrained('cities')->nullable();
-            $table->string('filecv')->nullable();
             $table->string('links')->nullable();
             $table->longText('introduce_yourself')->nullable();
             $table->longText('study_degree')->nullable();

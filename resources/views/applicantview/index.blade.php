@@ -469,8 +469,7 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function(){
-
+    $(document).ready(function(){
     var checked = true;
     $('#check_allow').click(function(){
         if(checked == true){

@@ -12,10 +12,14 @@
     <title>Tuyển dụng IT</title>
 </head>
 <body>
-    @if(session('success_login'))
-    @include('layout.applicantview.header')
-    <div class="end-header">
-               
+    @if(session('success_login_applicant'))
+        @include('layout.applicantview.header')
+    @elseif(session('success_login_hr'))
+        @include('layout.hrview.public_header')
+    @else
+        @include('layout.publicview.header')
+    @endif
+    <div class="end-header">       
                <div class="row">
                    <div class="col-md-4">
                        <div class="search-input">
@@ -60,9 +64,7 @@
                </div>
   
        </div>
-    @else
-    @include('layout.publicview.header')
-    @endif
+    </div>
     <div id="main">
         <div class="hot-company_hot-job">
             <div class="container">
@@ -73,58 +75,31 @@
                                 <div class="hot-company-title">
                                     <h2 class="title"> <p>Công Ty </p> Nổi Bật</h2>
                                 </div>
-                                
                                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                        <div class="company-content">
-                                            <div class="company_item">
-                                                <img src="../assets/image/86abff643f29067301dd713716101cdd-6385bcbe4a011.jpg" alt="" class="img_hot_company">
-                                                <div class="company_decription">
-                                                    <h4 class="company_name"><a href="#"> Công Ty Cổ Phần Kinh Doanh Và Dịch Vụ KICC</a></h4>
-                                                    <p class="company_address">Địa chỉ: 1 Nguyễn Văn Linh, Phường 7, Quận Gò Vấp, TP. Hồ Chí Minh</p>
-                                                    <p class="company_phone">Số điện thoại: 028 7300 8888</p>
-                                                    <div class="detail">
-                                                        <a href="#">Xem Thêm <i class="fa-solid fa-arrow-right"></i></a>
-                                                    </div>
-                                                   
-                                                </div>
-                                            </div>
-                                        </div>
-                                      </div>
-                                      <div class="carousel-item">
-                                        <div class="company-content">
-                                            <div class="company_item">
-                                                <img src="../assets/image/86abff643f29067301dd713716101cdd-6385bcbe7f2ae.jpg" alt="" class="img_hot_company">
-                                                <div class="company_decription">
-                                                    <h4 class="company_name"><a href=""> Công Ty Cổ Phần Kinh Doanh Và Dịch Vụ KICC</a></h4>
-                                                    <p class="company_address">Địa chỉ: 1 Nguyễn Văn Linh, Phường 7, Quận Gò Vấp, TP. Hồ Chí Minh</p>
-                                                    <p class="company_phone">Số điện thoại: 028 7300 8888</p>
-                                                    <div class="detail">
-                                                        <a href="#">Xem Thêm <i class="fa-solid fa-arrow-right"></i></a>
+                                      @foreach($hot_companies as $hot_company)
+                                       <input type="hidden" value="{{$hot_company->id}}">
+                                        @if($loop->first)
+                                            <div class="carousel-item active">
+                                        @else
+                                        <div class="carousel-item">
+                                        @endif
+                                            <div class="company-content">
+                                                <div class="company_item">
+                                                    <img src="{{asset('storage/'.$hot_company->logo)}}" alt="" class="img_hot_company">
+                                                    <div class="company_decription">
+                                                        <h4 class="company_name"><a href="">{{$hot_company->name}}</a></h4>
+                                                        <p class="company_address">{{$hot_company->address}}</p>
+                                                        <p class="company_phone">Số điện thoại: {{$hot_company->phone}}</p>
+                                                        <div class="detail">
+                                                            <a href="#">Xem Thêm <i class="fa-solid fa-arrow-right"></i></a>
+                                                        </div>
+                                                    
                                                     </div>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                      </div>
-                                      <div class="carousel-item">
-                                        <div class="company-content">
-                                            <div class="company_item">
-                                                <img src="../assets/image/86abff643f29067301dd713716101cdd-6385bcbe9d214.jpg" alt="" class="img_hot_company">
-                                                <div class="company_decription">
-                                                    <h4 class="company_name"><a href=""> Công Ty Cổ Phần Kinh Doanh Và Dịch Vụ KICC</a></h4>
-                                                    <p class="company_address">Địa chỉ: 1 Nguyễn Văn Linh, Phường 7, Quận Gò Vấp, TP. Hồ Chí Minh</p>
-                                                    <p class="company_phone">Số điện thoại: 028 7300 8888</p>
-                                                    <div class="detail">
-                                                        <a href="#">Xem Thêm <i class="fa-solid fa-arrow-right"></i></a>
-                                                    </div>
-                                                   
-                                                </div>
-                                            </div>
-                                        </div>
-                                      </div>
-                                      
+                                        </div>      
+                                      @endforeach    
                                     </div>
                                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -139,10 +114,10 @@
                             </div>
                             <div class="col-md-4">
                                 <ul class="logo_company">
-                                    <li class="list_img_logo"> <img src="../assets/image/86abff643f29067301dd713716101cdd-6385bcbe4a011.jpg" alt=""> </li>
-                                    <li class="list_img_logo"> <img src="../assets/image/86abff643f29067301dd713716101cdd-6385bcbe7f2ae.jpg" alt=""></li>
-                                    <li class="list_img_logo"> <img src="../assets/image/86abff643f29067301dd713716101cdd-6385bcbe9d214.jpg" alt=""></li>
-                                    <li class="list_img_logo"> <img src="../assets/image/86abff643f29067301dd713716101cdd-6385bcbebefcf.jpg" alt=""></li>
+                                    <input type="hidden" value="{{$hot_company->id}}">
+                                    @foreach($hot_companies as $hot_company)
+                                    <li class="list_img_logo"> <img src="{{asset('storage/'.$hot_company->logo)}}" alt=""> </li>
+                                    @endforeach
                                 </ul>
 
                             </div>
@@ -155,21 +130,14 @@
                                 <h2 class="title"><p>Công Việc</p>Nổi Bật</h2>
                             </div>
                             <div class="job-content">
+                                @foreach($hot_jobs as $hot_job)
                                 <div class="job_item">
-                                    <span class="name-company-job">Code Engine Studio</span>
-                                    <div class="job_title"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></div>
-                                    <div class="salary">1000$ - 2000$ <i class="fa-solid fa-bookmark"></i></div>
+                                    <span class="name-company-job">{{$hot_job->company->name}}</span>
+                                    <div class="job_title"><a href="{{route('post.detail',[$hot_job->id,$hot_job->slug])}}">{{$hot_job->title}}</a></div>
+                                    <div class="salary">{{$hot_job->min_salary}}-{{$hot_job->max_salary}}{{$hot_job->unit_money}} <i class="fa-solid fa-bookmark"></i></div>
                                 </div>
-                                <div class="job_item">
-                                    <span class="name-company-job">Code Engine Studio</span>
-                                    <div class="job_title"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></div>
-                                    <div class="salary">1000$ - 2000$ <i class="fa-solid fa-bookmark"></i></div>
-                                </div>
-                                <div class="job_item">
-                                    <span class="name-company-job">Code Engine Studio</span>
-                                    <div class="job_title"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></div>
-                                    <div class="salary">1000$ - 2000$ <i class="fa-solid fa-bookmark"></i></div>
-                                </div>
+                                @endforeach
+                                {{$hot_jobs->links()}}
                             </div>
                             
                         </div>
@@ -187,149 +155,46 @@
                 <div class="row post_company">
                     <div class="col-md-9">
                       <h5 class="header_name">Bài Tuyển Dụng Mới Nhất</h5>
+                      @foreach($posts as $post)
                         <div class="post_item">
                             <div class="row">
                                 <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/pasted image 0.png" alt="">
+                                    <img src="{{asset('storage/'.$post->company_logo)}}" alt="">
                                     <div class="description-post">
-                                        <h3 class="title-job"><a href="detail_post.html">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
+                                        <h3 class="title-job"><a href="{{route('post.detail',[$post->id,$post->slug])}}">{{$post->title}}</a></h3>
+                                        <div class="company-name">{{$post->company_name}}</div>
+                                        <div class="address">{{$post->city}}</div>
+                                        <div class="salary">{{$post->min_salary}} {{$post->unit_money}} - {{$post->max_salary}} {{$post->unit_money}}</div>
                                     </div>
-        
+                                    <!-- @foreach (json_decode($post->languages) as $languages)
+                                            {{ $languages }}
+                                    @endforeach -->
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
+                                    <div class="post_time">{{  \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</div>
                                     <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/pasted image 0.png" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/images.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/images.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/images.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/images.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/images.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
+                        </div>        
+                      @endforeach    
+                      <p>{!! $posts->links() !!}</p>  
                     </div>
                     <div class="col-md-3 introduce_banner">
                         <div class="introduce_new_company">
                             <h4> Có thể bạn quan tâm</h4>
                             <div class="post_introduce_company">
                                 <div class="img_introduce-company">
-                                    <img src="../assets/image/images.jpg" alt="">
+                                    <img src="{{asset('storage/'.$review_company->company_logo)}}" alt="">
                                 </div>
                                 <div class="detail_introduce_company">
                                     <div class="name_company">
-                                        <a href="#">Công ty TNHH Sailun Việt Nam</a>
+                                        <a href="#">{{$review_company->name}}</a>
                                     </div>
                                     <div class="describe">
-                                        <a href="#">Quản Trị Viên Tập Sự (Sinh Viên)</a>
+                                        <a href="#">{{$review_company->title}}</a>
                                         <div class="salary-time_post">
-                                                <span><i class="fa-solid fa-money-bill-1-wave"></i> Trên 9 triệu</span>
-                                                <span><i class="fa-sharp fa-solid fa-clock"></i>31/12/2022</span>
+                                                <span><i class="fa-solid fa-money-bill-1-wave"></i>{{$review_company->min_salary}}-{{$review_company->max_salary}}{{$review_company->unit_money}}</span>
+                                                <span><i class="fa-sharp fa-solid fa-clock"></i>{{$review_company->expired_post}}</span>
                                         </div>
                                         <div class="detail">
                                             <button>
@@ -343,7 +208,7 @@
                                 </div>
                             </div>
                             <div class="banner_web">
-                                <img src="../assets/image/pasted image 0.png" alt="">
+                                <img src="{{asset('image/pasted image 0.png')}}" alt="">
                             </div>
                         </div>
                     </div>
@@ -546,6 +411,11 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="">
+        $(document).ready(function(){
+            $
+        })
+    </script>
 </body>
 
 </html>

@@ -127,52 +127,6 @@
     
            </div>
          </div>
-         <div class="end-header">
-               
-                 <div class="row">
-                     <div class="col-md-4">
-                         <div class="search-input">
-                             <input type="text" placeholder="Tìm kiếm công việc,vị trí bạn mong muốn">
-                         </div>
-                     </div>
-                     <div class="col-md-2">
-                         <div class="fillter">
-                             <span class="icon-header_fillter">
-                                 <i class="fa-solid fa-building"></i>
-                             </span>
-                             <select name="" id="">
-                                 <option value=""> Vị trí công việc</option>
-                             </select>
-                         </div>
-                     </div>
-                     <div class="col-md-2">
-                         <div class="fillter">
-                             <span class="icon-header_fillter">
-                                 <i class="fa-solid fa-building"></i>
-                             </span>
-                             <select name="" id="">
-                                 <option value=""> Vị trí công việc</option>
-                             </select>
-                         </div>
-                     </div>
-                     <div class="col-md-2">
-                         <div class="fillter">
-                             <span class="icon-header_fillter">  
-                                 <i class="fa-solid fa-location-dot"></i>
-                             </span>
-                             <select name="" id="">
-                                 <option value="">Địa Điểm</option>
-                             </select>
-                         </div>
-                     </div>
-                     <div class="col-md-2">
-                         <div class="fillter search_header">
-                            <i class="fa-solid fa-magnifying-glass"></i> Tìm Kiếm
-                         </div>
-                     </div>
-                 </div>
-    
-         </div>
        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

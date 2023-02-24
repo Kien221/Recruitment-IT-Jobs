@@ -473,4 +473,42 @@ html{
 .custom-file-upload-img-company:hover{
     background-color: #b9b8b8;
 }
+#btn_create_post{
+    text-align: center;
+}
+.btn_create_post{
+    margin-top: 20px;
+    padding: 7px 100px;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .214rem;
+    color: #fff;
+    background-color: #00b14f;
+    border: 1px solid #00b14f;
+}
+#main_edit_profile{
+    padding: 10px 100px;
+}
+.choice_unit_money{
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background-color: white;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+.post_info{
+    margin-top: 20px;
+}
+.post_info label{
+    font-size: 14px;
+    color: #303030;
+    margin-top: 10px;
+}
+.select2-selection--single{
+    height: 37px;
+}
 

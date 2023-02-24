@@ -1,7 +1,7 @@
 <div id="header">
         <div class="top-header">
             <div class="top-header-left">
-                <a href="../public_view/index.html">
+                <a href="{{route('home')}}">
                     <img src="{{asset('image/Logo_TopCV_no_slogan.png')}}" alt="" class="logo">
                 </a>
                 <h1 class="text-header"><span>Việc Làm</span> IT Hàng Đầu</h1>

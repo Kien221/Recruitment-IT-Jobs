@@ -13,7 +13,7 @@ class loginController extends Controller
         $applicant = applicant::where('email',$email)->where('password',$password)->first();
         $hr = hr::where('email',$email)->where('password',$password)->first();
         if($applicant){
-            session()->put('success_login','success_login');
+            session()->put('success_login_applicant','success_login_applicant');
             session()->put('id_aplicant',$check_login_applicant->id);
             session()->put('applicant_name',$check_login_applicant->name);
             session()->put('avatar',$check_login_applicant->avatar);
@@ -21,11 +21,11 @@ class loginController extends Controller
         }
         else if($hr){
             if($hr->status == 1){
-                session()->put('success_login','success_login');
+                session()->put('success_login_hr','success_login_hr');
                 session()->put('id_hr',$hr->id);
                 session()->put('hr_name',$hr->name);
                 session()->put('avatar',$hr->avatar);
-                return View('hr_view.index',compact('hr'));
+                return redirect()->route('hr.index');
             }
             else{
                 return redirect()->route('login')->with('error_active_account','Tài khoản chưa được kích hoạt');

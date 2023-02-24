@@ -19,7 +19,8 @@ class HrController extends Controller
      */
     public function index()
     {
-       
+        $hr = hr::find(session()->get('id_hr'));
+        return View('hr_view.index',compact('hr'));
     }
 
     public function resigntion(Request $request){
@@ -70,16 +71,14 @@ class HrController extends Controller
 
     public function create_Post_View(){
         $hr = hr::find(session()->get('id_hr'));
-        $check_create_company = companies::where('hr_id',$hr->id)->first();
-        if($check_create_company){
-            return view('hr_view.create_post',compact('hr'));
+        $company = companies::where('hr_id',$hr->id)->first();
+        if($company){
+            return view('hr_view.create_post',compact('company'));
         }
         else{
-            return redirect()->route('create.company')->with('error','Vui lòng tạo công ty trước khi đăng tin tuyển dụng');
+            return redirect()->route('create.company.view')->with('error','Vui lòng tạo công ty trước khi đăng tin tuyển dụng');
         }  
     }
-
-
     public function create()
     {
         //
