@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{asset('css/public.css')}}">
+    <link rel="stylesheet" href="{{asset('css/hr.css')}}">
+    <link rel="stylesheet" href="{{asset('css/applicant.css')}}">
+    <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css "/>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>NHÀ TUYỂN DỤNG</title>
+</head>
+<body>
+    @include('layout.hrview.header_hr')
+    <div class="main_hr_view">
+        <div class="row">
+            @include('layout.hrview.sidebar_hr')
+            <div class="col-md-10">
+              <table class="table table-bordered" id="customers">
+                                  <thead>
+                                      <tr>
+                                        <th scope="col">Tên bài viết</th>
+                                        <th scope="col">Ngày đăng</th>
+                                        <th scope="col">Ngày hết hạn</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">Người ứng tuyển</th>
+                                         <th scope="col">Tùy chọn</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      @foreach($posted as $post)
+                                    <tr id="tr_table">
+                                      <td class="title_post"><a href="{{route('post.detail',[$post->id,$post->slug])}}" style="text-decoration:none;color:green">{{$post->title}}</a></td>
+                                      <td >{{$post->created_at}}</td>
+                                      <td>{{$post->expired_post}}</td>
+                                      @if($post->is_expired == 1)
+                                      <td>
+                                        <div class="unexpired">
+                                            Còn hạn
+                                          </div>
+                                      </td>
+                                      @else
+                                      <td>
+                                        <div class="expired">
+                                          Hết hạn
+                                        </div>
+                                      </td>
+                                      @endif
+                                      @if($post->applicant == 0)
+                                      <td>{{$post->applicant}} CV</td>
+                                      @else
+                                      <td><a href="{{route('show_applicant.apply',[$post->id,$post->slug])}}">{{$post->applicant}} CV</a></td>
+                                      @endif
+                                      @if($post->is_expired == 1)
+                                      <td>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                          <a href="" class="btn btn-primary btn-sm" style="color:white"><i class="fas fa-edit"></i></a>
+                                        </div>
+                                    </td> 
+                                    @else
+                                    <td>
+                                      <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button id="btn_delete_post" class="btn btn-danger btn-sm" style="color:white"><i class="fas fa-trash"></i></button>
+                                      </div>
+                                  </td>
+                                    @endif
+                                    @endforeach   
+                          </tbody>
+                  </table>
+
+            </div>
+        </div>
+    </div>
+    <script>
+      $(document).ready(function(){
+        $('#btn_delete_post').click(function(){
+          alert('Bạn có muốn xóa bài viết này không?');
+        });
+      })
+    </script> 
+</body>
+</html>

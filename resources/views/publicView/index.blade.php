@@ -134,7 +134,7 @@
                                 <div class="job_item">
                                     <span class="name-company-job">{{$hot_job->company->name}}</span>
                                     <div class="job_title"><a href="{{route('post.detail',[$hot_job->id,$hot_job->slug])}}">{{$hot_job->title}}</a></div>
-                                    <div class="salary">{{$hot_job->min_salary}}-{{$hot_job->max_salary}}{{$hot_job->unit_money}} <i class="fa-solid fa-bookmark"></i></div>
+                                    <div class="salary">{{$hot_job->min_salary}}{{$hot_job->unit_money}}-{{$hot_job->max_salary}}{{$hot_job->unit_money}} <i class="fa-solid fa-bookmark"></i></div>
                                 </div>
                                 @endforeach
                                 {{$hot_jobs->links()}}
@@ -148,8 +148,8 @@
         <div class="main_content">
             <div class="sum_job">
                 <div class="total_job all">Tất cả(300)</div>
-                <div class="total_job">Cái Răng(100)</div>
-                <div class="total_job">Ninh Kiều(200)</div>
+                <!-- <div class="total_job">Cái Răng(100)</div>
+                <div class="total_job">Ninh Kiều(200)</div> -->
             </div>
             <div class="post">
                 <div class="row post_company">
@@ -158,13 +158,14 @@
                       @foreach($posts as $post)
                         <div class="post_item">
                             <div class="row">
-                                <div class="col-md-8 img-title_job-description">
+                                <div class="col-md-8 img-title_job-description">    
                                     <img src="{{asset('storage/'.$post->company_logo)}}" alt="">
                                     <div class="description-post">
                                         <h3 class="title-job"><a href="{{route('post.detail',[$post->id,$post->slug])}}">{{$post->title}}</a></h3>
                                         <div class="company-name">{{$post->company_name}}</div>
-                                        <div class="address">{{$post->city}}</div>
-                                        <div class="salary">{{$post->min_salary}} {{$post->unit_money}} - {{$post->max_salary}} {{$post->unit_money}}</div>
+                                        <span class="btn-introduce-post" style="color:black;">{{$post->min_salary}} {{$post->unit_money}} - {{$post->max_salary}} {{$post->unit_money}}</span>
+                                        <span class="btn-introduce-post" style="color:black;">Hết hạn - {{$post->expired_post}}</span>
+                                        <span class="btn-introduce-post" style="color:black;">{{$post->city}}</span>
                                     </div>
                                     <!-- @foreach (json_decode($post->languages) as $languages)
                                             {{ $languages }}
@@ -194,7 +195,7 @@
                                         <a href="#">{{$review_company->title}}</a>
                                         <div class="salary-time_post">
                                                 <span><i class="fa-solid fa-money-bill-1-wave"></i>{{$review_company->min_salary}}-{{$review_company->max_salary}}{{$review_company->unit_money}}</span>
-                                                <span><i class="fa-sharp fa-solid fa-clock"></i>{{$review_company->expired_post}}</span>
+                                                <span><i class="fa-sharp fa-solid fa-clock"></i>{{$review_company->expired_date()}} hết hạn</span>
                                         </div>
                                         <div class="detail">
                                             <button>
@@ -413,7 +414,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="">
         $(document).ready(function(){
-            $
+            
         })
     </script>
 </body>

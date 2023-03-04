@@ -65,6 +65,19 @@
 
       </div>
     </div>
+    @if(session('apply_cv_success'))
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>{{session('apply_cv_success')}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
+    @if(session('apply_cv_error'))
+    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+        <strong>{{session('apply_cv_error')}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
+
     <div id="main-post_detail">
         <div class="container-fluid">
             <div class="row post_introduce">
@@ -154,7 +167,7 @@
                                     </li>
                                     <li>
                                         <div class="infor-icon">
-                                            <i class="fa-solid fa-venus-mars"></i>
+                                            <i class="fa-solid fa-code"></i>
                                         </div>
                                         <div class="infor-content">
                                             <span>Ngôn ngữ</span>
@@ -170,7 +183,7 @@
                                 <ul>
                                     <li>
                                         <div class="infor-icon">
-                                            <i class="fa-solid fa-money-bill"></i>
+                                            <i class="fa-solid fa-users"></i>
                                         </div>
                                         <div class="infor-content">
                                             <span>Số Lượng Tuyển</span>
@@ -192,7 +205,7 @@
                                     </li>
                                     <li>
                                         <div class="infor-icon">
-                                            <i class="fa-solid fa-venus-mars"></i>
+                                            <i class="fa-solid fa-location-dot"></i>
                                         </div>
                                         <div class="infor-content">
                                             <span>Địa điểm làm việc</span>
@@ -229,7 +242,7 @@
                         </div>
                     @else
                         <div class="apply-press">
-                            <button id="apply_btn"><a href="#">ỨNG CỬ NGAY</a></button>
+                            <button id="apply_btn" style="color:white;"onclick="show_apply_form()">ỨNG TUYỂN NGAY</button>
                             <button><a href="#">LƯU TIN</a></button>
                         </div> 
                     @endif
@@ -251,7 +264,7 @@
                                 <div class="link_icon"><i class="fa-solid fa-link"></i></div>
                             </div>
                             <p>Chia sẻ qua mạng xã hội</p>
-                            <div class="social">
+                            <div id="social">
                                 <ul>
                                     <li>
                                         <a href="#"><i class="fa-brands fa-facebook"></i></a>
@@ -569,10 +582,10 @@
                                 </div>
                                 <div class="detail_introduce_company">
                                     <div class="name_company">
-                                        <a href="#">{{$review_company->name}}</a>
+                                        <a href="{{route('post.detail',[$review_company->id,$review_company->slug])}}">{{$review_company->company_name}}</a>
                                     </div>
                                     <div class="describe">
-                                        <a href="#">{{$review_company->title}}</a>
+                                        <a href="{{route('post.detail',[$review_company->id,$review_company->slug])}}">{{$review_company->title}}</a>
                                         <div class="salary-time_post">
                                                 <span><i class="fa-solid fa-money-bill-1-wave"></i>{{$review_company->min_salary}}-{{$review_company->max_salary}}{{$review_company->unit_money}}</span>
                                                 <span><i class="fa-sharp fa-solid fa-clock"></i>{{$review_company->expired_post}}</span>
@@ -775,46 +788,57 @@
     <div class="form-apply" id="form-apply">
         <div class="content-form">
             <div class="job_apply">
-                <h4><span>Ứng tuyển</span> <a href="#"> Diễn Hoạ Kiến Trúc (Visualization Architecture)</a></h4>
+                <h4><span>Ứng tuyển</span> <a href="#"> {{$detail_post->title}}</a></h4>
                 <span class="close" onclick="close_apply_form()">
                     <i class="fa-sharp fa-solid fa-xmark"></i>
                 </span>
             </div>
+            @if(session()->get('id_applicant') != null)
             <div class="method-apply">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="choice_method">
-                            <span><b>Chọn CV online:</b> <i>khuyến khích</i></span>
-                            <br>
-                            <br>
-                            <div class="or">
-                                <span class="or">Hoặc</span>
+                <form action="{{route('apply.cv',[$detail_post->post_id,session()->get('id_applicant')])}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="choice_method">
+                                <span><b>Chọn CV online:</b> <i>khuyến khích</i></span>
+                                <br>
+                                <br>
+                                <div id="choice_profile_cv">
+                                    <div class="or">
+                                        <span class="or">Hoặc</span>
+                                    </div>
+                                    <br>
+                                    <input type="radio" id="check" name="type_cv" value="cv_web">
+                                    <span class="cv_online">Chọn hồ sơ online <a href="../applicant_view/index.html" target="_blank">(Xem)</a></span>
+                                    <br>
+                                    <span class="attend">Hồ sơ chưa hoàn thiện. Vui lòng cập nhật <a href="../applicant_view/edit_cv_profile.html"> Tại đây</a></span>
+        
+                                </div>
                             </div>
-                            <br>
-                            <input type="radio" class="check">
-                            <span class="cv_online">Chọn hồ sơ online <a href="../applicant_view/index.html" target="_blank">(Xem)</a></span>
-                            <br>
-                            <span class="attend">Hồ sơ chưa hoàn thiện. Vui lòng cập nhật <a href="../applicant_view/edit_cv_profile.html"> Tại đây</a></span>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="upfile" id="upfile">
+                                <label for="up_cv" class="custom-file-upload">
+                                    <i class="fa fa-cloud-upload"></i> Tải CV lên từ máy tính(PDF)
+                                </label>
+                                <input type="file" id="up_cv" name="file_cv">
+                                <span class="remove_img_cv" id="remove_img_cv">
+                                        <i class="fa-sharp fa-solid fa-xmark"></i>
+                                </span>
+                                <embed src="" alt="" id="img_cv" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hope">
+                        <h5><b>Thư giới thiệu:</b></h5>
+                        <textarea name="brief_introduce" id="text_hope_to_apply" cols="96" rows="3" placeholder="Viết giới thiệu ngắn gọn về bản thân (điểm mạnh, điểm yếu) và nêu rõ mong muốn, lý do làm việc tại công ty này. Đây là cách gây ấn tượng với nhà tuyển dụng nếu bạn có chưa có kinh nghiệm làm việc (hoặc CV không tốt)."></textarea>
+                    </div>
+                    <div class="button">
+                        <button class="close_btn" onclick="close_apply_form()"> Đóng lại</button>
+                        <button class="send_btn">Nộp CV</button>
+                    </div>
+                </form>
 
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="upfile">
-                            <label for="up_cv" class="custom-file-upload">
-                                <i class="fa fa-cloud-upload"></i> Tải CV lên từ máy tính
-                            </label>
-                            <input type="file" id="up_cv">
-                        </div>
-                    </div>
-                </div>
-                <div class="hope">
-                    <h5><b>Thư giới thiệu:</b></h5>
-                    <textarea name="" id="text_hope_to_apply" cols="96" rows="3" placeholder="Viết giới thiệu ngắn gọn về bản thân (điểm mạnh, điểm yếu) và nêu rõ mong muốn, lý do làm việc tại công ty này. Đây là cách gây ấn tượng với nhà tuyển dụng nếu bạn có chưa có kinh nghiệm làm việc (hoặc CV không tốt)."></textarea>
-                </div>
-                <div class="button">
-                    <button class="close_btn" onclick="close_apply_form()"> Đóng lại</button>
-                    <button class="send_btn">Nộp CV</button>
-                </div>
                 <div class="warning">
                     <span><i class="fa-solid fa-triangle-exclamation"></i> Lưu ý:</span>
                     <div class="warning_text">
@@ -832,6 +856,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
 
     </div>

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{asset('css/applicant.css')}}">
     <link rel="stylesheet" href="{{asset('css/public.css')}}">
     <script src="{{asset('js/js.js')}}"></script> 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css "/>
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/css/bootstrap-switch-button.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
@@ -86,295 +87,251 @@
                 </div>
                 <div class="col-md-9">
                     <div class="main_edit_profile">
-                        <div class="infor_yourself" id="infor_yourself">
-                            <h5 class="title_edit_form"><i class="fa-solid fa-user"></i> THÔNG TIN CÁ NHÂN </h5>
-                            <form action="{{route('update.infor.applicant',$cv_user->id)}}" method="post" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <div class="infor_input">
-                                            <div class="col-md-3">Họ và tên</div>
-                                            <div class="col-md-1">
-                                                <span class="required">(*)</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="text" placeholder="Vui lòng nhập họ tên" value="{{$cv_user->name}}" name="name">
-                                            </div>
-                                        </div>
-                                        <div class="infor_input">
-                                            <div class="col-md-3">Email</div>
-                                            <div class="col-md-1">
-                                                <span class="required">(*)</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="text" placeholder="{{$cv_user->email}}" id="email_applicant" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="infor_input">
-                                            <div class="col-md-3">Điện thoại</div>
-                                            <div class="col-md-1">
-                                                <span class="required">(*)</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="text" placeholder="Vui lòng nhập số điện thoại" name="phoneNumber" value="{{$cv_user->phoneNumber}}">
-                                            </div>
-                                        </div>
-                                        <div class="infor_input">
-                                            <div class="col-md-3">Giới tính</div>
-                                            <div class="col-md-1">
-                                                <span class="required">(*)</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <select name="gender" id="" class="gender_select" value="{{$cv_user->gender}}">
-                                                    <option value="Nam">Nam</option>
-                                                    <option value="Nữ">Nữ</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="infor_input">
-                                            <div class="col-md-3">Thành Phố</div>
-                                            <div class="col-md-1">
-                                                <span class="required">(*)</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="text" name="city_id" list="cityname" placeholder="Chọn thành phố" >
-                                                    <datalist id="cityname" class="datalist" >
-                                                        <option value="Boston">
-                                                        <option value="Cambridge">
-                                                    </datalist>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h6 class="choice_img_text">CHỌN ẢNH ĐẠI DIỆN</h6>
-                                        <div class="upload_img_avatar">
-                                            <div class="avatar_upload">
-                                                <img src="{{asset('storage/'.$cv_user->avatar)}}" alt="" name="avatar" id="avatar">
-                                            </div>
-                                            <div class="">
-                                                <input type="file" name="avatar" id="avatar_upload">
-                                                <label for="avatar_upload" class="lable_upload_avatar">Tải ảnh lên</label>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="infor_input">
-                                        <div class="col-md-3">
-                                            Địa chỉ cụ thể
-                                        </div>
+                        <form action="{{route('update.cv.applicant',$cv_user->id)}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="infor_yourself" id="infor_yourself">
+                                <h5 class="title_edit_form"><i class="fa-solid fa-user"></i> THÔNG TIN CÁ NHÂN </h5>
+                                    <div class="row">
                                         <div class="col-md-9">
-                                            <input type="text" placeholder="Nhập địa chỉ cụ thể" name="address" value="{{$cv_user->address}}">
+                                            <div class="infor_input">
+                                                <div class="col-md-3">Họ và tên</div>
+                                                <div class="col-md-1">
+                                                    <span class="required">(*)</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" placeholder="Vui lòng nhập họ tên" value="{{$cv_user->name}}" name="name">
+                                                </div>
+                                            </div>
+                                            <div class="infor_input">
+                                                <div class="col-md-3">Email</div>
+                                                <div class="col-md-1">
+                                                    <span class="required">(*)</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" placeholder="{{$cv_user->email}}" id="email_applicant" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="infor_input">
+                                                <div class="col-md-3">Điện thoại</div>
+                                                <div class="col-md-1">
+                                                    <span class="required">(*)</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" placeholder="Vui lòng nhập số điện thoại" name="phoneNumber" value="{{$cv_user->phoneNumber}}">
+                                                </div>
+                                            </div>
+                                            <div class="infor_input">
+                                                <div class="col-md-3">Giới tính</div>
+                                                <div class="col-md-1">
+                                                    <span class="required">(*)</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <select name="gender" id="" class="gender_select" value="{{$cv_user->gender}}">
+                                                        <option value="Nam">Nam</option>
+                                                        <option value="Nữ">Nữ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="infor_input">
+                                                <div class="col-md-3">Thành Phố</div>
+                                                <div class="col-md-1">
+                                                    <span class="required">(*)</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="city">
+                                                        <select class="form-control" id="select-city" name="city" required="required"> 
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="infor_input">
                                         <div class="col-md-3">
-                                            Link
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" placeholder="https://github.com/username" name="links" value="{{$cv_user->links}}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="warning_text">Chú ý: không được để trống các thông tin bắt buộc có kí tự (*)</p>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="btn_save_edit">
-                                            <button type="submit" class="infor_button" onClick="ajax_update_introduce()">Lưu</button>
-    
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <!-- <form action="" enctype="multipart/form-data">
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <div class="infor_input">
-                                            <div class="col-md-3">Họ và tên</div>
-                                            <div class="col-md-1">
-                                                <span class="required">(*)</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="hidden" value="{{$cv_user->id}}" id="applicant_id">
-                                                <input type="text" placeholder="Vui lòng nhập họ tên" value="{{$cv_user->name}}" name="name" id="name">
-                                            </div>
-                                        </div>
-                                        <div class="infor_input">
-                                            <div class="col-md-3">Email</div>
-                                            <div class="col-md-1">
-                                                <span class="required">(*)</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="text" placeholder="{{$cv_user->email}}">
-                                            </div>
-                                        </div>
-                                        <div class="infor_input">
-                                            <div class="col-md-3">Điện thoại</div>
-                                            <div class="col-md-1">
-                                                <span class="required">(*)</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="text" placeholder="Vui lòng nhập số điện thoại" name="phoneNumber" value="{{$cv_user->phoneNumber}}" id="phoneNumber">
-                                            </div>
-                                        </div>
-                                        <div class="infor_input">
-                                            <div class="col-md-3">Giới tính</div>
-                                            <div class="col-md-1">
-                                                <span class="required">(*)</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <select name="gender" id="" class="gender_select" value="{{$cv_user->gender}}" id="gender">
-                                                    <option value="">Nam</option>
-                                                    <option value="">Nữ</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="infor_input">
-                                            <div class="col-md-3">Thành Phố</div>
-                                            <div class="col-md-1">
-                                                <span class="required">(*)</span>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <input type="text" name="city_id" list="cityname" placeholder="Chọn thành phố" >
-                                                    <datalist id="cityname" class="datalist" >
-                                                        <option value="Boston">
-                                                        <option value="Cambridge">
-                                                    </datalist>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <h6 class="choice_img_text">CHỌN ẢNH ĐẠI DIỆN</h6>
-                                        <div class="upload_img_avatar">
-                                            <div class="avatar_upload">
-                                                <img src="{{asset('storage/'.$cv_user->avatar)}}" alt="" name="avatar">
-                                            </div>
-                                            <div class="">
-                                                <input type="file" name="avatar" id="avatar">
-                                                <label for="avatar" class="lable_upload_avatar">Tải ảnh lên</label>
-                                            </div>
+                                            <h6 class="choice_img_text">CHỌN ẢNH ĐẠI DIỆN</h6>
+                                            <div class="upload_img_avatar">
+                                                <div class="avatar_upload">
+                                                    <img src="{{asset('storage/'.$cv_user->avatar)}}" alt="" name="avatar" id="avatar">
+                                                </div>
+                                                <div class="">
+                                                    <input type="file" name="avatar" id="avatar_upload">
+                                                    <label for="avatar_upload" class="lable_upload_avatar">Tải ảnh lên</label>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="infor_input">
+                                    <div class="row">
+                                        <div class="infor_input">
+                                            <div class="col-md-3">
+                                                Địa chỉ cụ thể
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" placeholder="Nhập địa chỉ cụ thể" name="address" value="{{$cv_user->address}}">
+                                            </div>
+                                        </div>
+                                        <div class="infor_input">
+                                            <div class="col-md-3">
+                                                Link
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" placeholder="https://github.com/username" name="links" value="{{$cv_user->links}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="warning_text">Chú ý: không được để trống các thông tin bắt buộc có kí tự (*)</p>
+                                <!-- <form action="" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="infor_input">
+                                                <div class="col-md-3">Họ và tên</div>
+                                                <div class="col-md-1">
+                                                    <span class="required">(*)</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="hidden" value="{{$cv_user->id}}" id="applicant_id">
+                                                    <input type="text" placeholder="Vui lòng nhập họ tên" value="{{$cv_user->name}}" name="name" id="name">
+                                                </div>
+                                            </div>
+                                            <div class="infor_input">
+                                                <div class="col-md-3">Email</div>
+                                                <div class="col-md-1">
+                                                    <span class="required">(*)</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" placeholder="{{$cv_user->email}}">
+                                                </div>
+                                            </div>
+                                            <div class="infor_input">
+                                                <div class="col-md-3">Điện thoại</div>
+                                                <div class="col-md-1">
+                                                    <span class="required">(*)</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" placeholder="Vui lòng nhập số điện thoại" name="phoneNumber" value="{{$cv_user->phoneNumber}}" id="phoneNumber">
+                                                </div>
+                                            </div>
+                                            <div class="infor_input">
+                                                <div class="col-md-3">Giới tính</div>
+                                                <div class="col-md-1">
+                                                    <span class="required">(*)</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <select name="gender" id="" class="gender_select" value="{{$cv_user->gender}}" id="gender">
+                                                        <option value="">Nam</option>
+                                                        <option value="">Nữ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="infor_input">
+                                                <div class="col-md-3">Thành Phố</div>
+                                                <div class="col-md-1">
+                                                    <span class="required">(*)</span>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" name="city_id" list="cityname" placeholder="Chọn thành phố" >
+                                                        <datalist id="cityname" class="datalist" >
+                                                            <option value="Boston">
+                                                            <option value="Cambridge">
+                                                        </datalist>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-md-3">
-                                            Địa chỉ cụ thể
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" placeholder="Nhập địa chỉ cụ thể" name="address" id="address" value="{{$cv_user->address}}">
-                                        </div>
-                                    </div>
-                                    <div class="infor_input">
-                                        <div class="col-md-3">
-                                            Link
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input type="text" placeholder="https://github.com/username" name="links" id="links" value="{{$cv_user->links}}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="warning_text">Chú ý: không được để trống các thông tin bắt buộc có kí tự (*)</p>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="btn_save_edit">
-                                            <button  type="button" onclick="infor_update()">Lưu</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form> -->
-                        </div>
-                        <div class="introduce_yourself_form hooby" id="your_hooby">
-                            <h5 class="title_edit_form"><i class="fa-regular fa-pen-to-square"></i> GIỚI THIỆU BẢN THÂN </h5>
-                            <form action="{{route('update.introdeyourself',$cv_user->id)}}" method="post">
-                                @csrf
-                                @method('PUT')
-                                <textarea name="introdeyourself" id="editor1" rows="10"  placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
-                                    <div>
-                                    {{$cv_user->introduce_yourself}}
-                                    </div>
-                                </textarea>
-                                <script>
-                                    CKEDITOR.replace( 'editor1' );
-                                </script>
-                                 <div class="row">
-                                    <div class="col-md-12 btn_save">
-                                        <div class="btn_save_edit">
-                                            <button type="submit" id="introduce_yourself">Lưu</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                                            <h6 class="choice_img_text">CHỌN ẢNH ĐẠI DIỆN</h6>
+                                            <div class="upload_img_avatar">
+                                                <div class="avatar_upload">
+                                                    <img src="{{asset('storage/'.$cv_user->avatar)}}" alt="" name="avatar">
+                                                </div>
+                                                <div class="">
+                                                    <input type="file" name="avatar" id="avatar">
+                                                    <label for="avatar" class="lable_upload_avatar">Tải ảnh lên</label>
+                                                </div>
 
-                        </div>
-                        <div class="introduce_yourself_form hooby" id="your_study">
-                            <h5 class="title_edit_form"><i class="fa-solid fa-graduation-cap"></i></i> HỌC VẤN </h5>
-                            <form action="{{route('update.degree',$cv_user->id)}}" method="post">
-                                @csrf
-                                @method('PUT')
-                                <textarea name="editor2" id="editor2" rows="10" placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
-                                
-                                </textarea>
-                                <script>
-                                    CKEDITOR.replace( 'editor2' );
-                                </script>
-                                 <div class="row">
-                                    <div class="col-md-12 btn_save">
-                                        <div class="btn_save_edit">
-                                            <button type="submit">Lưu</button>
-    
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-
-                        </div>
-                        <div class="introduce_yourself_form exp" id="your_exp">
-                            <h5 class="title_edit_form"><i class="fa-solid fa-briefcase"></i> KINH NGHIỆM LÀM VIỆC </h5>
-                            <form action="{{route('update.exp',$cv_user->id)}}" method="post"> 
-                                @csrf
-                                @method('PUT')
-                                <textarea name="editor3" id="editor3" rows="10" placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
-                                
-                                </textarea>
-                                <script>
-                                    CKEDITOR.replace( 'editor3' );
-                                </script>
-                                 <div class="row">
-                                    <div class="col-md-12 btn_save">
-                                        <div class="btn_save_edit">
-                                            <button type="submit">Lưu</button>
-    
+                                    <div class="row">
+                                        <div class="infor_input">
+                                            <div class="col-md-3">
+                                                Địa chỉ cụ thể
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" placeholder="Nhập địa chỉ cụ thể" name="address" id="address" value="{{$cv_user->address}}">
+                                            </div>
+                                        </div>
+                                        <div class="infor_input">
+                                            <div class="col-md-3">
+                                                Link
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" placeholder="https://github.com/username" name="links" id="links" value="{{$cv_user->links}}">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-
-                        </div>
-                        <div class="introduce_yourself_form language_skill" id="language_skill">
-                            <h5 class="title_edit_form"><i class="fa-solid fa-graduation-cap"></i></i> KỸ NĂNG LẬP TRÌNH </h5>
-                            <form action="{{route('update.language.skill',$cv_user->id)}}"> 
-                                @csrf
-                                @method('PUT')
-                                <textarea name="editor4" id="editor4" rows="10" cols="80" placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
-                                
-                                </textarea>
-                                <script>
-                                    CKEDITOR.replace( 'editor4' );
-                                </script>
-                                 <div class="row">
-                                    <div class="col-md-12 btn_save">
-                                        <div class="btn_save_edit">
-                                            <button type="submit">Lưu</button>
+                                    <p class="warning_text">Chú ý: không được để trống các thông tin bắt buộc có kí tự (*)</p>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="btn_save_edit">
+                                                <button  type="button" onclick="infor_update()">Lưu</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form> -->
+                            </div>
+                            <div class="introduce_yourself_form hooby" id="your_hooby">
+                                <h5 class="title_edit_form"><i class="fa-regular fa-pen-to-square"></i> GIỚI THIỆU BẢN THÂN </h5>
+                                    <textarea name="introduce_yourself" id="introduce_yourself" rows="10"  placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
+                                        <div>
+                                        {{$cv_user->introduce_yourself}}
+                                        </div>
+                                    </textarea>
+                                    <script>
+                                        CKEDITOR.replace( 'introduce_yourself' );
+                                    </script>
+                            </div>
+                            <div class="introduce_yourself_form hooby" id="your_study">
+                                <h5 class="title_edit_form"><i class="fa-solid fa-graduation-cap"></i></i> HỌC VẤN </h5>
+                                    <textarea name="study_degree" id="study_degree" rows="10" placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
+                                        <div>
+                                        {{$cv_user->study_degree}}
+                                        </div>
+                                    </textarea>
+                                    <script>
+                                        CKEDITOR.replace( 'study_degree' );
+                                    </script>
 
-                        </div> 
+                            </div>
+                            <div class="introduce_yourself_form exp" id="your_exp">
+                                <h5 class="title_edit_form"><i class="fa-solid fa-briefcase"></i> KINH NGHIỆM LÀM VIỆC </h5>
+                                    <textarea name="experience" id="experience" rows="10" placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
+                                        <div>
+                                        {{$cv_user->experience}}
+                                        </div>
+                                    </textarea>
+                                    <script>
+                                        CKEDITOR.replace( 'experience' );
+                                    </script>
+
+                            </div>
+                            <div class="introduce_yourself_form language_skill" id="language_skill">
+                                <h5 class="title_edit_form"><i class="fa-solid fa-graduation-cap"></i> KỸ NĂNG LẬP TRÌNH </h5>
+                                    <textarea name="language_skill" id="language_skill" rows="10" cols="80">
+                                        <div>
+                                        {{$cv_user->language_skill}}
+                                        </div>
+                                    </textarea>
+                                    <script>
+                                        CKEDITOR.replace( 'language_skill' );
+                                    </script>
+                            </div> 
+                            <div class="row">
+                            <div class="col-md-12 btn_save">
+                                <div class="btn_save_edit">
+                                    <button type="submit">Lưu</button>
+                                </div>
+                            </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -556,16 +513,9 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="../assets/js.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script >
-        $(document).ready(function(){
-
-            $('#introduce_yourself').submit(function(){
-                var introduce_yourself= $('#editor1').val();
-                if(introduce_yourself.length == 0){
-                    alert('Bạn chưa nhập mô tả về bản thân');
-                }
-            });
+        $(document).ready(async function(){
             $('#avatar_upload').change(function(){
             let file = $(this).prop('files')[0];
             let reader = new FileReader();
@@ -574,6 +524,14 @@
             }
             reader.readAsDataURL(file);
         })
+            $('#select-city').select2();
+            const response = await fetch('{{asset('locations/index.json')}}');
+            const cities = await response.json();
+            $.each(cities, function (index, each){
+                $('#select-city').append(`
+                <option value='${index}' data-path='${each.file_path}'>${index}</option>
+                `);
+            })
         });
     </script>
 

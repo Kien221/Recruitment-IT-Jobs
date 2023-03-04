@@ -7,6 +7,7 @@ use App\Http\Controllers\loginController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ApplyCvController;
 use App\Models\Applicant;
 use App\Http\Middleware\loginApplicant;
 
@@ -36,8 +37,6 @@ Route::get('/auth/callback/{provider}', function ($provider) {
         session()->put('avatar',$call_user->avatar);
         if(session('post_id') != null){
             return redirect()->route('post.detail',[session('post_id'),session('slug')]);
-            session()->forget('post_id');
-            session()->forget('slug');
         }
         else if(session('post_id') == null){
             return redirect()->route('home');
@@ -66,16 +65,11 @@ Route::get('/logout', function () {
     return redirect()->route('home');
 })->name('logout');
 
-
 Route::group([
     'middleware'=>loginApplicant::class,
 ],function(){
     Route::get('/cv-Applicant-view.html',[ApplicantController::class,'edit_cv_view'])->name('applicantView');
-    Route::put('/update/infor/applicant/{user_id}.html',[ApplicantController::class,'update_infor'])->name('update.infor.applicant');
-    Route::put('/update/introdeyourself/applicant/{user_id}.html',[ApplicantController::class,'update_introdeyourself'])->name('update.introdeyourself');
-    Route::put('/update/degree/applicant/{user_id}.html',[ApplicantController::class,'update_degree'])->name('update.degree');
-    Route::put('/update/exp/applicant/{user_id}.html',[ApplicantController::class,'update_exp'])->name('update.exp');
-    Route::put('/update/languague-skill/applicant/{user_id}.html',[ApplicantController::class,'update_languae_skill'])->name('update.language.skill');
+    Route::put('/update/infor/applicant/{user_id}.html',[ApplicantController::class,'update_cv'])->name('update.cv.applicant');
     Route::get('/applicant/view/{user_id}.html',[ApplicantController::class,'index'])->name('applicant.index.view');
 });
 Route::put('/check/resigntion/hr',[HrController::class,'resigntion'])->name('resignation.hr');
@@ -87,7 +81,12 @@ Route::get('hr/create_company/view',[CompaniesController::class,'create_Company_
 Route::put('hr/store_company',[CompaniesController::class,'store'])->name('store.company');
 Route::post('hr/store_post',[PostController::class,'store'])->name('store.post');
 Route::get('hr/post_recruitment',[PostController::class,'index'])->name('hr.post_recruitment');
+Route::get('show/posts/view',[HrController::class,'show_posted_view'])->name('show.posted.view');
+Route::get('show/list-applicants/apply/{post_id}/{slug}',[ApplyCvController::class,'show_list_applicants'])->name('show_applicant.apply');
 
 
 Route::get('/post/detail/{id}/{slug}',[PostController::class,'detail'])->name('post.detail');
+Route::post('apply_cv/{post_id}/{applicant_id}',[ApplyCvController::class,'apply_cv'])->name('apply.cv');
+Route::get('applicant/show/cv_web',[ApplyCvController::class,'show_cv_web'])->name('applicant.show.cv_web');
+
 

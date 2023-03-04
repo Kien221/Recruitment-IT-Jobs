@@ -15,7 +15,7 @@
                             <a href=""><i class="fa-regular fa-file"></i> Bảng tin</a>
                         </li>
                         <li class="list_nav_hr_view_item">
-                            <a href="#" class="icon_link"><i class="fa-regular fa-pen-to-square"></i>Tin Tuyển Dụng</a>
+                            <a href="{{route('show.posted.view')}}" class="icon_link"><i class="fa-regular fa-pen-to-square"></i>Tin Tuyển Dụng</a>
                         </li>
                         <li class="list_nav_hr_view_item">
                             <a href="#" class="icon_link"><i class="fa-regular fa-user"></i>Quản lý CV</a>

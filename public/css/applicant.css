@@ -127,7 +127,6 @@
 }
 .email_applicant{
     display: flex;
-    justify-content: space-between;
 }
 .email_applicant i{
     margin-top: 3px;
@@ -414,12 +413,10 @@ input[type="radio"]{
     font-weight: 600;
 }
 .btn_save_edit{
-    margin-right: 50px;
-    display: flex;
-    justify-content: flex-end;
+    text-align: center;
 }
 .btn_save_edit button{
-    padding: 10px 30px;
+    padding: 10px 50px;
     border: 1px solid #00b14f;
     background-color: #00b14f;
     color: white;

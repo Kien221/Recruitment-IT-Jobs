@@ -269,6 +269,7 @@
 
 .salary{
     color: #d34127;
+    margin-bottom: 5px;
 }
 .salary i{
     float: right;
@@ -333,6 +334,7 @@
 }
 .img-title_job-description img{
     height: 120px;
+    width: 50%;
 }
 .description-post{
     margin-left: 20px;
@@ -769,17 +771,18 @@ p span{
     cursor: pointer;
     border-radius: 5px;
 }
-.social ul{
+#social ul{
     list-style: none;
     display: flex;
     justify-content: flex-start;
     padding: 0;
 }
-.social ul li{
+#social ul li{
     margin-right: 30px;
     align-items: center;
     font-size: 40px;
 }
+
 .youtube_icon{
     color: red;
 }
@@ -1030,6 +1033,7 @@ p span{
     font-weight: 600;
     margin-top: 10px;
     margin-left: 43px;
+    margin-left: -10px;
 }
 input[type="file"]{
     display: none;
@@ -1368,6 +1372,29 @@ input[type="file"]{
 }
 .pagination{
     float: right;
+}
+.btn-introduce-post{
+    font-size: 12px;
+    padding: 4px 8px;
+    font-weight: 400;
+    border: none;
+    margin-top: 5px;
+    background-color: #e9eaec;
+    border-radius: 5px;
+}
+.company-name{
+    margin-bottom: 15px;
+}
+#img_cv{
+    width: 150px;
+    height: 150px;
+    margin-left:25px;
+    margin-top:20px;
+}
+.remove_img_cv{
+    margin-top: 5px;
+    margin-bottom: -25px;
+    margin-left: 177px;
 }
 
 

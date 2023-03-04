@@ -20,7 +20,7 @@ class ApplicantController extends Controller
         return view('applicantview.editCvProfile',compact('cv_user'));
     }
     
-    public function update_infor($user_id,Request $request){
+    public function update_cv($user_id,Request $request){
         $update_user = applicant::find($user_id);
         $input = $request->all();
         if($request->has('avatar')){
@@ -45,32 +45,6 @@ class ApplicantController extends Controller
         $update_user->perfection_level = 40;
         $update_user->save();
         return redirect()->route('applicantView');
-    }
-    public function update_introdeyourself($user_id,Request $request){
-
-       $text_introdeyourself = $request->introdeyourself;
-       $update_info_user = applicant::find($user_id);
-       $perfection_level = $update_info_user->perfection_level;
-       if($text_introdeyourself == '' || $text_introdeyourself == null){
-           $update_info_user->introduce_yourself = $text_introdeyourself;
-           $update_info_user->perfection_level = $perfection_level - 10;
-           $update_info_user->save();
-       }
-       else{
-        $update_info_user->introduce_yourself = $text_introdeyourself;
-        $update_info_user->perfection_level = $perfection_level + 10;
-        $update_info_user->save();
-       }
-       return redirect()->route('applicantView');
-    }
-    public function update_degree($user_id,Request $request){
-
-    }
-    public function update_exp($user_id,Request $request){
-
-    }
-    public function update_language($user_id,Request $request){
-
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\applicant;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Support\Str;
@@ -25,6 +26,7 @@ class PostController extends Controller
     {
         //
     }
+
     public function generateSlug(Request $request){
         try{
            $slug  = Str::slug($request->title);
@@ -39,14 +41,15 @@ class PostController extends Controller
     public function detail(Request $request,$id){
         $detail_post = DB::table('posts')
                         ->join('companies','posts.company_id','=','companies.id')
-                        ->select('posts.*','companies.*')
+                        ->select('posts.*','companies.*','posts.id as post_id')
                         ->where('posts.id',$id)
                         ->first();
- 
+        $detail_post->expired_post = Carbon::parse($detail_post->expired_post)->format('d-m-Y');
         $review_company = Post::inRandomOrder()
                         ->join('companies','posts.company_id','=','companies.id')
                         ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
                         ->first();
+        $review_company->expired_post = Carbon::parse($detail_post->expired_post)->format('d-m-Y');
         $images_company = DB::table('images_companies')
                         ->join('companies','images_companies.company_id','=','companies.id')
                         ->select('images_companies.image')
@@ -88,6 +91,8 @@ class PostController extends Controller
             'requirement' => $request->requirement,
             'benefit' => $request->benefit,
         ]);
+        
+
         return redirect()->route('hr.post_recruitment')->with('create_post_success','Tạo bài viết bà đăng tin thành công');
     }
 

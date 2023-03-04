@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class applicant extends Model
 {
     public $fillable = ['id','name','avatar','email','password','gender','phoneNumber','address',
-                        'city_id','filecv','links','introduce_yourself','study_degree',
+                        'city','filecv','links','introduce_yourself','study_degree',
                         'experience','hobby','certificate','perfection_level'];
     use HasFactory;
 }

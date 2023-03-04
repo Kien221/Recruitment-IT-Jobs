@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\companies;
+use Carbon\Carbon;
 class Post extends Model
 {
     use HasFactory;
@@ -29,6 +30,14 @@ class Post extends Model
     ];
     public function company(){
         return $this->belongsTo(companies::class,'company_id','id');
+    }
+    public function expired_date(){
+        Carbon::setLocale('vi');
+        return Carbon::parse($this->expired_post)->diffForHumans();
+    }
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
     }
     
 }

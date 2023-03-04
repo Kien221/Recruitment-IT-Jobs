@@ -15,7 +15,7 @@
     <div id="header">
            <div class="top-header">
                <div class="top-header-left">
-                   <a href="">
+                   <a href="{{route('home')}}">
     
                        <img src="{{asset('image/Logo_TopCV_no_slogan.png')}}" alt="" class="logo">
                    </a>

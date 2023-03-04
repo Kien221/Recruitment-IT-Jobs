@@ -220,7 +220,12 @@
                     string = `(${city})-${position}-${languages} - ${company}`;
                 }
                 $('#title').val(string);
-                generateSlug(string);
+                let title = $('#title').val();
+                generateSlug(title);
+               $('#title').change(function(){
+                    let title = $('#title').val();
+                    generateSlug(title);
+                });
             }
             function generateSlug(title){
                 $.ajax({
@@ -255,7 +260,6 @@
             });
             $(document).on('change', '#select-languages , #select-city , #company_name , #select-position-apply', function(){
                 let city = $("#select-city option:selected").val();
-                console.log(city);
                 generateTitle();
             });
 

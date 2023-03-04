@@ -94,7 +94,7 @@
                           <div class="carousel-item active">
                
                                 <div class="banner_singup">
-                                    <img src="../assets/image/86abff643f29067301dd713716101cdd-6385bcbe4a011.jpg" alt="" class="img_hot_company">
+                                    <img src="{{asset('image/86abff643f29067301dd713716101cdd-6385bcbe4a011.jpg')}}" alt="" class="img_hot_company">
                                     <h5>Công cụ viết CV đẹp Miễn phí</h5>
                                     <p>Nhiều mẫu CV đẹp, phù hợp nhu cầu ứng tuyển các vị trí khác nhau. Dễ dàng chỉnh sửa thông tin, tạo CV online nhanh chóng trong vòng 5 phút.</p>
                 
@@ -103,7 +103,7 @@
                           <div class="carousel-item">
                      
                                 <div class="banner_singup">
-                                    <img src="../assets/image/86abff643f29067301dd713716101cdd-6385bcbe7f2ae.jpg" alt="" class="img_hot_company">
+                                    <img src="{{asset('image/86abff643f29067301dd713716101cdd-6385bcbe7f2ae.jpg')}}" alt="" class="img_hot_company">
                                     <h5>Công cụ viết CV đẹp Miễn phí</h5>
                                     <p>Nhiều mẫu CV đẹp, phù hợp nhu cầu ứng tuyển các vị trí khác nhau. Dễ dàng chỉnh sửa thông tin, tạo CV online nhanh chóng trong vòng 5 phút.</p>
                                 </div>
@@ -113,7 +113,7 @@
                           <div class="carousel-item">
                     
                                 <div class="banner_singup">
-                                    <img src="../assets/image/86abff643f29067301dd713716101cdd-6385bcbe9d214.jpg" alt="" class="img_hot_company">
+                                    <img src="{{asset('image/86abff643f29067301dd713716101cdd-6385bcbe9d214.jpg')}}" alt="" class="img_hot_company">
                                     <h5>Công cụ viết CV đẹp Miễn phí</h5>
                                     <p>Nhiều mẫu CV đẹp, phù hợp nhu cầu ứng tuyển các vị trí khác nhau. Dễ dàng chỉnh sửa thông tin, tạo CV online nhanh chóng trong vòng 5 phút.</p>
                                 </div>
