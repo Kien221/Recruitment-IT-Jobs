@@ -21,14 +21,16 @@
         <div class="row">
             @include('layout.hrview.sidebar_hr')
             <div class="col-md-10">
-                <div class="compete_text">
-                        <h5 style="color:green">
-                            {{$post->title}}
+                <div class="compete_text" style="border-bottom:5px solid #de8700;">
+                        <h5>
+                            <a href="{{route('post.detail',[$post->id,$post->slug])}}" style="color:green">{{$post->title}}</a>
+                            <input type="hidden" value="{{$post->id}}" id="post_id">
                         </h5>
                 </div>
               <table class="table table-bordered" id="customers">
                                   <thead>
                                       <tr>
+                                        <th scope="col">Đánh dấu</th>
                                         <th scope="col">Họ và tên</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Địa Chỉ</th>
@@ -41,21 +43,37 @@
                                       @foreach($list_applicants as $applicant)
                                     <tr>
                                       <input type="hidden" value="{{$applicant->id}}" id="applicant_id">
-                                      <td class="post_text_center">{{$applicant->name}}</td>
-                                      <td class="post_text_center">{{$applicant->email}}</td>
-                                      <td class="post_text_center">{{$applicant->city}}</td>
-                                      <td class="post_text_center">{{$applicant->brief_introduce}}</td>
+                                      <td><input type="checkbox"></td>
+                                      <td class="text_center">{{$applicant->name}}</td>
+                                      <td class="text_center">{{$applicant->email}}</td>
+                                      <td class="text_center">{{$applicant->city}}</td>
+                                      <td class="text_center">{{$applicant->brief_introduce}}</td>
                                       @if($applicant->type_cv === 'cv_web')
-                                      <td><span style="color:blue;cursor:pointer;text-decoration:underline;" id="cv_web">{{$applicant->name}}-{{$applicant->email}}</span></td>
+                                      <td><span style="color:blue;cursor:pointer;text-decoration:underline;" class="text_center" id="cv_web">{{$applicant->name}}-{{$applicant->email}}</span></td>
                                       @else
-                                      <td><a href="{{asset('storage/'.$applicant->file_cv)}}" target="blank">{{$applicant->file_cv}}</a></td>
+                                      <td class="text_center"><a href="{{asset('storage/'.$applicant->file_cv)}}"  target="blank">{{$applicant->file_cv}}</a></td>
                                       @endif
+                                      <td>
+                                        <div class="btn-group" role="group" aria-label="Basic example" id="success_accept">
+                                          @if($applicant->status == 1)
+                                          <button class="btn btn-success btn-sm" style="color:white" id="accep_cv_btn"><i class="fa-solid fa-check-double"></i></button>
+                                          @elseif($applicant->status == 2)
+                                          <button class="btn btn-danger btn-sm" style="color:white" id="refuse_cv_btn"><i class="fa-sharp fa-regular fa-circle-xmark"></i></button>
+                                          @else
+                                          <button class="btn btn-success btn-sm" style="color:white" id="accep_cv_btn"><i class="fa-regular fa-thumbs-up"></i></button>
+                                          <button class="btn btn-danger btn-sm" id="refuse_cv_btn" style="color:white"><i class="fa-sharp fa-regular fa-circle-xmark"></i></button>
+                                          @endif
+                                        </div>
+                                      </td>
+                                    
                                     </tr>
+
                                       @endforeach
+
                                   </tbody>
 
                           </tbody>
-                  </table>
+              </table>
 
             </div>
 
@@ -91,6 +109,50 @@
             }
           })
       })
+      $('#accep_cv_btn').click(function(){  
+        $post_id = $('#post_id').val();
+        $applicant_id = $('#applicant_id').val();
+        $.ajax({
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            url:'{{route('accept.applicant.cv')}}',
+            method:'put',
+            data:{
+              post_id:$post_id,
+              applicant_id:$applicant_id,
+            },
+            dataType:'json',
+            success:function(data){
+              $('#success_accept').html("");
+              $('#success_accept').append('<button class="btn btn-success btn-sm" style="color:white" id="accep_cv_btn"><i class="fa-solid fa-check-double"></i></button>');
+            },
+            error:function(error){
+              console.log(error);
+            }
+        })
+      })
+
+      $('#refuse_cv_btn').click(function(){  
+        $post_id = $('#post_id').val();
+        $applicant_id = $('#applicant_id').val();
+        $.ajax({
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            url:'{{route('refuse.applicant.cv')}}',
+            method:'put',
+            data:{
+              post_id:$post_id,
+              applicant_id:$applicant_id,
+            },
+            dataType:'json',
+            success:function(data){
+              $('#success_accept').html("");
+              $('#success_accept').append('<button class="btn btn-danger btn-sm" style="color:white" id="refuse_cv_btn"><i class="fa-sharp fa-regular fa-circle-xmark"></i></button>');
+            },
+            error:function(error){
+              console.log(error);
+            }
+        })
+      })
+      
    })
 </script>
 </body>

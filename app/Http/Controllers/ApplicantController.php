@@ -8,11 +8,13 @@ use App\Http\Requests\StoreapplicantRequest;
 use App\Http\Requests\UpdateapplicantRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
+use Carbon\Carbon;
 class ApplicantController extends Controller
 {
-    public function index($user_id){
-        $user = applicant::find($user_id);
+    public function index(){
+        $user = applicant::find(session('id_applicant'));
         return view('applicantview.index',compact('user'));
     }
     public function edit_cv_view(Request $request){
@@ -47,14 +49,23 @@ class ApplicantController extends Controller
         return redirect()->route('applicantView');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function jobs_apply_view(){
+        Carbon::setLocale('vi');
+        $jobs_apply = DB::table('apply_cvs')
+                    ->join('applicants','apply_cvs.applicant_id','=','applicants.id')
+                    ->join('posts','apply_cvs.post_id','=','posts.id')
+                    ->join('companies','posts.company_id','=','companies.id')
+                    ->select('posts.title as post_title','apply_cvs.status as status_apply','apply_cvs.id as apply_cvs_id','companies.name as company_name','companies.logo as company_logo','apply_cvs.created_at as date_apply','posts.id as post_id','posts.slug as slug')
+                    ->orderBy('apply_cvs.created_at','desc')
+                    ->where('applicants.id',session('id_applicant'))
+                    ->groupBy('applicants.id','posts.title','apply_cvs.status','apply_cvs.id','apply_cvs.created_at','posts.id','companies.name','companies.logo','posts.slug')
+                    ->paginate(5);
+        return view('applicantview.jobs_Apply',compact('jobs_apply'));
+    }
+    public function delete_job_apply(request $request)
     {
-        //
+        $delete_job_apply = DB::table('apply_cvs')->where('id',$request->job_apply_cv_id)->delete();
+        return response()->json(['message'=>'Xóa thành công']);
     }
 
     /**

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Support\Str;
 use App\Models\companies;
 use Carbon\Carbon;
+use App\Events\HrAcceptCv;
 use Illuminate\Support\Facades\DB;
 class PostController extends Controller
 {
@@ -22,11 +23,6 @@ class PostController extends Controller
         return view('hr_view.post_recruitment');
         
     }
-    public function create()
-    {
-        //
-    }
-
     public function generateSlug(Request $request){
         try{
            $slug  = Str::slug($request->title);
@@ -93,7 +89,7 @@ class PostController extends Controller
         ]);
         
 
-        return redirect()->route('hr.post_recruitment')->with('create_post_success','Tạo bài viết bà đăng tin thành công');
+        return redirect()->route('show.posted.view')->with('create_post_success','Tạo bài viết bà đăng tin thành công');
     }
 
     /**

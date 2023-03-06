@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/public.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/applicant.css')}}">
     <script src="{{asset('js/js.js')}}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css "/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Tuyển dụng IT</title>
@@ -130,14 +131,16 @@
                                 <h2 class="title"><p>Công Việc</p>Nổi Bật</h2>
                             </div>
                             <div class="job-content">
-                                @foreach($hot_jobs as $hot_job)
-                                <div class="job_item">
-                                    <span class="name-company-job">{{$hot_job->company->name}}</span>
-                                    <div class="job_title"><a href="{{route('post.detail',[$hot_job->id,$hot_job->slug])}}">{{$hot_job->title}}</a></div>
-                                    <div class="salary">{{$hot_job->min_salary}}{{$hot_job->unit_money}}-{{$hot_job->max_salary}}{{$hot_job->unit_money}} <i class="fa-solid fa-bookmark"></i></div>
+                                <div class="list_hot_job">
+                                    @foreach($hot_jobs as $hot_job)
+                                    <div class="job_item">
+                                        <span class="name-company-job">{{$hot_job->company->name}}</span>
+                                        <div class="job_title"><a href="{{route('post.detail',[$hot_job->id,$hot_job->slug])}}">{{$hot_job->title}}</a></div>
+                                        <div class="salary">{{$hot_job->min_salary}}{{$hot_job->unit_money}}-{{$hot_job->max_salary}}{{$hot_job->unit_money}} <i class="fa-solid fa-bookmark"></i></div>
+                                    </div>
+                                    @endforeach
+                                    {!!$hot_jobs->links()!!}
                                 </div>
-                                @endforeach
-                                {{$hot_jobs->links()}}
                             </div>
                             
                         </div>
@@ -155,30 +158,33 @@
                 <div class="row post_company">
                     <div class="col-md-9">
                       <h5 class="header_name">Bài Tuyển Dụng Mới Nhất</h5>
-                      @foreach($posts as $post)
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">    
-                                    <img src="{{asset('storage/'.$post->company_logo)}}" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="{{route('post.detail',[$post->id,$post->slug])}}">{{$post->title}}</a></h3>
-                                        <div class="company-name">{{$post->company_name}}</div>
-                                        <span class="btn-introduce-post" style="color:black;">{{$post->min_salary}} {{$post->unit_money}} - {{$post->max_salary}} {{$post->unit_money}}</span>
-                                        <span class="btn-introduce-post" style="color:black;">Hết hạn - {{$post->expired_post}}</span>
-                                        <span class="btn-introduce-post" style="color:black;">{{$post->city}}</span>
+                      <div class="list_posts">
+                          @foreach($posts as $post)
+                            <div class="post_item">
+                                <div class="row">
+                                    <div class="col-md-8 img-title_job-description">    
+                                        <img src="{{asset('storage/'.$post->company_logo)}}" alt="">
+                                        <div class="description-post">
+                                            <h3 class="title-job"><a href="{{route('post.detail',[$post->id,$post->slug])}}">{{$post->title}}</a></h3>
+                                            <div class="company-name">{{$post->company_name}}</div>
+                                            <span class="btn-introduce-post" style="color:black;">{{$post->min_salary}} {{$post->unit_money}} - {{$post->max_salary}} {{$post->unit_money}}</span>
+                                            <span class="btn-introduce-post" style="color:black;">Hết hạn - {{$post->expired_post}}</span>
+                                            <span class="btn-introduce-post" style="color:black;">{{$post->city}}</span>
+                                        </div>
+                                        <!-- @foreach (json_decode($post->languages) as $languages)
+                                                {{ $languages }}
+                                        @endforeach -->
                                     </div>
-                                    <!-- @foreach (json_decode($post->languages) as $languages)
-                                            {{ $languages }}
-                                    @endforeach -->
+                                    <div class="col-md-4">
+                                        <div class="post_time">{{  \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</div>
+                                        <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">{{  \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>        
-                      @endforeach    
-                      <p>{!! $posts->links() !!}</p>  
+                            </div>        
+                          @endforeach    
+                          <p>{!! $posts->links() !!}</p>  
+
+                      </div>
                     </div>
                     <div class="col-md-3 introduce_banner">
                         <div class="introduce_new_company">
@@ -412,9 +418,48 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    </script>
+    <script type="text/javascript">
         $(document).ready(function(){
-            
+            $(document).on('click','.list_posts>nav>ul a', function(e){
+            e.preventDefault();
+            let page = $(this).attr('href').split('page=')[1]
+            record_posts(page)
+            })
+            function record_posts(page){
+                $.ajax({
+                    url:"api/ajax-paginate-posts?page="+page,
+                    success:function(res){
+                        $('.list_posts').html(res);
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                })
+            };
+            $(document).on('click','.list_hot_job>nav>ul a', function(e){
+            e.preventDefault();
+            let page = $(this).attr('href').split('page=')[1]
+            record_hot_jobs(page)
+            })
+            function record_hot_jobs(page){
+                $.ajax({
+                    url:"api/ajax-paginate-hot-jobs?page="+page,
+                    success:function(res){
+                        $('.list_hot_job').html(res);
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                })
+            }
         })
     </script>
 </body>

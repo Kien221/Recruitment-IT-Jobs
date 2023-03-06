@@ -11,4 +11,8 @@ class applicant extends Model
                         'city','filecv','links','introduce_yourself','study_degree',
                         'experience','hobby','certificate','perfection_level'];
     use HasFactory;
+    public function getCreatedAtAttribute($date)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-m-Y');
+    }
 }

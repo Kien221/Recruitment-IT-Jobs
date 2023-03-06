@@ -66,7 +66,25 @@
                             <li class="menu">
                                 <a href="#" class="icon_link"><i class="fa-solid fa-bell"></i></a>
                             </li>
-                            
+
+
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+                            <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+                            <script>
+
+                                // Enable pusher logging - don't include this in production
+                                Pusher.logToConsole = true;
+
+                                var pusher = new Pusher('89f157943ae133692fc2', {
+                                cluster: 'ap1'
+                                });
+
+                                var channel = pusher.subscribe('Recruitment-channel.'.{{session('id_applicant')}});
+                                channel.bind('hr-accept-applicantcv', function(data) {
+                                alert(JSON.stringify(data));
+                                });
+                            </script>
+                                                        
                             <li class="menu">
                                
                                 <div class="profile">

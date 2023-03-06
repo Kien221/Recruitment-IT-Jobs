@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\apply_cv;
 use App\Models\Post;
+use App\Events\HrAcceptCv;
 use App\Http\Requests\Storeapply_cvRequest;
 use App\Http\Requests\Updateapply_cvRequest;
 use Redirect;
@@ -45,7 +46,7 @@ class ApplyCvController extends Controller
         $list_applicants = apply_cv::query()
                             ->join('applicants','applicants.id','=','apply_cvs.applicant_id')
                             ->where('apply_cvs.post_id',$post_id)
-                            ->select('applicants.*','apply_cvs.*')
+                            ->select('applicants.*','apply_cvs.brief_introduce as brief_introduce','apply_cvs.file_cv as file_cv','apply_cvs.status as status')
                             ->orderBy('apply_cvs.created_at','desc')
                             ->paginate(10);
         $post = Post::find($post_id);
@@ -62,7 +63,33 @@ class ApplyCvController extends Controller
         return response()->json($data_html);
 
     }
-
+    public function acceptCv(Request $request){
+        $update_status_apply_cv = apply_cv::where('post_id',$request->post_id)->where('applicant_id',$request->applicant_id)->first();    
+        if($update_status_apply_cv){
+            $update_status_apply_cv->status = 1;
+            $update_status_apply_cv->save();
+            $message = "Bạn đã được nhà tuyển dụng chấp nhận cv";
+            event(new HrAcceptCv($request->applicant_id,$message));
+            return response()->json(['success'=>'Duyệt Cv thành công']);
+        }
+        else{
+            return response()->with("accept_cv_error",'Có lỗi xảy ra , vui lòng thử lại sau!!');
+        }
+            
+    }
+    public function refuseCv(Request $request){
+        $update_status_apply_cv = apply_cv::where('post_id',$request->post_id)->where('applicant_id',$request->applicant_id)->first();    
+        if($update_status_apply_cv){
+            $update_status_apply_cv->status = 2;
+            $update_status_apply_cv->save();
+            return response()->json(['success'=>'Từ chối Cv thành công']);
+        }
+        else{
+            return response()->with("accept_cv_error",'Có lỗi xảy ra , vui lòng thử lại sau!!');
+        }
+            
+    }
+    
     public function store(Storeapply_cvRequest $request)
     {
         //

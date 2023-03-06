@@ -19,6 +19,11 @@
         <div class="row">
             @include('layout.hrview.sidebar_hr')
             <div class="col-md-10">
+              @if(session('create_post_success'))
+                <div class="alert alert-success text-center" style="margin-left:50px;margin-top:20px">
+                        {{session('create_post_success')}}
+                </div>
+              @endif
               <table class="table table-bordered" id="customers">
                                   <thead>
                                       <tr>
@@ -33,26 +38,26 @@
                                   <tbody>
                                       @foreach($posted as $post)
                                     <tr id="tr_table">
-                                      <td class="title_post"><a href="{{route('post.detail',[$post->id,$post->slug])}}" style="text-decoration:none;color:green">{{$post->title}}</a></td>
-                                      <td >{{$post->created_at}}</td>
-                                      <td>{{$post->expired_post}}</td>
+                                      <td class="text_center title_post"><a href="{{route('post.detail',[$post->id,$post->slug])}}" style="text-decoration:none;color:green">{{$post->title}}</a></td>
+                                      <td class="text_center">{{$post->created_at}}</td>
+                                      <td class="text_center">{{$post->expired_post}}</td>
                                       @if($post->is_expired == 1)
-                                      <td>
+                                      <td class="text_center">
                                         <div class="unexpired">
                                             Còn hạn
                                           </div>
                                       </td>
                                       @else
-                                      <td>
+                                      <td class="text_center">
                                         <div class="expired">
                                           Hết hạn
                                         </div>
                                       </td>
                                       @endif
                                       @if($post->applicant == 0)
-                                      <td>{{$post->applicant}} CV</td>
+                                      <td class="text_center">{{$post->applicant}} CV</td>
                                       @else
-                                      <td><a href="{{route('show_applicant.apply',[$post->id,$post->slug])}}">{{$post->applicant}} CV</a></td>
+                                      <td class="text_center"><a href="{{route('show_applicant.apply',[$post->id,$post->slug])}}">{{$post->applicant}} CV</a></td>
                                       @endif
                                       @if($post->is_expired == 1)
                                       <td>
@@ -78,6 +83,7 @@
       $(document).ready(function(){
         $('#btn_delete_post').click(function(){
           alert('Bạn có muốn xóa bài viết này không?');
+
         });
       })
     </script> 

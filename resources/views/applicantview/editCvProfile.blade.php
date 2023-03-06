@@ -19,22 +19,7 @@
 <body>
    @include('layout.applicantview.header')  
     <div id="main_profile">
-        <div class="navbar_profile">
-            <ul>
-                <li>
-                    <a href="{{route('applicant.index.view',$cv_user->id)}}" class="link_profile">CV của tôi</a>
-                </li>
-                <li>
-                    <a href="#" class="link_profile">Điều chỉnh CV</a>
-                </li>
-                <li>
-                    <a href="#" class="link_profile">Việc đã ứng tuyển</a>
-                </li>
-                <li>
-                    <a href="#" class="link_profile">Việc Đã Lưu</a>
-                </li>
-            </ul>
-        </div>
+    @include('layout.applicantview.navbar_profile')
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3">

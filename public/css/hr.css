@@ -569,21 +569,26 @@ td{
     font-size: 30px;
     color: red;
 }
-#tr_table>td{
-    padding-top: 20px;
-}
+
 
 .expired{
     padding: 5px 10px;
     border-radius: 5px;
-    margin-top: -7px;
+    margin-top: -5px;
     background-color: red;
+    color: white;
+}
+.wait_response{
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: -5px;
+    background-color: orange;
     color: white;
 }
 .unexpired{
     padding: 5px 10px;
     border-radius: 5px;
-    margin-top: -7px;
+    margin-top: -5px;
     background-color: #06c24e;
     color: white;
 }
@@ -608,4 +613,10 @@ td{
     text-align: center;
     background-color: #03744b;
     color: white;
+  }
+  .text_center{
+    padding-top: 12px !important;
+  }
+  .text_center_job_apply{
+    padding-top: 22px !important;
   }

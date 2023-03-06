@@ -16,22 +16,7 @@
 <body>
     @include('layout.applicantview.header');
     <div id="main_profile">
-        <div class="navbar_profile">
-            <ul>
-                <li class="link_profile">
-                    <a href="index.html">CV của tôi</a>
-                </li>
-                <li class="link_profile">
-                    <a href="{{route('applicantView')}}" >Điều chỉnh CV</a>
-                </li>
-                <li class="link_profile">
-                    <a href="#">Việc đã ứng tuyển</a>
-                </li>
-                <li class="link_profile">
-                    <a href="#">Việc Đã Lưu</a>
-                </li>
-            </ul>
-        </div>
+       @include('layout.applicantview.navbar_profile')
         <div class="container-fluid">
             <div class="row">
                  @if($user->perfection_level < 40)

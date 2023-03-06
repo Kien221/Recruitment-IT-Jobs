@@ -89,7 +89,7 @@ class HrController extends Controller
         ->join('companies','companies.id','=','posts.company_id')
         ->where('companies.hr_id',$hr->id)
         ->select('posts.*')
-        ->orderBy('posts.created_at','asc')
+        ->orderBy('posts.created_at','desc')
         ->paginate(10);
         foreach($posted as $post){
             $post->created_at = Carbon::parse($post->created_at)->format('d-m-Y');

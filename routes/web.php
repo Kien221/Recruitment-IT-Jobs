@@ -70,7 +70,9 @@ Route::group([
 ],function(){
     Route::get('/cv-Applicant-view.html',[ApplicantController::class,'edit_cv_view'])->name('applicantView');
     Route::put('/update/infor/applicant/{user_id}.html',[ApplicantController::class,'update_cv'])->name('update.cv.applicant');
-    Route::get('/applicant/view/{user_id}.html',[ApplicantController::class,'index'])->name('applicant.index.view');
+    Route::get('/applicant/view/index',[ApplicantController::class,'index'])->name('applicant.index.view');
+    Route::get('/applicant/view/jobs_apply_view',[ApplicantController::class,'jobs_apply_view'])->name('jobs.apply.view');
+    Route::delete('/job_apply/delete',[ApplicantController::class,'delete_job_apply'])->name('applicant.remove_cv_apply');
 });
 Route::put('/check/resigntion/hr',[HrController::class,'resigntion'])->name('resignation.hr');
 Route::get('/active_account/{token}/{hr_id}',[HrController::class,'active_account'])->name('active_account');

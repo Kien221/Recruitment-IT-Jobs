@@ -89,6 +89,7 @@
     
                        </div>
                    </div>
+
                    <div class="choice_role" id="choice_role">
                     <div class="form_choice_role">
                         <div class="close_form_choice_role" onclick="close_choice_role_form()">
