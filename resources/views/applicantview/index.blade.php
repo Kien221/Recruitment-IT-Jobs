@@ -14,7 +14,7 @@
     <title>ỨNG CỬ VIÊN</title>
 </head>
 <body>
-    @include('layout.applicantview.header');
+    @include('layout.applicantview.header')
     <div id="main_profile">
        @include('layout.applicantview.navbar_profile')
         <div class="container-fluid">
@@ -86,16 +86,7 @@
                                     <span>HỌC VẤN</span>
                                 </div>
                                 <div class="show_detail">
-                                    ● Perform a mix of new software development, enhancements and defect resolution as required
-                                    <br>
-                                    ● Build and Implement project applications according to design specifications
-            
-                                    ● Research technical issues and provide recommendations to enhance company websites
-                                    <br>
-                                    ● Work with external partners in the design and development of software solutions
-                                    <br>
-                                    ● Work as a team with other development staff in Magento and JavaScript related technologies
-                                    <br>
+                                   {!!$user->study_degree!!}
                                 </div>
                             </div>
                             <div class="category experience">
@@ -104,16 +95,7 @@
                                     <span>KINH NGHIỆM LÀM VIỆC</span>
                                 </div>
                                 <div class="show_detail">
-                                    ● Perform a mix of new software development, enhancements and defect resolution as required
-                                    <br>
-                                    ● Build and Implement project applications according to design specifications
-            
-                                    ● Research technical issues and provide recommendations to enhance company websites
-                                    <br>
-                                    ● Work with external partners in the design and development of software solutions
-                                    <br>
-                                    ● Work as a team with other development staff in Magento and JavaScript related technologies
-                                    <br>
+                                    {!!$user->experience!!}
                                 </div>
                             </div>
                             <div class="category work_skill">
@@ -122,16 +104,7 @@
                                     <span>KỸ NĂNG LÀM VIỆC</span>
                                 </div>
                                 <div class="show_detail">
-                                    ● Perform a mix of new software development, enhancements and defect resolution as required
-                                    <br>
-                                    ● Build and Implement project applications according to design specifications
-            
-                                    ● Research technical issues and provide recommendations to enhance company websites
-                                    <br>
-                                    ● Work with external partners in the design and development of software solutions
-                                    <br>
-                                    ● Work as a team with other development staff in Magento and JavaScript related technologies
-                                    <br>
+                                   {{$user->work_skill}}
                                 </div>
                             </div>
                             <div class="category certificate">
@@ -278,149 +251,6 @@
         </div>
     </div>
     <div id="footer">
-        <div class="infor-partnership">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="infor-relate">
-                            <span>Về TopCV</span>
-                            <ul>
-                                <li>
-                                    <a href="">Giới thiệu</a>
-                                </li>
-                                <li>
-                                    <a href="">Góc báo chí</a>
-                                </li>
-                                <li>
-                                    <a href="">Tuyển dụng</a>
-                                </li>
-                                <li>
-                                    <a href="">Liên hệ</a>
-                                </li>
-                                <li>
-                                    <a href="">Hỏi đáp</a>
-                                </li>
-                                <li>
-                                    <a href="">Chính sách bảo mật</a>
-                                </li>
-                                <li>
-                                    <a href="">Điều khoản sử dụng</a>
-                                </li>
-                                <li>
-                                    <a href="">Quy chế hoạt động</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="infor-relate">
-                            <span>Cộng đồng TopCV</span>
-                            <ul>
-                                <li>
-                                    <a href="">Blog</a>
-                                </li>
-                                <li>
-                                    <a href="">Facebook</a>
-                                </li>
-                                <li>
-                                    <a href="">Youtube</a>
-                                </li>
-                                <li>
-                                    <a href="">Instagram</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="infor-relate">
-                            <span>Đối tác</span>
-                            <ul>
-                                <li>
-                                    <a href="">TestCenter</a>
-                                </li>
-                                <li>
-                                    <a href="">TopHR</a>
-                                </li>
-                                <li>
-                                    <a href="">ViecNgay</a>
-                                </li>
-                                <li>
-                                    <a href="">Happy Time</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="infor-relate">
-                            <span>Hồ sơ và CV</span>
-                            <ul>
-                                <li>
-                                    <a href="">Quản lý CV của bạn</a>
-                                </li>
-                                <li>
-                                    <a href="">TopCV Profile</a>
-                                </li>
-                                <li>
-                                    <a href="">Hướng dẫn viết CV</a>
-                                </li>
-                                <li>
-                                    <a href="">Review CV</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="infor-relate">
-                            <span>khám phá</span>
-                            <ul>
-                                <li>
-                                    <a href="">Ứng dụng di động TopCV</a>
-                                </li>
-                                <li>
-                                    <a href="">Tính lương Gross - Net</a>
-                                </li>
-                                <li>
-                                    <a href="">Tính lãi suất kép</a>
-                                </li>
-                                <li>
-                                    <a href="">Lập kế hoạch tiết kiệm</a>
-                                </li>
-                                <li>
-                                    <a href="">Tính bảo hiểm thất nghiệp</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="infor-relate">
-                            <span>Phát triển bản thân</span>
-                            <ul>
-                                <li>
-                                    <a href="">TopCV Contest</a>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                        <div class="infor-relate">
-                            <span>Xây dựng sự nghiệp</span>
-                            <ul>
-                                <li>
-                                    <a href="">Việc làm tốt nhất</a>
-                                </li>
-                                <li>
-                                    <a href="">Việc làm lương cao</a>
-                                </li>
-                                <li>
-                                    <a href="">Việc làm quản lý</a>
-                                </li>
-                                <li>
-                                    <a href="">Việc làm từ xa (remote)</a>
-                                </li>
-                                <li>
-                                    <a href="">Việc làm bán thời gian</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="location-ahead-company">
             <div class="container-fluid">
                 <div class="row">

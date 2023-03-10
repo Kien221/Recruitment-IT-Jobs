@@ -68,22 +68,25 @@
                             </li>
 
 
-                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-                            <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+                            <title>Pusher Test</title>
+
+
+                            <!-- <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                             <script>
 
                                 // Enable pusher logging - don't include this in production
                                 Pusher.logToConsole = true;
 
-                                var pusher = new Pusher('89f157943ae133692fc2', {
+                                var pusher = new Pusher('f159bf8e622a9a565b4f', {
                                 cluster: 'ap1'
                                 });
 
-                                var channel = pusher.subscribe('Recruitment-channel.'.{{session('id_applicant')}});
+                                var channel = pusher.subscribe('Recruitment-channel');
                                 channel.bind('hr-accept-applicantcv', function(data) {
                                 alert(JSON.stringify(data));
                                 });
-                            </script>
+                            </script> -->
                                                         
                             <li class="menu">
                                
@@ -94,7 +97,9 @@
                                     @if(session('avatar_newuser') !== null)
                                     <img src="{{session('avatar_newuser')}}" alt="">
                                     @endif
-                                    <span class="name_user">{{session('applicant_name')}}</span>
+                                    <a href="{{route('home')}}">
+                                        <span class="name_user">{{session('applicant_name')}}</span>
+                                    </a>
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </div>
                              

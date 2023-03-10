@@ -1396,6 +1396,10 @@ input[type="file"]{
     margin-bottom: -25px;
     margin-left: 177px;
 }
+.page-item.active .page-link{
+    background-color: #00b14f !important;
+    border-color: #00b14f !important;
+}
 
 
 

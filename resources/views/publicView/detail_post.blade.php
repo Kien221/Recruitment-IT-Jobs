@@ -372,205 +372,31 @@
             <div class="post_relate">
                 <div class="row post_company">
                     <div class="col-md-9">
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <a href="">
-                                        <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    </a>
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="detail_post.html">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
+                        <div class="list_posts">
+                            @foreach($relate_posts as $relate_post)
+                            <div class="post_item">
+                                    <div class="row">
+                                        <div class="col-md-8 img-title_job-description">    
+                                            <img src="{{asset('storage/'.$relate_post->company_logo)}}" alt="">
+                                            <div class="description-post">
+                                                <h3 class="title-job"><a href="{{route('post.detail',[$relate_post->id,$relate_post->slug])}}">{{$relate_post->title}}</a></h3>
+                                                <div class="company-name">{{$relate_post->company_name}}</div>
+                                                <span class="btn-introduce-post" style="color:black;">{{$relate_post->min_salary}} {{$relate_post->unit_money}} - {{$relate_post->max_salary}} {{$relate_post->unit_money}}</span>
+                                                <span class="btn-introduce-post" style="color:black;">Hết hạn - {{$relate_post->expired_post}}</span>
+                                                <span class="btn-introduce-post" style="color:black;">{{$relate_post->city}}</span>
+                                            </div>
+                                            <!-- @foreach (json_decode($relate_post->languages) as $languages)
+                                                    {{ $languages }}
+                                            @endforeach -->
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="post_time">{{  \Carbon\Carbon::parse($relate_post->created_at)->diffForHumans() }}</div>
+                                            <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
+                                        </div>
                                     </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post_item">
-                            <div class="row">
-                                <div class="col-md-8 img-title_job-description">
-                                    <img src="../assets/image/330x290_KICC_banner_2022.jpg" alt="">
-                                    <div class="description-post">
-                                        <h3 class="title-job"><a href="">Senior Full Stack Developer (JavaScript, React, NodeJS)</a></h3>
-                                        <div class="company-name">Code Engine Studio</div>
-                                        <div class="address">Cần Thơ</div>
-                                        <div class="salary">1000$ - 2000$</div>
-                                    </div>
-        
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post_time">1 ngày trước</div>
-                                    <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                </div>
-                            </div>
+                                </div>    
+                            @endforeach
+                            {!!$relate_posts->links()!!}
                         </div>
                     </div>
                     <div class="col-md-3 introduce_banner">
@@ -864,5 +690,35 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(document).on('click','.pagination a', function(e){  
+                e.preventDefault();
+                var page = $(this).attr('href').split('page=')[1];
+                console.log($(this).attr('href').split('page=')[1]);
+    
+            record_posts(page)
+            })
+            function record_posts(page){
+                $.ajax({
+                    url:"api/ajax-paginate-posts-detail_page?page="+page,
+                    success:function(res){
+                        console.log(res);
+                        $('.list_posts').html(res);
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                })
+            };
+        });
+    </script>
 </body>
 </html>

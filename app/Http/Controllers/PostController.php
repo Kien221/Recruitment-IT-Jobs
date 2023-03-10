@@ -51,13 +51,27 @@ class PostController extends Controller
                         ->select('images_companies.image')
                         ->where('companies.id',$detail_post->company_id)
                         ->get();
-        $relate_posts = DB::table('posts')
+
+       $relate_posts = Post::inRandomOrder()
                         ->join('companies','posts.company_id','=','companies.id')
                         ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
-                        ->paginate(10);
+                        ->paginate(5);
+        foreach($relate_posts as $relate_post){
+            $relate_post->expired_post = Carbon::parse($relate_post->expired_post)->diffForHumans();
+        }
         session()->put('post_id',$id);
         session()->put('slug',$detail_post->slug);
-       return view('publicView.detail_post',compact('detail_post','images_company','review_company'));
+       return view('publicView.detail_post',compact('detail_post','images_company','review_company','relate_posts'));
+    }
+    public function ajax_paginate_posts_detail_page(){
+        $posts = Post::inRandomOrder()
+                        ->join('companies','posts.company_id','=','companies.id')
+                        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+                        ->paginate(5);
+        foreach($posts as $post){
+            $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
+        }
+        return response()->json($posts);
     }
     /**
      * Store a newly created resource in storage.

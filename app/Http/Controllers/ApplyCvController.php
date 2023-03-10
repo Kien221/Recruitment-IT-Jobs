@@ -45,8 +45,9 @@ class ApplyCvController extends Controller
     public function show_list_applicants(Request $request,$post_id){
         $list_applicants = apply_cv::query()
                             ->join('applicants','applicants.id','=','apply_cvs.applicant_id')
+                            ->join('posts','posts.id','=','apply_cvs.post_id')
                             ->where('apply_cvs.post_id',$post_id)
-                            ->select('applicants.*','apply_cvs.brief_introduce as brief_introduce','apply_cvs.file_cv as file_cv','apply_cvs.status as status')
+                            ->select('applicants.*','apply_cvs.brief_introduce as brief_introduce','apply_cvs.file_cv as file_cv','apply_cvs.status as status','apply_cvs.type_cv as type_cv')
                             ->orderBy('apply_cvs.created_at','desc')
                             ->paginate(10);
         $post = Post::find($post_id);
@@ -56,7 +57,7 @@ class ApplyCvController extends Controller
     public function show_cv_web(Request $request){
         $applicant_cv = apply_cv::query()
                     ->join('applicants','applicants.id','=','apply_cvs.applicant_id')
-                    ->where('apply_cvs.id',$request->applicant_id)
+                    ->where('apply_cvs.applicant_id',$request->applicant_id)
                     ->select('applicants.*','apply_cvs.*')
                     ->first();
         $data_html = view('layout.applicantview.cv_applicant',compact('applicant_cv'))->render();

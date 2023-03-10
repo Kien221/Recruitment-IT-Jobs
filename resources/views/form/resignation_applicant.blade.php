@@ -24,36 +24,39 @@
                     </div>
                     <h6>Chào mừng bạn đến với TopCV</h6>
                     <span class="sign_up_intro">Cùng xây dựng một hồ sơ nổi bật và nhận được các cơ hội sự nghiệp lý tưởng</span>
-                    <div class="form">
+                    <form id="form" action="" class="form" onsubmit="return validateForm()">
                         <div class="input">
                             <span>Họ và tên</span>
                             <br>
-                            <input type="text" placeholder="Vui lòng nhập họ và tên">
+                            <input type="text" placeholder="Vui lòng nhập họ và tên" name="name">
+                            <div class="validate-name">
+                                
+                            </div>
                         </div>
                         <div class="input">
                             <span>Email</span>
                             <br>
-                            <input type="email" placeholder="Nhập email của bạn">
+                            <input type="email" placeholder="Nhập email của bạn" name="email">
                         </div>
                         <div class="input">
                             <span>Mật khẩu</span>
                             <br>
-                            <input type="password" placeholder="Nhập mật khẩu">
+                            <input type="password" placeholder="Nhập mật khẩu" name="password">
                         </div>
                         <div class="input">
                             <span>Xác nhận mật khẩu</span>
                             <br>
-                            <input type="password" placeholder="Nhập lại mật khẩu">
+                            <input type="password" placeholder="Nhập lại mật khẩu" name="confirm_password">
+                        </div>
+                        <p>Bằng việc đăng ký tài khoản, bạn đã đồng ý với <span>Điều khoản dịch vụ</span> và <span>Chính sách bảo mật</span> của chúng tôi</p>
+                        <div class="sign_up_button">
+                            <button type="submit">Đăng ký</button>
+                        </div>
+                    </form>
+                        <div class="sign_up_footer">
+                            <span>Bạn đã có tài khoản? <a href="{{route('login')}}">Đăng nhập ngay</a></span>
                         </div>
                     </div>
-                    <p>Bằng việc đăng ký tài khoản, bạn đã đồng ý với <span>Điều khoản dịch vụ</span> và <span>Chính sách bảo mật</span> của chúng tôi</p>
-                    <div class="sign_up_button">
-                        <button type="submit">Đăng ký</button>
-                    </div>
-                    <div class="sign_up_footer">
-                        <span>Bạn đã có tài khoản? <a href="login.html">Đăng nhập ngay</a></span>
-                    </div>
-                </div>
             </div>
             <div class="col-md-6">
                 <div class="banner_intro">
@@ -109,5 +112,38 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            let form = $('#form');
+            let name = $('input[name="name"]');
+            let email = $('input[name="email"]');
+            let password = $('input[name="password"]');
+            let confirm_password = $('input[name="confirm_password"]');
+            form.on('submit', function(e){
+                    e.preventDefault();
+                    if(name.val() == ''){
+                        
+                    }
+                    if(email.val() == ''){
+                        alert('Vui lòng nhập email');
+                        return false;
+                    }
+                    if(password.val() == ''){
+                        alert('Vui lòng nhập mật khẩu');
+                        return false;
+                    }
+                    if(confirm_password.val() == ''){
+                        alert('Vui lòng nhập lại mật khẩu');
+                        return false;
+                    }
+                    if(password.val() != confirm_password.val()){
+                        alert('Mật khẩu không khớp');
+                        return false;
+                    }
+                    form.submit();
+                });
+
+        });
+    </script>
 </body>
 </html>

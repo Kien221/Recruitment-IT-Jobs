@@ -429,20 +429,20 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $(document).on('click','.list_posts>nav>ul a', function(e){
-            e.preventDefault();
-            let page = $(this).attr('href').split('page=')[1]
-            record_posts(page)
-            })
-            function record_posts(page){
-                $.ajax({
-                    url:"api/ajax-paginate-posts?page="+page,
-                    success:function(res){
-                        $('.list_posts').html(res);
-                    },
-                    error:function(err){
-                        console.log(err);
-                    }
+                e.preventDefault();
+                let page = $(this).attr('href').split('page=')[1]
+                record_posts(page)
                 })
+                function record_posts(page){
+                    $.ajax({
+                        url:"api/ajax-paginate-posts?page="+page,
+                        success:function(res){
+                            $('.list_posts').html(res);
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+                    })
             };
             $(document).on('click','.list_hot_job>nav>ul a', function(e){
             e.preventDefault();

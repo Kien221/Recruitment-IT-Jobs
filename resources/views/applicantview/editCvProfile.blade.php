@@ -298,15 +298,15 @@
                                     </script>
 
                             </div>
-                            <div class="introduce_yourself_form language_skill" id="language_skill">
+                            <div class="introduce_yourself_form language_skill" id="your_language_skill">
                                 <h5 class="title_edit_form"><i class="fa-solid fa-graduation-cap"></i> KỸ NĂNG LẬP TRÌNH </h5>
                                     <textarea name="language_skill" id="language_skill" rows="10" cols="80">
                                         <div>
-                                        {{$cv_user->language_skill}}
+                                            
                                         </div>
                                     </textarea>
                                     <script>
-                                        CKEDITOR.replace( 'language_skill' );
+                                            CKEDITOR.replace( 'language_skill' );
                                     </script>
                             </div> 
                             <div class="row">
