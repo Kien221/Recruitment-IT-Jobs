@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{asset('css/public.css')}}">
-    <link rel="stylesheet" href="{{asset('css/hr.css')}}">
-    <link rel="stylesheet" href="{{asset('css/applicant.css')}}">
-    <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css "/>
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>NHÀ TUYỂN DỤNG</title>
-</head>
-<body>
+@section('title')- {{'Cập nhật thông tin công ty'}} @endsection
     @include('layout.hrview.header_hr')
     <div class="main_hr_view">
         <div class="row">
@@ -109,6 +94,10 @@
                                                                 <i class="fa fa-cloud-upload"></i> Up hình ảnh của công ty
                                                                 </label>
                                                                 <input type="file" id="up_images" name="images[]" multiple="true" accept="image/gif, image/jpeg, image/png"/>
+                                                                <br>
+                                                                @foreach($images as $image)
+                                                                <img src="{{asset('storage/'.$image->image)}}" alt="" class="images_company" style="width: 40px;height: 40px;margin:10px 10px">
+                                                                @endforeach
                                                                 </br>
                                                            </div>
                                                         </div>
@@ -130,7 +119,7 @@
                                                             </div>
                                                             <div class="company_info">
                                                                 <label for="">Mô tả công ty</label>
-                                                                <textarea name="description_company" id="editor1" rows="10" cols="80" placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
+                                                                <textarea name="description_company" class="description_company" id="editor1" rows="10" cols="80" placeholder="giới chịu đôi chút về bản thân VD( nơi sinh, tuổi tác, đam mê nghề nghiệp như nào, sở thích)">
                                                                         <div>{{$company->description_company ?? ''}}</div>
                                                                 </textarea>
                                                                 <script>
@@ -139,8 +128,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    
                                                     <div class="submit_button">
-                                                        <button type="submit" class="btn_save">Lưu</button>
+                                                        @if($company['id'] == null)
+                                                        <button type="submit" class="btn_save" >Lưu</button>
+                                                        @else
+                                                        <button type="submit" class="btn_save" onclick="if (!confirm('Xác nhận những thay đổi?')) { return false }" >Lưu</button>
+                                                        @endif
                                                     </div>
                                             </form>
                                         </div>
@@ -164,6 +158,9 @@
             reader.readAsDataURL(file);
         })
         $('#up_images').change(function(){
+            if($('#up_images_company').children().length > 0){
+                $('.images_company').remove();
+            }
             let file_length = $(this).prop('files').length;
             for(let i = 0; i < file_length; i++){
                 let file = $(this).prop('files')[i];
@@ -174,6 +171,20 @@
                 reader.readAsDataURL(file);
             }
         });
+        $('.btn_save').click(function(){
+            let name = $('.company_name_input').val();
+            let tax_code = $('.tax_input').val();
+            let address = $('.address_input').val();
+            let phone = $('.phone_input').val();
+            let email = $('.email_input').val();
+            let website = $('.website_input').val();
+            let number_of_employees = $('.number_of_employees_input').val();
+            let description_company = $('.description_company').val();
+            if(name == '' || tax_code == '' || address == '' || phone == '' || email == '' || website == '' || number_of_employees == '' || description_company == ''){
+                alert('Vui lòng nhập đầy đủ thông tin');
+                return false;
+            }
+        })
     });
 </script>  
 </body>

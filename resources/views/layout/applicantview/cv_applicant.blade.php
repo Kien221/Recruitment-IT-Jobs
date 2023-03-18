@@ -55,8 +55,8 @@
                                             <span>{{$applicant_cv->email}}</span>
                                         </div>
                                         <div class="infor_applicant email_applicant">
-                                            <i class="fa-solid fa-envelope"></i>
-                                            <a href="{{$applicant_cv->links}}" style="color:white">{{$applicant_cv->links}}</a>
+                                            <i class="fa-solid fa-link"></i>
+                                            <a href="{{$applicant_cv->links}}" target="blank" style="color:white">{{$applicant_cv->links}}</a>
                                         </div>
                                         <div class="introduce_yourself">
                                             <h5>GIỚI THIỆU BẢN THÂN</h5>

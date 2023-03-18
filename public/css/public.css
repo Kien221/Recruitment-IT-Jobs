@@ -295,12 +295,12 @@
     padding: 7px;
     border: 1px solid white;
     border-radius: 15px;
-    background-color: rgb(228, 226, 226);
+    background-color: #e9eaec;
     cursor: pointer;
 }
 .total_job:hover{
-    background-color: #089f4c;  
-    color: white;
+    background-color: #00b14f;;  
+    color: white !important;
 }
 
 .all{
@@ -334,7 +334,7 @@
 }
 .img-title_job-description img{
     height: 120px;
-    width: 50%;
+    width: 160px;
 }
 .description-post{
     margin-left: 20px;
@@ -1399,6 +1399,11 @@ input[type="file"]{
 .page-item.active .page-link{
     background-color: #00b14f !important;
     border-color: #00b14f !important;
+}
+.click_active{
+    background-color: #05d362 !important;
+    border-color: white !important;
+    color:white !important;
 }
 
 

@@ -36,7 +36,7 @@
                                     @foreach($jobs_apply as $job_apply)
                                     <tr>
                                         <input type="hidden" value="{{$job_apply->apply_cvs_id}}" id="job_apply_cv"> 
-                                        <td>
+                                        <td style="text-align:left">
                                             <img src="{{asset('storage/'.$job_apply->company_logo)}}" alt="" style="height:50px;width:50px">
                                             {{$job_apply->company_name}}
                                         </td>
@@ -112,11 +112,11 @@
     <script>
         $(document).ready(function(){
             const list_btn_remove = document.querySelectorAll('.remove_cv_apply_btn');
-            const job_apply_cv_id = $('#job_apply_cv').val();
-            console.log(job_apply_cv_id);
+      
             if(list_btn_remove.length != 0){
               for(let i = 0 ; i<list_btn_remove.length ; i++){
                 list_btn_remove[i].addEventListener('click',function(){
+                  const job_apply_cv_id = this.parentElement.parentElement.querySelector('#job_apply_cv').value;
                   const title_post = this.parentElement.parentElement.querySelector('.title_post').innerText;
                   const check = confirm('Bạn có muốn xóa bài ứng tuyển '+title_post+' không?');
                   if(check){
@@ -129,7 +129,7 @@
                       },
                       dataType: 'json',
                       success: function(data){
-                        location.reload();
+                        list_btn_remove[i].parentElement.parentElement.remove();  
                       }
                     })
                   }

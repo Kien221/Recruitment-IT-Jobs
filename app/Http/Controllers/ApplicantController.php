@@ -74,9 +74,12 @@ class ApplicantController extends Controller
      * @param  \App\Http\Requests\StoreapplicantRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreapplicantRequest $request)
+    public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $new_applicant = new applicant();
+        $new_applicant->fill($data);
+        
     }
 
     /**

@@ -22,10 +22,10 @@ class HrAcceptCv implements ShouldBroadcast
      */
     public $message;
     public $applicant_id;
-    public function __construct($applicant_id,$message)
+    public function __construct($message,$applicant_id)
     {
-        $this->applicant_id = $applicant_id;
         $this->message = $message;
+        $this->applicant_id = $applicant_id;
     }
 
     /**
@@ -35,7 +35,7 @@ class HrAcceptCv implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('Recruitment-channel');
+        return new PrivateChannel('Recruitment-channel.'.$this->applicant_id);
     }
     public function broadcastAs()
     {

@@ -25,7 +25,8 @@ Route::get('/signup-hr',function(){
 Route::get('/auth/redirect/{provider}', function ($provider) {
     return Socialite::driver($provider)->redirect();
 })->name('auth.github');
- 
+Route::post('/signup/applicant',[ApplicantController::class,'store'])->name('register.applicant');
+
 Route::get('/auth/callback/{provider}', function ($provider) {
     $user = Socialite::driver($provider)->user();
     $query = Applicant::where('id',$user->getId())->first();
@@ -90,5 +91,4 @@ Route::get('show/list-applicants/apply/{post_id}/{slug}',[ApplyCvController::cla
 Route::get('/post/detail/{id}/{slug}',[PostController::class,'detail'])->name('post.detail');
 Route::post('apply_cv/{post_id}/{applicant_id}',[ApplyCvController::class,'apply_cv'])->name('apply.cv');
 Route::get('applicant/show/cv_web',[ApplyCvController::class,'show_cv_web'])->name('applicant.show.cv_web');
-
-
+Route::get('/ajax-paginate-total-jobs-by-city',[HomeController::class,'jobs_by_city'])->name('jobs.by.city');

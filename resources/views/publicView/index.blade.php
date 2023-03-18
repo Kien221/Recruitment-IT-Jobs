@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css "/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Tuyển dụng IT</title>
+    <title>TopCv-Trang chủ</title>
 </head>
 <body>
     @if(session('success_login_applicant'))
@@ -150,40 +150,16 @@
         </div>
         <div class="main_content">
             <div class="sum_job">
-                <div class="total_job all">Tất cả(300)</div>
-                <!-- <div class="total_job">Cái Răng(100)</div>
-                <div class="total_job">Ninh Kiều(200)</div> -->
+                <div class="total_job all" id="all_posts">Tất cả({{$count_post}})</div>
+                @foreach($num_jobs_by_city as $num_job_by_city)
+                <div class="total_job" style="color:black;" data-city="{{$num_job_by_city->city}}">{{$num_job_by_city->city}}({{$num_job_by_city->total}})</div>
+                @endforeach 
             </div>
             <div class="post">
                 <div class="row post_company">
                     <div class="col-md-9">
                       <h5 class="header_name">Bài Tuyển Dụng Mới Nhất</h5>
                       <div class="list_posts">
-                          @foreach($posts as $post)
-                            <div class="post_item">
-                                <div class="row">
-                                    <div class="col-md-8 img-title_job-description">    
-                                        <img src="{{asset('storage/'.$post->company_logo)}}" alt="">
-                                        <div class="description-post">
-                                            <h3 class="title-job"><a href="{{route('post.detail',[$post->id,$post->slug])}}">{{$post->title}}</a></h3>
-                                            <div class="company-name">{{$post->company_name}}</div>
-                                            <span class="btn-introduce-post" style="color:black;">{{$post->min_salary}} {{$post->unit_money}} - {{$post->max_salary}} {{$post->unit_money}}</span>
-                                            <span class="btn-introduce-post" style="color:black;">Hết hạn - {{$post->expired_post}}</span>
-                                            <span class="btn-introduce-post" style="color:black;">{{$post->city}}</span>
-                                        </div>
-                                        <!-- @foreach (json_decode($post->languages) as $languages)
-                                                {{ $languages }}
-                                        @endforeach -->
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="post_time">{{  \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</div>
-                                        <div class="icon_save_post"><i class="fa-solid fa-heart"></i></div>
-                                    </div>
-                                </div>
-                            </div>        
-                          @endforeach    
-                          <p>{!! $posts->links() !!}</p>  
-
                       </div>
                     </div>
                     <div class="col-md-3 introduce_banner">
@@ -445,9 +421,9 @@
                     })
             };
             $(document).on('click','.list_hot_job>nav>ul a', function(e){
-            e.preventDefault();
-            let page = $(this).attr('href').split('page=')[1]
-            record_hot_jobs(page)
+                e.preventDefault();
+                let page = $(this).attr('href').split('page=')[1]
+                record_hot_jobs(page)
             })
             function record_hot_jobs(page){
                 $.ajax({
@@ -460,6 +436,71 @@
                     }
                 })
             }
+            $list_total_job_by_city = document.getElementsByClassName('total_job');
+           for(let i=0;i<$list_total_job_by_city.length;i++){
+                $list_total_job_by_city[i].addEventListener('click',function(){
+                    if($(this).hasClass('click_active')){
+                        $(this).removeClass('click_active');
+                    }
+                    else{
+
+                        $(this).addClass('click_active');
+                    }
+                    $city = $(this).attr('data-city');
+                    $.ajax({
+                        url:'{{route('jobs.by.city')}}',
+                        data:{city:$city},
+                        type:'GET',
+                        dataType:'json',
+                        success:function(data){
+                            $('.list_posts').html(data);
+                            $(document).on('click','.list_posts>.post_by_city>nav>ul a', function(e){
+                                e.preventDefault();
+                                let page = $(this).attr('href').split('page=')[1]
+                                record_posts_by_city(page)
+                                })
+                                function record_posts_by_city(page){
+                                    $.ajax({
+                                        url:"api/ajax-paginate-posts_by_city?page="+page,
+                                        data:{city:$city},
+                                        success:function(res){
+                                            $('.list_posts').html(res);
+                                        },
+                                        error:function(err){
+                                            console.log(err);
+                                        }
+                                    })
+                            };
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+                    })
+                })
+           }
+
+           $.ajax({
+                url:"api/ajax-get_all_jobs",
+                success:function(res){
+                    $('.list_posts').html(res);
+                },
+                error:function(err){
+                    console.log(err);
+                }
+           });
+           $('#all_posts').click(function(){
+                $.ajax({
+                    url:"api/ajax-get_all_jobs",
+                    success:function(res){
+                        $('.list_posts').html(res);
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                })
+           })
+
+
         })
     </script>
 </body>

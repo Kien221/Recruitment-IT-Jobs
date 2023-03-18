@@ -11,12 +11,15 @@ class CompaniesController extends Controller
 {
     public function create_Company_View(){
         $company = companies::where('hr_id',session()->get('id_hr'))->first();
+        $images = imagesCompany::where('company_id',$company->id)->get();
         if($company){
-            return view('hr_view.create_company',compact('company'));
+            return view('hr_view.create_company',compact('company','images'));
         }
         else{
             $company = [
                 'logo'=>'',
+                'id'=>'',
+                'image'=>'',
             ];
             return view('hr_view.create_company',compact('company'));
         }

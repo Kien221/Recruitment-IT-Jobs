@@ -1,4 +1,4 @@
-
+@section('title'){{'Tạo bài tuyển dụng'}} @endsection
     @include('layout.hrview.header_hr')
     <div class="main_hr_view">
         <div class="row">
@@ -202,6 +202,23 @@
                      `);
                 })
             };
+            async function loadCity(){
+                const countries = $("#select-city option:selected").val();
+                const response = await fetch('{{asset('locations/test.json')}}');
+                const districts = await response.json();
+                $.each(districts, function (index,each){
+                    if(index == countries){
+                        $.each(each, function (index,each){
+                            $('#select-district').append(`
+                            <option value='${each}'>${each}</option>
+                            `);
+                        })
+                    }
+                    //  $('#select-district').append(`
+                    //  <option value='${each.name}'>${each.name}</option>
+                    //  `);
+                })
+            };
             function generateTitle(){
                 const city = $("#select-city option:selected").val();
                 let languages = [];
@@ -242,18 +259,29 @@
                 })     
             }
             $('#select-city').select2();
-            $('#select-district').select2();
+            $('#select-district').select2({
+                tags: true,
+            });
+             //const response = await fetch('{{asset('locations/test.json')}}');
             const response = await fetch('{{asset('locations/index.json')}}');
             const cities = await response.json();
             $.each(cities, function (index, each){
+                
                 $('#select-city').append(`
                 <option value='${index}' data-path='${each.file_path}'>${index}</option>
                 `);
+                // $('#select-city').append(`
+                // <option value='${index}'>${index}</option>
+                // `);
+
             })
+
+            //loadCity()
             loadDistrict();
             $('#select-city').change(function(){
                 $('#select-district').empty();
-                loadDistrict();
+                 loadDistrict();
+                //loadCity();
             })
             $("#select-company,#select-languages,#select-position-apply").select2({
             tags: true

@@ -70,7 +70,7 @@ class ApplyCvController extends Controller
             $update_status_apply_cv->status = 1;
             $update_status_apply_cv->save();
             $message = "Bạn đã được nhà tuyển dụng chấp nhận cv";
-            event(new HrAcceptCv($request->applicant_id,$message));
+            event(new HrAcceptCv($message,$request->applicant_id));
             return response()->json(['success'=>'Duyệt Cv thành công']);
         }
         else{

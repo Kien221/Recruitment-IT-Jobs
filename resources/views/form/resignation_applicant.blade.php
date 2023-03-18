@@ -24,29 +24,42 @@
                     </div>
                     <h6>Chào mừng bạn đến với TopCV</h6>
                     <span class="sign_up_intro">Cùng xây dựng một hồ sơ nổi bật và nhận được các cơ hội sự nghiệp lý tưởng</span>
-                    <form id="form" action="" class="form" onsubmit="return validateForm()">
+                    <form id="form" action="{{route('register.applicant')}}" class="form" method="POST">
+                        @csrf
                         <div class="input">
                             <span>Họ và tên</span>
                             <br>
                             <input type="text" placeholder="Vui lòng nhập họ và tên" name="name">
-                            <div class="validate-name">
-                                
+                            <div class="validate-name" style="display:none">
+                                <p style="color:red">Vui lòng nhập tên</p>
                             </div>
                         </div>
                         <div class="input">
                             <span>Email</span>
                             <br>
                             <input type="email" placeholder="Nhập email của bạn" name="email">
+                            <div class="validate-email" style="display:none">
+                                <p style="color:red">Email không được để trống</p>
+                            </div>
                         </div>
                         <div class="input">
                             <span>Mật khẩu</span>
                             <br>
                             <input type="password" placeholder="Nhập mật khẩu" name="password">
+                            <div class="validate-password" style="display:none">
+                                <p style="color:red">Vui lòng mật khẩu</p>
+                            </div>
                         </div>
                         <div class="input">
                             <span>Xác nhận mật khẩu</span>
                             <br>
                             <input type="password" placeholder="Nhập lại mật khẩu" name="confirm_password">
+                            <div class="validate-confirm_password" style="display:none">
+                                <p style="color:red">Vui lòng xác nhận mật khẩu</p>
+                            </div>
+                            <div class="validate-confirm_password_wrong" style="display:none">
+                                <p style="color:red">Mật khẩu không khớp</p>
+                            </div>
                         </div>
                         <p>Bằng việc đăng ký tài khoản, bạn đã đồng ý với <span>Điều khoản dịch vụ</span> và <span>Chính sách bảo mật</span> của chúng tôi</p>
                         <div class="sign_up_button">
@@ -122,27 +135,31 @@
             form.on('submit', function(e){
                     e.preventDefault();
                     if(name.val() == ''){
+                        $(this).find('input[name="name"]').css('border', '1px solid red');
+                        $('.validate-name').css('display','block')
                         
                     }
                     if(email.val() == ''){
-                        alert('Vui lòng nhập email');
-                        return false;
+                        $(this).find('input[name="email"]').css('border', '1px solid red');
+                        $('.validate-email').css('display','block')
+                        
                     }
                     if(password.val() == ''){
-                        alert('Vui lòng nhập mật khẩu');
-                        return false;
+                        $(this).find('input[name="password"]').css('border', '1px solid red');
+                        $('.validate-password').css('display','block')
+                        
                     }
                     if(confirm_password.val() == ''){
-                        alert('Vui lòng nhập lại mật khẩu');
-                        return false;
+                        $(this).find('input[name="confirm_password"]').css('border', '1px solid red');
+                        $('.validate-confirm_password').css('display','block')
+                        
                     }
                     if(password.val() != confirm_password.val()){
-                        alert('Mật khẩu không khớp');
-                        return false;
+                        $(this).find('input[name="confirm_password"]').css('border', '1px solid red');
+                        $('.validate-confirm_password_wrong').css('display','block') 
                     }
                     form.submit();
                 });
-
         });
     </script>
 </body>

@@ -1,3 +1,4 @@
+
 <div id="header">
         <div class="top-header">
             <div class="top-header-left">
@@ -70,23 +71,33 @@
 
                             <title>Pusher Test</title>
 
-
-                            <!-- <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+                            <script src="{{ asset('js/app.js') }}" defer></script>
+                            <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                            <script>
-
-                                // Enable pusher logging - don't include this in production
+                            <!-- <script>
                                 Pusher.logToConsole = true;
-
+                                let user_id = '{{session('id_applicant')}}';
                                 var pusher = new Pusher('f159bf8e622a9a565b4f', {
-                                cluster: 'ap1'
-                                });
+                                    cluster: 'ap1',
+                                    endPoint: 'http://127.0.0.1:8000/broadcasting/auth',
+                                    auth: {
+                                        headers: {
+                                            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                                        }
+                                    }
 
-                                var channel = pusher.subscribe('Recruitment-channel');
-                                channel.bind('hr-accept-applicantcv', function(data) {
-                                alert(JSON.stringify(data));
+                                });
+                                var private = pusher.subscribe('private-Recruitment-channel.'+ user_id);
+                                private.bind('hr-accept-applicantcv', function(data) {
+                                 console.log(data);
                                 });
                             </script> -->
+                            <script>
+                                window.Echo.private('private-Recruitment-channel.{{session('id_applicant')}}')
+                                .listen('hr-accept-applicantcv', (e) => {
+                                    console.log(e);
+                                });
+                            </script>
                                                         
                             <li class="menu">
                                
@@ -115,4 +126,5 @@
 
         </div>
       </div>
-    </div>
+</div>
+
