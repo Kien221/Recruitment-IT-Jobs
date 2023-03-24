@@ -34,7 +34,12 @@
                                       <td colspan="5" class="text-center">Bạn chưa ứng tuyển công việc nào</td>
                                     @else
                                     @foreach($jobs_apply as $job_apply)
-                                    <tr>
+                                    @dd(session('apply_cv_id'))
+                                    @if(session('apply_cv_id') != null && session('apply_cv_id') == $job_apply->apply_cvs_id)
+                                      <tr style="border:5px solid red;">
+                                    @else
+                                      <tr>
+                                    @endif
                                         <input type="hidden" value="{{$job_apply->apply_cvs_id}}" id="job_apply_cv"> 
                                         <td style="text-align:left">
                                             <img src="{{asset('storage/'.$job_apply->company_logo)}}" alt="" style="height:50px;width:50px">
@@ -66,12 +71,12 @@
                                         </td>
 
                                     </tr>
+                                     {{session()->forget('apply_cv_id')}}
                                     @endforeach
                                     {{ $jobs_apply->links() }}
                                     @endif
                                   </tbody>
 
-                          </tbody>
               </table>
             </div>
         </div>

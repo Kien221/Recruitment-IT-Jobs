@@ -59,7 +59,7 @@ class ApplicantController extends Controller
                     ->orderBy('apply_cvs.created_at','desc')
                     ->where('applicants.id',session('id_applicant'))
                     ->groupBy('applicants.id','posts.title','apply_cvs.status','apply_cvs.id','apply_cvs.created_at','posts.id','companies.name','companies.logo','posts.slug')
-                    ->paginate(5);
+                    ->paginate(10);
         return view('applicantview.jobs_Apply',compact('jobs_apply'));
     }
     public function delete_job_apply(request $request)

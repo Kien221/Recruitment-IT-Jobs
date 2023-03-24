@@ -96,6 +96,12 @@
     text-decoration: none;
     color: white; 
 }
+.menu div{
+    color: white; 
+}
+.menu div:hover{
+    color: #f1c40f;
+}
 .menu a:hover{
     color: #f1c40f;
 }
@@ -1404,6 +1410,76 @@ input[type="file"]{
     background-color: #05d362 !important;
     border-color: white !important;
     color:white !important;
+}
+#message{
+    display: none;
+}
+#list-messages{
+    margin-left: -300px;
+    margin-top: 10px;
+    margin-right: 200px;
+    position: fixed;
+    box-shadow: 0 0 10px black;
+    border-radius: 10px;
+    background: #fff;
+    height: 400px;
+    padding: 5px;
+    color: #000;
+    padding-top: 20px;
+    display: none;
+    overflow-y: auto;
+    z-index: 999000;
+
+}
+#list-messages ul{
+    list-style: none;
+    margin-left: -30px;
+    color: #000;
+    margin-right: 2px;
+
+}
+#list-messages ul li{
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    color: #000;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+#list-messages ul li:hover{
+    background: #c8c7c7;
+}   
+.content-message{
+    display: flex;
+}
+.content-message img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.text-message{
+    margin-left: 10px;
+    font-size: 14px;
+    color: #666 !important;
+}
+.time-message{
+    margin-left: 50px;
+    font-size: 12px;
+    margin-top: 15px;
+    color: #666 !important;
+}
+.not_seen_message{
+    border: 1px solid black !important;
+    color: black !important;
+}
+.not_seen_message .text-message{
+    color: black !important;
+    font-weight: 600 !important;
+}
+.not_seen_message .time-message{
+    color: black !important;
+    font-weight: 600 !important;
 }
 
 

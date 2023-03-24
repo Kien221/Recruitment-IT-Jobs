@@ -17,3 +17,5 @@ Route::put('/refuse/applicant/cv',[ApplyCvController::class, 'refuseCv'])->name(
 //Job_by_city
 Route::get('ajax-paginate-posts_by_city',[HomeController::class,'ajax_paginate_posts_by_city'])->name('ajax.paginate.posts_by_city');
 Route::get('ajax-get_all_jobs',[HomeController::class,'ajax_get_all_jobs'])->name('ajax.get.all.jobs');
+Route::get('count/messages',[ApplyCvController::class,'count_messages'])->name('count.messages');
+

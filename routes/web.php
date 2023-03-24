@@ -8,6 +8,7 @@ use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ApplyCvController;
+use App\Http\Controllers\MessageController;
 use App\Models\Applicant;
 use App\Http\Middleware\loginApplicant;
 
@@ -32,10 +33,16 @@ Route::get('/auth/callback/{provider}', function ($provider) {
     $query = Applicant::where('id',$user->getId())->first();
     if($query){
         $call_user = Applicant::where('id',$query->id)->first();
+        $count_message = DB::table('messages')
+                            ->join('apply_cvs','messages.apply_cvs_id','=','apply_cvs.id')
+                            ->where('apply_cvs.applicant_id',$call_user->id)
+                            ->where('messages.status',0)
+                            ->count();
         session()->put('success_login_applicant','success_login_applicant');
         session()->put('id_applicant',$call_user->id);
         session()->put('applicant_name',$call_user->name);
         session()->put('avatar',$call_user->avatar);
+        session()->put('count_message',$count_message);
         if(session('post_id') != null){
             return redirect()->route('post.detail',[session('post_id'),session('slug')]);
         }
@@ -74,6 +81,8 @@ Route::group([
     Route::get('/applicant/view/index',[ApplicantController::class,'index'])->name('applicant.index.view');
     Route::get('/applicant/view/jobs_apply_view',[ApplicantController::class,'jobs_apply_view'])->name('jobs.apply.view');
     Route::delete('/job_apply/delete',[ApplicantController::class,'delete_job_apply'])->name('applicant.remove_cv_apply');
+    Route::get('list/messages',[MessageController::class,'listMessages'])->name('list.messages');
+    Route::get('update/status/messages',[MessageController::class,'updateStatusMessage'])->name('update.status.message');
 });
 Route::put('/check/resigntion/hr',[HrController::class,'resigntion'])->name('resignation.hr');
 Route::get('/active_account/{token}/{hr_id}',[HrController::class,'active_account'])->name('active_account');
@@ -92,3 +101,5 @@ Route::get('/post/detail/{id}/{slug}',[PostController::class,'detail'])->name('p
 Route::post('apply_cv/{post_id}/{applicant_id}',[ApplyCvController::class,'apply_cv'])->name('apply.cv');
 Route::get('applicant/show/cv_web',[ApplyCvController::class,'show_cv_web'])->name('applicant.show.cv_web');
 Route::get('/ajax-paginate-total-jobs-by-city',[HomeController::class,'jobs_by_city'])->name('jobs.by.city');
+Route::get('/list-applicants-accepted',[HrController::class,'list_applicants_accepted'])->name('list.applicants.accepted');
+

@@ -12,13 +12,13 @@
                     @endif
                     <ul class="list_nav_hr_view">
                         <li class="list_nav_hr_view_item">
-                            <a href=""><i class="fa-regular fa-file"></i> Bảng tin</a>
+                            <a href="{{route('hr.index')}}"><i class="fa-regular fa-file"></i> Bảng tin</a>
                         </li>
                         <li class="list_nav_hr_view_item">
                             <a href="{{route('show.posted.view')}}" class="icon_link"><i class="fa-regular fa-pen-to-square"></i>Tin Tuyển Dụng</a>
                         </li>
                         <li class="list_nav_hr_view_item">
-                            <a href="#" class="icon_link"><i class="fa-regular fa-user"></i>Quản lý CV</a>
+                            <a href="{{route('list.applicants.accepted')}}" class="icon_link"><i class="fa-regular fa-user"></i>Quản lý CV</a>
                             
                         </li>
                         <li class="list_nav_hr_view_item">

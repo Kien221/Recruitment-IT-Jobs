@@ -94,7 +94,6 @@ class PostController extends Controller
             'benefit' => $request->benefit,
         ]);
         
-
         return redirect()->route('show.posted.view')->with('create_post_success','Tạo bài tuyển dụng thành công');
     }
 

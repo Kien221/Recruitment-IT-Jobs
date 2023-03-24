@@ -23,7 +23,32 @@ class HrController extends Controller
     public function index()
     {
         $hr = hr::find(session()->get('id_hr'));
-        return View('hr_view.index',compact('hr'));
+        $num_cv_accepted = apply_cv::query()
+                        ->join('posts','apply_cvs.post_id','=','posts.id')
+                        ->join('companies','posts.company_id','=','companies.id')
+                        ->where('apply_cvs.status',1)
+                        ->where('companies.hr_id',session()->get('id_hr'))
+                        ->get()
+                        ->count();
+        $num_posts = Post::query()
+                        ->join('companies','posts.company_id','=','companies.id')
+                        ->where('companies.hr_id',session()->get('id_hr'))
+                        ->get()
+                        ->count(); 
+        $num_cv_not_seen = apply_cv::query()
+                        ->join('posts','apply_cvs.post_id','=','posts.id')
+                        ->join('companies','posts.company_id','=','companies.id')
+                        ->where('apply_cvs.status',0)
+                        ->where('companies.hr_id',session()->get('id_hr'))
+                        ->get()
+                        ->count();
+        $num_all_cv = apply_cv::query()
+                        ->join('posts','apply_cvs.post_id','=','posts.id')
+                        ->join('companies','posts.company_id','=','companies.id')
+                        ->where('companies.hr_id',session()->get('id_hr'))
+                        ->get()
+                        ->count();                   
+        return View('hr_view.index',compact('hr','num_cv_accepted','num_cv_not_seen','num_posts','num_all_cv'));
     }
 
     public function resigntion(Request $request){
@@ -108,6 +133,23 @@ class HrController extends Controller
         }
         return view('hr_view.show_posted',compact('posted'));
 
+    }
+    public function list_applicants_accepted(){
+        $company = companies::where('hr_id',session()->get('id_hr'))->first();
+        $list_applicants_accepted = apply_cv::query()
+        ->join('posts','posts.id','=','apply_cvs.post_id')
+        ->join('applicants','applicants.id','=','apply_cvs.applicant_id')
+        ->join('companies','companies.id','=','posts.company_id')
+        ->where('companies.id',$company->id)
+        ->where('apply_cvs.status',1)
+        ->select('applicants.*')
+        ->orderBy('apply_cvs.created_at','desc')
+        ->DISTINCT('applicants.id')
+        ->paginate(10);
+        foreach($list_applicants_accepted as $applicant){
+            $applicant->created_at = Carbon::parse($applicant->created_at)->format('d-m-Y');
+        }
+        return view('hr_view.list_applicant_be_accept',compact('list_applicants_accepted'));
     }
 
     /**

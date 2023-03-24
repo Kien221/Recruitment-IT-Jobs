@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\apply_cv;
 use App\Models\Post;
+use App\Models\messages;
 use App\Events\HrAcceptCv;
 use App\Http\Requests\Storeapply_cvRequest;
 use App\Http\Requests\Updateapply_cvRequest;
+use Illuminate\Support\Facades\DB;
 use Redirect;
+
 class ApplyCvController extends Controller
 {
 
@@ -69,8 +72,12 @@ class ApplyCvController extends Controller
         if($update_status_apply_cv){
             $update_status_apply_cv->status = 1;
             $update_status_apply_cv->save();
-            $message = "Bạn đã được nhà tuyển dụng chấp nhận cv";
+            $message = "Chúc mừng bạn đã được ".$update_status_apply_cv->post->company->name. " chấp nhận CV";
             event(new HrAcceptCv($message,$request->applicant_id));
+            messages::create([
+                'apply_cvs_id' => $update_status_apply_cv->id,
+                'message' => $message
+            ]);
             return response()->json(['success'=>'Duyệt Cv thành công']);
         }
         else{
@@ -89,6 +96,18 @@ class ApplyCvController extends Controller
             return response()->with("accept_cv_error",'Có lỗi xảy ra , vui lòng thử lại sau!!');
         }
             
+    }
+    public function count_messages(Request $request){
+        $id = $request->id_applicant;
+        $count_message = DB::table('messages')
+        ->join('apply_cvs','messages.apply_cvs_id','=','apply_cvs.id')
+        ->join('applicants','applicants.id','=','apply_cvs.applicant_id')
+        ->where('applicants.id',$id)
+        ->where('messages.status',0)
+        ->count();
+        return response()->json([
+            'count_message' => $count_message,
+        ]);
     }
     
     public function store(Storeapply_cvRequest $request)

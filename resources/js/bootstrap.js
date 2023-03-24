@@ -18,18 +18,27 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * allows your team to easily build robust real-time web applications.
  */
 
+window.$ = window.jQuery = require('jquery');
+
+require('bootstrap-sass');
+let token = document.head.querySelector('meta[name="csrf-token"]');
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': token.content
+    }
+});
+
 import Echo from 'laravel-echo';
 
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
 window.Echo = new Echo({
+    namespace: 'App.Events',
     broadcaster: 'pusher',
-    key: import.meta.env.VITE_PUSHER_APP_KEY,
-    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
-    forceTLS: false,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
+    key: 'f159bf8e622a9a565b4f',
+    cluster: 'ap1',
+    encrypted: true
 });
 
 

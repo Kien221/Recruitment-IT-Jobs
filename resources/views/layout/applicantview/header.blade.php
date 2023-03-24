@@ -65,37 +65,81 @@
                                 <a href="#" class="icon_link"><i class="fa-solid fa-comment"></i></a>
                             </li>
                             <li class="menu">
-                                <a href="#" class="icon_link"><i class="fa-solid fa-bell"></i></a>
+                                <div class="icon_link"><i class="fa-solid fa-bell" id="message_account"></i>
+                                <span style="padding:5px;border-radius:30%;background-color:red;color:white;position:absolute;margin-top:-33px;margin-left: 14px;display:none;" id="count_message">
+                                </span>
+                                <div class="list-messages" id="list-messages">
+                                </div>
+                            </div>
                             </li>
 
-
-                            <title>Pusher Test</title>
-
-                            <script src="{{ asset('js/app.js') }}" defer></script>
                             <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                            <!-- <script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+                            <script>
                                 Pusher.logToConsole = true;
-                                let user_id = '{{session('id_applicant')}}';
+                                let id_applicant = '{{session('id_applicant')}}';
                                 var pusher = new Pusher('f159bf8e622a9a565b4f', {
-                                    cluster: 'ap1',
-                                    endPoint: 'http://127.0.0.1:8000/broadcasting/auth',
+                                    cluster: 'ap1', 
+                                    encrypted:true,
+                                    authEndpoint: 'http://localhost:8000/broadcasting/auth',
                                     auth: {
                                         headers: {
                                             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                                         }
-                                    }
+                                    },
 
-                                });
-                                var private = pusher.subscribe('private-Recruitment-channel.'+ user_id);
-                                private.bind('hr-accept-applicantcv', function(data) {
-                                 console.log(data);
-                                });
-                            </script> -->
-                            <script>
-                                window.Echo.private('private-Recruitment-channel.{{session('id_applicant')}}')
-                                .listen('hr-accept-applicantcv', (e) => {
-                                    console.log(e);
+                                })
+                                var private = pusher.subscribe('Recruitment-channel.'+ id_applicant);
+                                private.bind('hr-accept-applicantcv', function(data) {             
+                                    $('#message').css('display','block');
+                                    $('#message').css('background-color','#00b894');
+                                    $('#message').css('color','#fff');
+                                    $('#message').css('padding','10px');
+                                    $('#message').css('border-radius','5px');
+                                    $('#message').css('margin-bottom','10px');
+                                    $('#message').css('margin-top','10px');
+                                    $('#message').css('width','100%');
+                                    $('#message').css('text-align','center');
+                                    $('#message').css('position','fixed');
+                                    $('#message').css('z-index','9999');
+                                    $('#message').css('bottom','0');
+                                    $('#message').css('right','0');
+                                    $('#message').css('margin','auto');
+                                    $('#message').css('font-size','20px');
+                                    $('#message').css('font-weight','bold');
+                                    $('#message').css('box-shadow','0 0 10px rgba(0,0,0,0.5)');
+                                    $('#message').css('transition','all 0.5s ease');
+                                    $('#message').css('opacity','0');
+                                    $('#message').css('transform','translateY(-100px)');
+                                    $('#message').css('transition-delay','0.5s');
+                                    $('#message').css('transition','all 0.5s ease');
+                                    $('#message').css('opacity','1');
+                                    $('#message').css('transform','translateY(0px)');
+                                    $('#message').css('transition-delay','0.5s');
+                                    $('#message').html(data.message);
+                                    setTimeout(function(){
+                                        $('#message').css('display','none');
+                                    }, 10000);
+                                
+                                        $.ajax({
+                                            url:'{{route('count.messages')}}',
+                                            type:'GET',
+                                            dataType:'json',
+                                            data:{
+                                                id_applicant:{{session('id_applicant')}}
+                                            },
+                                            success:function(data){
+                                                if(data.count_message != 0){
+                                                    $('#count_message').css('display','block');
+                                                    $('#count_message').html(data.count_message);
+                                                }
+                                            },
+                                            error:function(error){
+                                                console.log(error);
+                                            }
+                                        })
+
                                 });
                             </script>
                                                         
@@ -123,8 +167,80 @@
                     </div>
                 </div>
             </div>
-
+                      
         </div>
       </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url:'{{route('count.messages')}}',
+            type:'GET',
+            dataType:'json',
+            data:{
+                id_applicant:{{session('id_applicant')}}
+            },
+            success:function(data){
+                if(data.count_message != 0){
+                    $('#count_message').css('display','block');
+                    $('#count_message').html(data.count_message);
+                }
+              
+            },
+            error:function(error){
+                console.log(error);
+            }
+
+        })
+
+        $('#message_account').click(function(){
+            $.ajax({
+                url:'{{route('list.messages')}}',
+                type:'GET',
+                dataType:'json',
+                data:{
+                    id_applicant:{{session('id_applicant')}}
+                },
+                success:function(data){
+                    $('#list-messages').css('display','block');
+                    $('#list-messages').html(data);
+                    $list_messages_not_seen = document.getElementsByClassName('message');
+                    console.log($list_messages_not_seen);
+                    for(let i = 0; i<$list_messages_not_seen.length; i++){
+                        $list_messages_not_seen[i].addEventListener('click',function(){
+                            $id_message = $(this).val();
+                            $.ajax({
+                                url:'{{route('update.status.message')}}',
+                                type:'GET',
+                                dataType:'json',
+                                data:{
+                                    id_message:$id_message
+                                },
+                                success:function(data){
+                                    console.log(data)
+                                },
+                                error:function(error){
+                                    console.log(error);
+                                }
+                            })
+                            
+                        })
+                    }
+
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            })
+        })
+        $(document).scroll(function(){
+                $('#list-messages').css('display','none');
+        }) 
+        $(document).on('click', function (e) {
+        if ($(e.target).closest("#list-messages").length === 0) {
+            $("#list-messages").hide();
+        }
+});
+    });
+</script>
 

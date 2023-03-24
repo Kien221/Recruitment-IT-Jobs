@@ -35,10 +35,16 @@ class HrAcceptCv implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('Recruitment-channel.'.$this->applicant_id);
+        return new PrivateChannel('Recruitment-channel.' .$this->applicant_id);
     }
     public function broadcastAs()
     {
         return 'hr-accept-applicantcv';
+    }
+    public function broadcastWith(){
+        return [
+            'message' => $this->message,
+            'applicant_id' => $this->applicant_id
+        ];
     }
 }

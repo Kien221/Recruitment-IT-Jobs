@@ -33,15 +33,15 @@
                                         <div class="col-md-6">
                                             <div class="data_statistical campaign">
                                                 <div class="data_campaign">
-                                                    <span>0</span>
-                                                    <p>Chiến dịch đang mở</p>
+                                                    <span>{{$num_all_cv}}</span>
+                                                    <p>CV tiếp nhận</p>
                                                 </div>
                                                 <i class="fa-solid fa-bullhorn"></i>
                                                 
                                             </div>
                                             <div class="data_statistical post_hr">
                                                 <div class="data_post">
-                                                    <span>0</span>
+                                                    <span>{{$num_posts}}</span>
                                                     <p>Tin tuyển dụng</p>
                                                 </div>
                                                 <i class="fa-regular fa-file"></i>
@@ -50,15 +50,15 @@
                                         <div class="col-md-6">
                                             <div class="data_statistical cv_receive">
                                                 <div class="data_cv_receive">
-                                                    <span>0</span>
-                                                    <p>CV tiếp nhận</p>
+                                                    <span>{{$num_cv_accepted}}</span>
+                                                    <p>CV đã chấp nhận</p>
                                                 </div>
                                                 <i class="fa-sharp fa-solid fa-file-pdf"></i>
                                             </div>
                                             <div class="data_statistical cv_new">
                                                 <div class="data_cv_new">
-                                                    <span>0</span>
-                                                    <p>CV ứng tuyển mới</p>
+                                                    <span>{{$num_cv_not_seen}}</span>
+                                                    <p>CV ứng tuyển chưa xem</p>
                                                 </div>
                                                 <i class="fa-sharp fa-solid fa-file-import"></i>
                                             </div>
@@ -70,12 +70,12 @@
                             <div class="col-md-6">
                                 <div class="account_hr">
                                     <div class="avatar_infor_hr">
-                                        <img src="../assets/image/avatar.jpg" alt="">
+                                        <img src="{{asset('storage/images/'.session('avatar'))}}" alt="">
                                         <div class="infor_account_hr">
                                             <span>Chế Thanh Kiên</span>
-                                            <p>Mã NTD: 502722   |  kienb1910088@student.ctu.edu.vn
+                                            <p>Mã NTD: 502722   |  {{$hr->email}}
                                                 <br>
-                                                0395004764
+                                                {{$hr->phoneNumber}}
                                             </p>                                           
                                         </div>
                                     </div>
