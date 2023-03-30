@@ -159,7 +159,7 @@
 .icon-header_fillter{
     color:#00b14f;
     position: absolute;
-    margin-left:130px;
+    margin-left:255px;
     margin-top: 8px;
 }
 .search_header{
@@ -1444,6 +1444,9 @@ input[type="file"]{
     background: #fff;
     border-radius: 10px;
     color: #000;
+    height: 86px;
+    align-items: 86px;
+    overflow: hidden;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
 }

@@ -22,7 +22,7 @@ class HomeController extends Controller
                         ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
                         ->first();
 
-        $hot_companies = companies::inRandomOrder()->take(4)->get();
+        $hot_companies = companies::inRandomOrder()->take(4)->DISTINCT('companies.id')->get();
         $hot_jobs = Post::inRandomOrder()->take(3)->paginate(3);
         if(session('post_id') && session('slug') != null){
             session()->forget('post_id');
@@ -36,7 +36,7 @@ class HomeController extends Controller
                 ->join('companies','posts.company_id','=','companies.id')
                 ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
                 ->orderby('posts.created_at','desc')
-                ->paginate(5);
+                ->paginate(10);
         $count_post = Post::count();
         foreach($posts as $post){
             $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
@@ -52,7 +52,7 @@ class HomeController extends Controller
         ->join('companies','posts.company_id','=','companies.id')
         ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
         ->orderby('posts.created_at','desc')
-        ->paginate(5);
+        ->paginate(10);
         foreach($posts as $post){
             $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
             
@@ -68,7 +68,7 @@ class HomeController extends Controller
         $posts_by_city = Post::where('city',$request->get('city'))
                         ->join('companies','posts.company_id','=','companies.id')
                         ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
-                        ->paginate(2);
+                        ->paginate(5);
                         foreach($posts_by_city as $post){
                             $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
                             
@@ -81,7 +81,7 @@ class HomeController extends Controller
         $posts_by_city = Post::where('city',$request->get('city'))
                         ->join('companies','posts.company_id','=','companies.id')
                         ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
-                        ->paginate(2);
+                        ->paginate(5);
                         foreach($posts_by_city as $post){
                             $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
                             

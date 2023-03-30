@@ -12,7 +12,7 @@ use App\Http\Controllers\MessageController;
 use App\Models\Applicant;
 use App\Http\Middleware\loginApplicant;
 
-Route::get('/home',[HomeController::class,'index'])->name('home');
+Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/login',function(){
     return view('form.login');
 })->name('login');
@@ -102,4 +102,6 @@ Route::post('apply_cv/{post_id}/{applicant_id}',[ApplyCvController::class,'apply
 Route::get('applicant/show/cv_web',[ApplyCvController::class,'show_cv_web'])->name('applicant.show.cv_web');
 Route::get('/ajax-paginate-total-jobs-by-city',[HomeController::class,'jobs_by_city'])->name('jobs.by.city');
 Route::get('/list-applicants-accepted',[HrController::class,'list_applicants_accepted'])->name('list.applicants.accepted');
+Route::get('ajax-get_all_jobs_randoms',[PostController::class,'ajax_paginate_posts_random_detail_page'])->name('ajax.get.all.jobs.randoms');
+Route::get('/ajax-paginate-posts-detail_page',[PostController::class,'ajax_paginate_posts_detail_page'])->name('ajax.paginate.detail_page');
 

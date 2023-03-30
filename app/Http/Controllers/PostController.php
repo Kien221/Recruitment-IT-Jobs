@@ -55,7 +55,8 @@ class PostController extends Controller
         session()->put('slug',$detail_post->slug);
        return view('publicView.detail_post',compact('detail_post','images_company','review_company'));
     }
-    public function ajax_paginate_posts_detail_page(){
+    public function ajax_paginate_posts_random_detail_page(){
+        Carbon::setLocale('vi');
         $posts = Post::inRandomOrder()
                         ->join('companies','posts.company_id','=','companies.id')
                         ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
@@ -63,7 +64,19 @@ class PostController extends Controller
         foreach($posts as $post){
             $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
         }
-        return response()->json($posts);
+        return view('layout.api.paginate_posts',compact('posts'))->render();
+    }
+    
+    public function ajax_paginate_posts_detail_page(){
+        Carbon::setLocale('vi');
+        $posts = Post::inRandomOrder()
+                        ->join('companies','posts.company_id','=','companies.id')
+                        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+                        ->paginate(5);
+        foreach($posts as $post){
+            $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
+        }
+        return view('layout.api.paginate_posts',compact('posts'))->render();
     }
     /**
      * Store a newly created resource in storage.

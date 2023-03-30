@@ -35,9 +35,8 @@ class CompaniesController extends Controller
                     $data['logo'] = $file_logo;
                 }
             }
-            $company_update = companies::find($company->id);
-            $company_update->fill($data);
-            $company_update->save();
+            $company->fill($data);
+            $company->save();
             return redirect()->route('create.company.view')->with('success_update','Cập nhật công ty thành công');
         }
         else{

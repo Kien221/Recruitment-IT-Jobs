@@ -312,7 +312,7 @@
                             <div class="row">
                             <div class="col-md-12 btn_save">
                                 <div class="btn_save_edit">
-                                    <button type="submit">Lưu</button>
+                                    <button type="submit" onclick="if (!confirm('Xác nhận những thay đổi?')) { return false }">Lưu</button>
                                 </div>
                             </div>
                             </div>

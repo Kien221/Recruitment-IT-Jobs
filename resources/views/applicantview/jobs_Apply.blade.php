@@ -34,9 +34,9 @@
                                       <td colspan="5" class="text-center">Bạn chưa ứng tuyển công việc nào</td>
                                     @else
                                     @foreach($jobs_apply as $job_apply)
-                                    @dd(session('apply_cv_id'))
                                     @if(session('apply_cv_id') != null && session('apply_cv_id') == $job_apply->apply_cvs_id)
-                                      <tr style="border:5px solid red;">
+                                      <tr style="border:5px solid red;background-color:lightblue;">
+                                      {{session()->forget('apply_cv_id')}}
                                     @else
                                       <tr>
                                     @endif
@@ -71,7 +71,6 @@
                                         </td>
 
                                     </tr>
-                                     {{session()->forget('apply_cv_id')}}
                                     @endforeach
                                     {{ $jobs_apply->links() }}
                                     @endif
@@ -127,7 +126,7 @@
                   if(check){
                     $.ajax({
                       url: '{{route('applicant.remove_cv_apply')}}',
-                      type: "delete",
+                      type: 'delete',
                       data: {
                         _token: "{{csrf_token()}}",
                         job_apply_cv_id:job_apply_cv_id

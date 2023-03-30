@@ -167,6 +167,9 @@
                     </div>
                 </div>
             </div>
+            <div id="message">
+
+            </div>
                       
         </div>
       </div>
@@ -209,6 +212,7 @@
                     for(let i = 0; i<$list_messages_not_seen.length; i++){
                         $list_messages_not_seen[i].addEventListener('click',function(){
                             $id_message = $(this).val();
+                            console.log($id_message)
                             $.ajax({
                                 url:'{{route('update.status.message')}}',
                                 type:'GET',

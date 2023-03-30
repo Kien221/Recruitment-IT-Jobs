@@ -19,52 +19,7 @@
     @else
         @include('layout.publicview.header')
     @endif
-    <div class="end-header">
-              <div class="row">
-                  <div class="col-md-4">
-                      <div class="search-input">
-                          <input type="text" placeholder="Tìm kiếm công việc,vị trí bạn mong muốn">
-                      </div>
-                  </div>
-                  <div class="col-md-2">
-                      <div class="fillter">
-                          <span class="icon-header_fillter">
-                              <i class="fa-solid fa-building"></i>
-                          </span>
-                          <select name="" id="">
-                              <option value=""> Vị trí công việc</option>
-                          </select>
-                      </div>
-                  </div>
-                  <div class="col-md-2">
-                      <div class="fillter">
-                          <span class="icon-header_fillter">
-                              <i class="fa-solid fa-building"></i>
-                          </span>
-                          <select name="" id="">
-                              <option value=""> Vị trí công việc</option>
-                          </select>
-                      </div>
-                  </div>
-                  <div class="col-md-2">
-                      <div class="fillter">
-                          <span class="icon-header_fillter">  
-                              <i class="fa-solid fa-location-dot"></i>
-                          </span>
-                          <select name="" id="">
-                              <option value="">Địa Điểm</option>
-                          </select>
-                      </div>
-                  </div>
-                  <div class="col-md-2">
-                      <div class="fillter search_header">
-                         <i class="fa-solid fa-magnifying-glass"></i> Tìm Kiếm
-                      </div>
-                  </div>
-              </div>
-
-      </div>
-    </div>
+    @include('layout.publicview.end_header')
     @if(session('apply_cv_success'))
     <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
         <strong>{{session('apply_cv_success')}}</strong>
@@ -682,7 +637,7 @@
                 })
                 function record_posts(page){
                     $.ajax({
-                        url:'{{route('ajax.get.all.jobs')}}?page='+page,
+                        url:'{{route('ajax.paginate.detail_page')}}?page='+page,
                         success:function(res){
                             $('.list_posts').html(res);
                         },
@@ -692,8 +647,9 @@
                     })
             };
             $.ajax({
-                url:'{{route('ajax.get.all.jobs')}}',
+                url:'{{route('ajax.get.all.jobs.randoms')}}',
                 success:function(res){
+                    console.log(res);
                     $('.list_posts').html(res);
                 },
                 error:function(err){

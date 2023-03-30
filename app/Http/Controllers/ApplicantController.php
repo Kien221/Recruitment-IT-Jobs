@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\applicant;
+use App\Models\messages;
+use App\Models\apply_cv;
 use App\Http\Requests\StoreapplicantRequest;
 use App\Http\Requests\UpdateapplicantRequest;
 use Illuminate\Support\Facades\Session;
@@ -64,7 +66,16 @@ class ApplicantController extends Controller
     }
     public function delete_job_apply(request $request)
     {
-        $delete_job_apply = DB::table('apply_cvs')->where('id',$request->job_apply_cv_id)->delete();
+        $message_id = messages::where('apply_cvs_id',$request->job_apply_cv_id)->first();
+        if($message_id != null){
+            DB::table('messages')->where('id',$message_id->id)->delete();
+        }
+        $apply_cv_id = apply_cv::find($request->job_apply_cv_id);
+        if($apply_cv_id->file_cv != null){
+            Storage::delete('public/'.$apply_cv_id->file_cv);
+            DB::table('apply_cvs')->where('id',$request->job_apply_cv_id)->delete();
+        }
+        DB::table('apply_cvs')->where('id',$request->job_apply_cv_id)->delete();
         return response()->json(['message'=>'Xóa thành công']);
     }
 
