@@ -1,16 +1,16 @@
 # DỰ ÁN WEB TUYỂN DỤNG VIỆC LÀM IT
 1.Mô tả
 Xây dựng trang web môi giới việc làm IT giúp kết nối giữa nhà tuyển dụng với ứng cử viên có thể là sinh viên ngành CNTT hoặc các đối tượng khác có nhu cầu tìm kiếm việc làm về lĩnh vực IT.
-Đối tượng người dùng:
-	+ADMIN
-	+Ứng cử viên
-	+HR (nhà tuyển dụng)
++   Đối tượng người dùng:
+	- ADMIN
+	- Ứng cử viên
+	- HR (nhà tuyển dụng)
 2.Chức năng chính: 
-+ADMIN:
++   ADMIN:
     - quản lí người dùng ( hr , ứng cử viên)
    	- Quản lí bài viết ( file JD , blog IT)
 	- Cập nhật giao diện
-+Nhà tuyển dụng
++   Nhà tuyển dụng
  	- Đăng bài tuyển dụng ( kèm file JD)
 	- Tìm kiếm ứng viên
 	- Tạo công ty
@@ -28,6 +28,6 @@ Xây dựng trang web môi giới việc làm IT giúp kết nối giữa nhà t
 	- Report bài viết
 
 3.Công nghệ, ngôn ngữ lập trình:
-Front-end : HTML, CSS , JS
-Back-end :  Laravel , MySql
-Và các package , library hỗ trợ khác.
+- Front-end : HTML, CSS , JS
+- Back-end :  Laravel , MySql
+- Và các package , library hỗ trợ khác.
