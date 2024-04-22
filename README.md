@@ -10,11 +10,15 @@ Xây dựng trang web môi giới việc làm IT giúp kết nối giữa nhà t
     - quản lí người dùng ( hr , ứng cử viên)
    	- Quản lí bài viết ( file JD , blog IT)
 	- Cập nhật giao diện
+    - Gửi email thông báo realtime sự kiện cho HR
 +   Nhà tuyển dụng
  	- Đăng bài tuyển dụng ( kèm file JD)
 	- Tìm kiếm ứng viên
 	- Tạo công ty
 	- nâng cấp tài khoản
+    - Duyệt CV
+    - Tạo, chỉnh sửa bài tuyển dụng
+    - Nhắn tin ứng cử viên 
 	//- Viết blog
 	- Cập nhật thông tin
 - Đăng kí ,  đăng nhập ( có thể bằng mạng xh) 
@@ -24,6 +28,8 @@ Xây dựng trang web môi giới việc làm IT giúp kết nối giữa nhà t
 	- Đăng kí ,  đăng nhập ( có thể bằng mạng xh)
     - Thông báo cv đã được chấp nhận
 	- Lưu bài viết
+    - Việc đã ứng tuyển
+    - Nhắn tin với HR
 	//- Viết Blog
 	- Report bài viết
 
