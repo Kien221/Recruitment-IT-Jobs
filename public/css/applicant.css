@@ -190,9 +190,9 @@
 }
 .manager_status_cv p{
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 15px;
     color: #444;
-    font-weight: 400;
+    font-weight: 600;
 }
 .form-check-label-allow{
     font-size: 16px;
@@ -222,10 +222,18 @@
 input[type="radio"]{
     color: #00b14f;
 }
-.remind span{
+.remind{
     font-size: 13px;
-    color: #e74c3c;
+    color: #00b14f;
    
+}
+.sub-cv-des{
+    font-size: 15px;
+    border-color: #00b14f;
+    font-weight: 400;
+}
+.tiltle_subcv{
+    margin-bottom: 2px;
 }
 .remind{
     line-height: 1.1;

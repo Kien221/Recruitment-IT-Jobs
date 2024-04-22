@@ -11,6 +11,7 @@ use App\Models\companies;
 use Carbon\Carbon;
 use App\Events\HrAcceptCv;
 use Illuminate\Support\Facades\DB;
+use App\Models\messages;
 class PostController extends Controller
 {
     /**
@@ -34,10 +35,13 @@ class PostController extends Controller
             ]);
         }
     }
-    public function detail(Request $request,$id){
+    public function detail($id,$slug){
         $detail_post = DB::table('posts')
                         ->join('companies','posts.company_id','=','companies.id')
-                        ->select('posts.*','companies.*','posts.id as post_id')
+                        ->leftJoin('hrs','companies.hr_id','=','hrs.id')
+                        ->leftJoin('level_account','hrs.id','=','level_account.hr_id')
+                        ->leftJoin('services','level_account.service_id','=','services.id')
+                        ->select('posts.*','services.border_post as borderpost','services.hot_company as hot_company','companies.name as name','companies.logo as logo','companies.description_company as description_company','companies.number_of_employees as number_of_employees','companies.address as address')
                         ->where('posts.id',$id)
                         ->first();
         $detail_post->expired_post = Carbon::parse($detail_post->expired_post)->format('d-m-Y');
@@ -57,10 +61,14 @@ class PostController extends Controller
     }
     public function ajax_paginate_posts_random_detail_page(){
         Carbon::setLocale('vi');
-        $posts = Post::inRandomOrder()
-                        ->join('companies','posts.company_id','=','companies.id')
-                        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
-                        ->paginate(5);
+        $posts = DB::table('posts')
+                ->join('companies','posts.company_id','=','companies.id')
+                ->leftJoin('hrs','companies.hr_id','=','hrs.id')
+                ->leftJoin('level_account','hrs.id','=','level_account.hr_id')
+                ->leftJoin('services','level_account.service_id','=','services.id')
+                ->select('posts.*','services.border_post as borderpost','services.hot_company as hot_company','companies.name as company_name','companies.logo as company_logo')
+                ->inRandomOrder()
+                ->paginate(5);
         foreach($posts as $post){
             $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
         }
@@ -69,10 +77,14 @@ class PostController extends Controller
     
     public function ajax_paginate_posts_detail_page(){
         Carbon::setLocale('vi');
-        $posts = Post::inRandomOrder()
-                        ->join('companies','posts.company_id','=','companies.id')
-                        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
-                        ->paginate(5);
+        $posts = DB::table('posts')
+                ->join('companies','posts.company_id','=','companies.id')
+                ->leftJoin('hrs','companies.hr_id','=','hrs.id')
+                ->leftJoin('level_account','hrs.id','=','level_account.hr_id')
+                ->leftJoin('services','level_account.service_id','=','services.id')
+                ->select('posts.*','services.border_post as borderpost','services.hot_company as hot_company','companies.name as company_name','companies.logo as company_logo')
+                ->inRandomOrder()
+                ->paginate(5);
         foreach($posts as $post){
             $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
         }
@@ -87,8 +99,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $company_id = Companies::where('hr_id',session()->get('id_hr'))->first();
-        $post = new Post();
-        $post = Post::create([
+        Post::create([
             'title' => $request->title,
             'slug' => $request->slug,
             'languages' => json_encode(request('languages')),
@@ -109,49 +120,145 @@ class PostController extends Controller
         
         return redirect()->route('show.posted.view')->with('create_post_success','Tạo bài tuyển dụng thành công');
     }
+    public function search(Request $request){
+        Carbon::setLocale('vi');
+        if($request->search_by_language == null && $request->choice_city == null){
+            $posts = Post::query()
+                        ->join('companies','posts.company_id','=','companies.id')
+                        ->where('position','like','%'.$request->search_by_positions.'%')
+                        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+                        ->orderBy('posts.id','desc')
+                        ->get();
+            foreach($posts as $post){
+                $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
+            }
+            $html = view('layout.api.search_posts',compact('posts'))->render();
+            return response()->json(['data'=>$html]);
+        }
+        if($request->search_by_positions == null && $request->choice_city == null){
+            $posts = Post::query()
+                        ->join('companies','posts.company_id','=','companies.id')
+                        ->where('languages','like','%'.$request->search_by_language.'%')
+                        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+                        ->orderBy('posts.id','desc')
+                        ->get();
+            foreach($posts as $post){
+                $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
+            }
+            $html = view('layout.api.search_posts',compact('posts'))->render();
+            return response()->json(['data'=>$html]);
+        }
+        if($request->search_by_positions == null && $request->search_by_language == null){
+            $posts = Post::query()
+            ->join('companies','posts.company_id','=','companies.id')
+            ->where('city','like','%'.$request->choice_city.'%')
+            ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+            ->orderBy('posts.id','desc')
+            ->get();
+            foreach($posts as $post){
+                $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
+            }
+            $html = view('layout.api.search_posts',compact('posts'))->render();
+            return response()->json(['data'=>$html]);
+        }
+        if($request->search_by_positions == null){
+            $posts = Post::query()
+            ->join('companies','posts.company_id','=','companies.id')
+            ->where('languages','like','%'.$request->search_by_languages.'%')
+            ->where('city','like','%'.$request->choice_city.'%')
+            ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+            ->orderBy('posts.id','desc')
+            ->get();
+            foreach($posts as $post){
+                $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
+            }
+            $html = view('layout.api.search_posts',compact('posts'))->render();
+            return response()->json(['data'=>$html]);
+        }
+        if($request->search_by_languages == null){
+            $posts = Post::query()
+            ->join('companies','posts.company_id','=','companies.id')
+            ->where('position','like','%'.$request->search_by_positions.'%')
+            ->where('city','like','%'.$request->choice_city.'%')
+            ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+            ->orderBy('posts.id','desc')
+            ->get();
+            foreach($posts as $post){
+                $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
+            }
+            $html = view('layout.api.search_posts',compact('posts'))->render();
+            return response()->json(['data'=>$html]);
+        }
+        if($request->choice_city == null){
+            $posts = Post::query()
+            ->join('companies','posts.company_id','=','companies.id')
+            ->where('position','like','%'.$request->search_by_positions.'%')
+            ->where('languages','like','%'.$request->search_by_languages.'%')
+            ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+            ->orderBy('posts.id','desc')
+            ->get();
+            foreach($posts as $post){
+                $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
+            }
+            $html = view('layout.api.search_posts',compact('posts'))->render();
+            return response()->json(['data'=>$html]);
+        }
+        $posts = Post::query()
+        ->join('companies','posts.company_id','=','companies.id')
+        ->where('position','like','%'.$request->search_by_positions.'%')
+        ->where('languages','like','%'.$request->search_by_languages.'%')
+        ->where('city','like','%'.$request->choice_city.'%')
+        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+        ->orderBy('posts.id','desc')
+        ->get();
+        foreach($posts as $post){
+            $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
+        }
+        $html = view('layout.api.search_posts',compact('posts'))->render();
+        return response()->json(['data'=>$html]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
+    public function edit_post_view($id,$slug){
+        $post = Post::where('id',$id)->first();
+        $company = Companies::where('id',$post->company_id)->first();
+        $post->languages = json_decode($post->languages);
+        $post->position = json_decode($post->position);
+        $post->expired_post = Carbon::parse($post->expired_post)->format('Y-m-d');
+        return view('hr_view.edit_post',compact('post','company'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdatePostRequest  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatePostRequest $request, Post $post)
-    {
-        //
+    public function update_post(Request $request,$id){
+        $post = Post::where('id',$id)->first();
+        $post->update([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'languages' => json_encode(request('languages')),
+            'city' => $request->city,
+            'district' => $request->district,
+            'position' => json_encode(request('position')),
+            'work_type' => $request->work_type,
+            'min_salary' => $request->min_salary,
+            'max_salary' => $request->max_salary,
+            'unit_money' => $request->unit_money,
+            'number_of_recruitment' => $request->number_of_recruitment,
+            'expired_post' => $request->expired_post,
+            'description' => $request->description,
+            'requirement' => $request->requirement,
+            'benefit' => $request->benefit,
+        ]);
+        return redirect()->route('post.edit',[$post->id,$post->slug])->with('update_post_success','Cập nhật bài tuyển dụng thành công');
     }
+    public function delete_post($id){
+        $apply_cvs_ids = DB::table('apply_cvs')->where('post_id', $id)->pluck('id');
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Post $post)
-    {
-        //
+        // Delete messages related to the apply_cvs_ids
+        messages::whereIn('apply_cvs_id', $apply_cvs_ids)->delete();
+
+        // Now you can delete the child records
+        DB::table('apply_cvs')->where('post_id', $id)->delete();
+        DB::table('report_post')->where('post_id', $id)->delete();
+        DB::table('save_post')->where('post_id', $id)->delete();
+        // And finally, delete the parent record
+        DB::table('posts')->where('id', $id)->delete();
+        return redirect()->route('show.posted.view')->with('delete_post_success','Xóa bài tuyển dụng thành công');
     }
 }

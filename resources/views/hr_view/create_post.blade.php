@@ -78,7 +78,7 @@
                                             <label for="" style="margin-bottom:10px">Vị trí tuyển dụng(*)</label>
                                                 <br>
                                             <select class="form-control" multiple="multiple" id="select-position-apply" name="position[]" required="required">
-                                                <option value="intern-fresher">intern</option>
+                                                <option value="intern">intern</option>
                                                 <option value="fresher">fresher</option>
                                                 <option value="junior">junior</option>
                                                 <option value="senior">senior</option>

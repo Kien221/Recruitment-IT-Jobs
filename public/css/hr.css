@@ -14,8 +14,8 @@ html{
 }
 
 .logo_hr_view{
-    width: 60%;
-    background-size: contain; 
+    width: 35%;
+    background-size:contain; 
     margin-left: -90px;
 }
 .menu a{
@@ -562,7 +562,37 @@ td{
     border-radius: 5px;
     padding: 20px;
 }
+#content-cv_profile_topcv{
+    position: relative;
+    box-sizing: border-box;
+    margin: 30px auto;
+    overflow: hidden;
+    background-color: white;
+    display: block;
+    width: 900px;
+    border-radius: 5px;
+    padding: 20px;
+
+}
+#content-cv_applicant{
+    position: relative;
+    box-sizing: border-box;
+    margin: 30px auto;
+    overflow: hidden;
+    background-color: white;
+    display: block;
+    width: 900px;
+    border-radius: 5px;
+    padding: 20px;
+}
 .close i{
+    float: right;
+    margin-top: -107px;
+    margin-right: -87px;
+    font-size: 30px;
+    color: red;
+}
+.close_cv i{
     float: right;
     margin-top: -107px;
     margin-right: -87px;
@@ -620,3 +650,216 @@ td{
   .text_center_job_apply{
     padding-top: 22px !important;
   }
+
+  .buy-service-header{
+    background-color: #f1f2f6;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  .buy-service-header-text{
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+  }
+  .list-service{
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f1f2f6;
+    border-radius: 5px;
+
+  }
+.service-item{
+    padding: 10px;
+    background-color: #fff;
+}
+
+
+
+.cart_product{
+    margin: 100px 90px;
+    display: flex;
+}
+.colum-10{
+    width: 100%;
+}
+.colum-8{
+    width: 70%;
+    padding: 0 20px;
+}
+.colum-6-5{
+    width: 65%;
+}
+.colum-6{
+    width: 60%;
+}
+.colum-5{
+    width: 50%;
+}
+.colum-4{
+    width: 40%;
+}
+.colum-2-5{
+    width: 25%;
+}
+.colum-3-5{
+    width: 35%;
+}
+.colum-3{
+    width: 30%;
+}
+.colum-2{
+    width: 18%;
+}
+.colum-1-1{
+    width: 10%;
+}
+.colum-1-5{
+    width: 15%;
+}
+.colum-1{
+    width: 6%;
+}
+.cart-title{
+    font-size: 14px;
+    color: #868e96;
+}
+.cart-a{
+    text-decoration: none;
+    color: black;
+}
+
+.cart-a:hover{
+    text-decoration-line: underline;
+    color: black;   
+}
+
+.header-info{
+    background-color: #f8f9fa;
+    display: flex;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    font-weight: 700;
+    padding: 1.2rem 2rem;
+    text-align: center;
+}
+
+.cart-item{
+    display: flex;
+    width: 100%;
+    position: relative;
+    margin-top: 30px;
+}
+.names-img{
+    display: flex;
+    
+}
+
+.img{
+    width: 100px;
+}
+
+.item-names{
+    margin: 16px 0 0 16px;
+}
+.names{
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+.names-p{
+    color: #868e96;
+    font-size: 14px;
+}
+
+.money{
+    text-align: center;
+    font-size: 14px;
+    margin-top: 24px;
+}
+
+.quantity{
+    margin-top: 24px;
+}
+.quantity-box{
+    font-size: 20px;
+    width: 40px;
+}
+
+.count{
+    text-align: center;
+    font-size: 14px;
+    margin-top: 24px;
+    margin-right: 50px;
+    
+}
+.remove{
+    width: 100%;
+    margin: 30px 0 0 0;
+}
+.cart-remove{
+    color: #000;
+}
+.back-pay{
+    display: flex;
+    padding-top: 75px;
+}
+
+.back-a{
+    color: #868e96;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: 700;
+}
+.back-a:hover{
+    text-decoration-Line: underLine;
+    color: #868e96;
+}
+
+.btn-pay{
+    background-color: #2b6800 ;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: 700;
+    border-style: none;
+}
+
+.btn-pay:hover{
+  background-color: #81d742;
+}
+
+.bill{
+    background-color: #f8f9fa;
+    padding: 0 0;
+}
+.bill-tt{
+    padding-left: 24px;
+    padding-top: 16px ;
+}
+.title-bill{
+    text-align: center;
+    
+}
+.expense-bill{
+    font-size: 14px;
+    color: black;
+    padding: 15px 0 15px 0;
+}
+
+.value{
+    padding: left 50px; ;
+}
+.fee{
+    display: flex;
+    padding: 15px 0 15px 0;
+}
+.count-fee{
+    color: #000;
+    font-size: 18px;
+    font-weight: 500;
+}

@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use App\Http\Requests\StorehrRequest;
 use App\Http\Requests\UpdatehrRequest;
 use App\Models\apply_cv;
+use Illuminate\Support\Facades\DB;
 
 class HrController extends Controller
 {
@@ -28,7 +29,7 @@ class HrController extends Controller
                         ->join('companies','posts.company_id','=','companies.id')
                         ->where('apply_cvs.status',1)
                         ->where('companies.hr_id',session()->get('id_hr'))
-                        ->get()
+                        ->DISTINCT('apply_cvs.applicant_id')
                         ->count();
         $num_posts = Post::query()
                         ->join('companies','posts.company_id','=','companies.id')
@@ -47,8 +48,14 @@ class HrController extends Controller
                         ->join('companies','posts.company_id','=','companies.id')
                         ->where('companies.hr_id',session()->get('id_hr'))
                         ->get()
-                        ->count();                   
-        return View('hr_view.index',compact('hr','num_cv_accepted','num_cv_not_seen','num_posts','num_all_cv'));
+                        ->count();
+        $level_account_hr = DB::table('level_account')
+                            ->join('services','level_account.service_id','=','services.id')
+                            ->where('hr_id',session()->get('id_hr'))
+                            ->select('services.*','level_account.*')
+                            ->first();
+        return view('hr_view.index', compact('hr', 'num_cv_accepted', 'num_cv_not_seen', 'num_posts', 'num_all_cv', 'level_account_hr'));
+
     }
 
     public function resigntion(Request $request){
@@ -100,7 +107,12 @@ class HrController extends Controller
     public function create_Post_View(){
         $hr = hr::find(session()->get('id_hr'));
         $company = companies::where('hr_id',$hr->id)->first();
+
         if($company){
+            if($company->status == 1){
+                return redirect()->route('create.company.view')->with('error','Công ty của bạn đang bị cấm đăng tin tuyển dụng, vui lòng liên hệ với quản trị viên để biết thêm chi tiết');
+            }
+            else
             return view('hr_view.create_post',compact('company'));
         }
         else{
@@ -151,28 +163,19 @@ class HrController extends Controller
         }
         return view('hr_view.list_applicant_be_accept',compact('list_applicants_accepted'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StorehrRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StorehrRequest $request)
-    {
-        //
+    public function email_from_admin(){
+        $email_from_admin = DB::table('emails')
+        ->orderBy('created_at','desc')
+        ->get();
+        return view('hr_view.email_from_admin',compact('email_from_admin'));
+    }
+    public function email_from_admin_detail($id){
+        $detail_email = DB::table('emails')
+        ->where('id',$id)
+        ->first();
+        return view('hr_view.email_from_admin_detail',compact('detail_email'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\hr  $hr
-     * @return \Illuminate\Http\Response
-     */
-    public function show(hr $hr)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

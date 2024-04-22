@@ -44,19 +44,18 @@
                                       @else
                                       <td class="text_center"><a href="{{route('show_applicant.apply',[$post->id,$post->slug])}}">{{$post->applicant}} CV</a></td>
                                       @endif
-                                      @if($post->is_expired == 1)
-                                      <td>
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                          <a href="" class="btn btn-primary btn-sm" style="color:white"><i class="fas fa-edit"></i></a>
-                                        </div>
-                                    </td> 
-                                    @else
                                     <td>
                                       <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button id="btn_delete_post" class="btn btn-danger btn-sm" style="color:white"><i class="fas fa-trash"></i></button>
+                                        <a href="{{route('post.edit',[$post->id,$post->slug])}}" class="btn btn-success btn-sm" style="color:white"><i class="fas fa-edit"></i></a>
+                                      </div>  
+                                      <div class="btn-group" role="group" aria-label="Basic example">
+                                        <form action="{{route('post.delete',$post->id)}}" method="post">
+                                          @csrf
+                                          @method('DELETE')
+                                          <button type="submit" class="btn btn-danger btn-sm" id="btn_delete_post" onclick="if (!confirm('Bạn có muốn xóa bài viết không?')) { return false }" style="color:white" ><i class="fas fa-trash-alt"></i></button>
+                                        </form>
                                       </div>
                                   </td>
-                                    @endif
                                     @endforeach   
                           </tbody>
                   </table>

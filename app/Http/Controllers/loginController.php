@@ -12,6 +12,7 @@ class loginController extends Controller
         $password = $request->password;
         $applicant = applicant::where('email',$email)->where('password',$password)->first();
         $hr = hr::where('email',$email)->where('password',$password)->first();
+        $check_login_applicant = applicant::where('email',$email)->where('password',$password)->first();
         if($applicant){
             session()->put('success_login_applicant','success_login_applicant');
             session()->put('id_aplicant',$check_login_applicant->id);

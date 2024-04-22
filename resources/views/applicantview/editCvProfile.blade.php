@@ -162,6 +162,31 @@
                                                 <input type="text" placeholder="https://github.com/username" name="links" value="{{$cv_user->links}}">
                                             </div>
                                         </div>
+                                        <div class="infor_input">
+                                            <div class="col-md-3">
+                                                FileCV (PDF)
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="upfile" id="upfile">
+                                                    <label for="up_cv" class="custom-file-upload">
+                                                        <i class="fa fa-cloud-upload"></i> Tải CV lên từ máy tính(PDF)
+                                                    </label>
+                                                    <input type="file" id="up_cv" name="file_cv">
+                                                </div>
+</br>
+                                                @if($cv_user->filecv != null)
+                                                <div class="col-md-2">
+                                                    <a href="{{asset('storage/'.$cv_user->filecv)}}"  target="_blank">{{$cv_user->filecv}}</a>
+                                                </div>
+                                                @endif
+                                                
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="show_cv">
+                                                    <embed src="" id="img_cv">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <p class="warning_text">Chú ý: không được để trống các thông tin bắt buộc có kí tự (*)</p>
                                 <!-- <form action="" enctype="multipart/form-data">
@@ -518,6 +543,17 @@
                 `);
             })
         });
+        $('#up_cv').change(function(){
+            let file = $(this).prop('files')[0];
+            $('.show_cv').prepend(`<span style="color:black;font-weight:600">${file.name}</span>`);
+            let reader = new FileReader();
+            reader.onload = function(){
+                $('#img_cv').attr('src',reader.result);
+            }
+            reader.readAsDataURL(file);
+
+            console.log(file);
+        })
     </script>
 
 </body>

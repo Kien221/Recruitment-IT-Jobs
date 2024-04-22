@@ -18,12 +18,27 @@ class HomeController extends Controller
                                 ->get();
 
         $review_company = Post::inRandomOrder()
-                        ->join('companies','posts.company_id','=','companies.id')
-                        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
-                        ->first();
-
+        ->join('companies','posts.company_id','=','companies.id')
+        ->join('hrs','companies.hr_id','=','hrs.id')
+        ->leftJoin('level_account','hrs.id','=','level_account.hr_id') // Changed this line
+        ->join('services','level_account.service_id','=','services.id')
+        ->select('posts.*','services.border_post as borderpost','services.hot_company as hot_company','companies.name as name','companies.logo as company_logo')
+        ->first();
+        if (!$review_company) {
+            $review_company = Post::inRandomOrder()
+                ->join('companies','posts.company_id','=','companies.id')
+                ->select('posts.*', 'companies.name as name','companies.logo as company_logo')
+                ->first();
+        }
         $hot_companies = companies::inRandomOrder()->take(4)->DISTINCT('companies.id')->get();
-        $hot_jobs = Post::inRandomOrder()->take(3)->paginate(3);
+        $hot_jobs =  DB::table('posts')
+        ->join('companies','posts.company_id','=','companies.id')
+        ->leftJoin('hrs','companies.hr_id','=','hrs.id')
+        ->leftJoin('level_account','hrs.id','=','level_account.hr_id')
+        ->leftJoin('services','level_account.service_id','=','services.id')
+        ->select('posts.*','services.border_post as borderpost','services.hot_company as hot_company','companies.name as company_name')
+        ->inRandomOrder() // Add this line
+        ->paginate(3);
         if(session('post_id') && session('slug') != null){
             session()->forget('post_id');
             session()->forget('slug');
@@ -34,7 +49,10 @@ class HomeController extends Controller
         Carbon::setLocale('vi');
         $posts = DB::table('posts')
                 ->join('companies','posts.company_id','=','companies.id')
-                ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+                ->leftJoin('hrs','companies.hr_id','=','hrs.id')
+                ->leftJoin('level_account','hrs.id','=','level_account.hr_id')
+                ->leftJoin('services','level_account.service_id','=','services.id')
+                ->select('posts.*','services.border_post as borderpost','services.hot_company as hot_company','companies.name as company_name','companies.logo as company_logo')
                 ->orderby('posts.created_at','desc')
                 ->paginate(10);
         $count_post = Post::count();
@@ -50,7 +68,10 @@ class HomeController extends Controller
         Carbon::setLocale('vi');
         $posts = DB::table('posts')
         ->join('companies','posts.company_id','=','companies.id')
-        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+        ->leftJoin('hrs','companies.hr_id','=','hrs.id')
+        ->leftJoin('level_account','hrs.id','=','level_account.hr_id')
+        ->leftJoin('services','level_account.service_id','=','services.id')
+        ->select('posts.*','services.border_post as borderpost','services.hot_company as hot_company','companies.name as company_name','companies.logo as company_logo')
         ->orderby('posts.created_at','desc')
         ->paginate(10);
         foreach($posts as $post){
@@ -60,14 +81,26 @@ class HomeController extends Controller
         return view('layout.api.paginate_posts',compact('posts'))->render();
     }
     public function ajax_paginate_hot_jobs(){
-        $hot_jobs = Post::inRandomOrder()->take(3)->paginate(3);
+        $hot_jobs = DB::table('posts')
+                    ->join('companies','posts.company_id','=','companies.id')
+                    ->leftJoin('hrs','companies.hr_id','=','hrs.id')
+                    ->leftJoin('level_account','hrs.id','=','level_account.hr_id')
+                    ->leftJoin('services','level_account.service_id','=','services.id')
+                    ->select('posts.*','services.border_post as borderpost','services.hot_company as hot_company','companies.name as company_name')
+                    ->orderby('posts.created_at','desc')
+                    ->inRandomOrder() // Add this line
+                    ->paginate(3);
         return view('layout.api.paginate_hotjobs',compact('hot_jobs'))->render();
     }
     public function jobs_by_city(Request $request){
         Carbon::setLocale('vi');
         $posts_by_city = Post::where('city',$request->get('city'))
                         ->join('companies','posts.company_id','=','companies.id')
-                        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+                        ->leftJoin('hrs','companies.hr_id','=','hrs.id')
+                        ->leftJoin('level_account','hrs.id','=','level_account.hr_id')
+                        ->leftJoin('services','level_account.service_id','=','services.id')
+                        ->select('posts.*','services.border_post as borderpost','services.hot_company as hot_company','companies.name as company_name','companies.logo as company_logo')
+                        ->orderby('posts.created_at','desc')
                         ->paginate(5);
                         foreach($posts_by_city as $post){
                             $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();
@@ -80,7 +113,11 @@ class HomeController extends Controller
         Carbon::setLocale('vi');
         $posts_by_city = Post::where('city',$request->get('city'))
                         ->join('companies','posts.company_id','=','companies.id')
-                        ->select('posts.*','companies.name as company_name','companies.logo as company_logo')
+                        ->leftJoin('hrs','companies.hr_id','=','hrs.id')
+                        ->leftJoin('level_account','hrs.id','=','level_account.hr_id')
+                        ->leftJoin('services','level_account.service_id','=','services.id')
+                        ->select('posts.*','services.border_post as borderpost','services.hot_company as hot_company','companies.name as company_name','companies.logo as company_logo')
+                        ->orderby('posts.created_at','desc')
                         ->paginate(5);
                         foreach($posts_by_city as $post){
                             $post->expired_post = Carbon::parse($post->expired_post)->diffForHumans();

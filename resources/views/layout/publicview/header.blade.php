@@ -85,7 +85,7 @@
                                     <a href="#" onclick="show_choice_role_form()" class="signin-button">Đăng ký</a>
                                </li>
                                <li class="menu">
-                                   <a href="../hr_view/index.html" class="post-button">Đăng Tuyển & Tìm Hồ Sơ</a>
+                                   <a href="" class="post-button">Đăng Tuyển & Tìm Hồ Sơ</a>
                                </li>
                            </ul>
     

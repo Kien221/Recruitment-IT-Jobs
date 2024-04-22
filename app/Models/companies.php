@@ -29,6 +29,9 @@ class companies extends Model
     public function post(){
         return $this->hasMany(Post::class,'company_id','id');
     }
+    public function hr(){
+        return $this->belongsTo(hr::class,'hr_id','id');
+    }
     public function imagesCompany(){
         return $this->hasMany(imagesCompany::class);
     }

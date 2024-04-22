@@ -150,95 +150,157 @@
                 </div>
                 @endif
                 <div class="col-md-3">
-                    <div class="manager_status_cv">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="check_allow" checked>
-                            <label class="form-check-label" for="check_allow">Trạng thái tìm việc đang bật</label>
-                          </div>
-                        
-                        <p>Bật tìm việc để nhận được nhiều cơ hội việc làm tốt nhất từ TopCV</p>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="check" checked>
-                            <label class="form-check-label-allow" for="check">Cho phép NTD liên hệ bạn qua</label>
-                        </div>
-                        <div class="choice_cv">
-                            <div class="cv_online">
-                                <input type="radio" checked>
-                                <span>CV Online</span>
+                    @if($sub_cv !== null)
+                        <form action="{{route('update.sub_cv.applicant')}}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <div class="manager_status_cv">
+                                <div class="form-check form-switch">
+                                    @if($user->status_public_cv == 1)
+                                    <input class="form-check-input" type="checkbox" role="switch" id="check_allow" checked>
+                                    <label class="form-check-label" for="check_allow">Trạng thái tìm việc đang bật</label>
+                                    @else
+                                    <input class="form-check-input" type="checkbox" role="switch" id="check_allow">
+                                    <label class="form-check-label" for="check_allow">Trạng thái tìm việc đang tắt</label>
+                                    @endif
+                                </div>
+                                
+                                <p>Bật tìm việc giúp hồ sơ của bạn nổi bật hơn và được chú ý nhiều hơn trong danh sách tìm kiếm của NTD.</p>
+                                <div class="sub-cv">
+                                    <p>Nhà tuyển dụng sẽ thấy bạn qua</p>
+                                        <div class="choice_cv">
+                                            <div class="cv_online">
+                                                @if($sub_cv->typeCV == "CV Upload")
+                                                    <input type="radio" name="typeCV" value="CV Upload" checked>
+                                                @else
+                                                    <input type="radio" name="typeCV" value="CV Upload">
+                                                @endif
+                                                <span>CV Upload</span>
+                                            </div>
+                                            <div class="profile_cv">
+                                                @if($sub_cv->typeCV == "CV Profile")
+                                                    <input type="radio" name="typeCV" value="CV Profile" checked>
+                                                @else
+                                                    <input type="radio" name="typeCV" value="CV Profile">
+                                                @endif
+                                                <span>TopCV Profile</span>
+                                            </div>
+                                        </div>
+                                        <p class="tiltle_subcv">Số năm kinh nghiệm</p>
+                                        <input type="text" placeholder="Số năm kinh nghiệm" class="sub-cv-des" name="exp_year_work" value="{{$sub_cv->exp_year_work}}">
+                                        <p class="tiltle_subcv">Vị trí ứng tuyển</p>
+                                        <input type="text" placeholder="Vị trí ứng tuyển" class="sub-cv-des" name="position_want_to_apply" value="{{$sub_cv->position_want_to_apply}}">
+                                        <p class="tiltle_subcv">Ngôn ngữ ứng tuyển</p>
+
+                                        <input type="text" placeholder="Ngôn ngữ ứng tuyển" class="sub-cv-des" name="languages_want_to_apply" value="{{$sub_cv->languages_want_to_apply}}">
+                                 
+                                        <p class="tiltle_subcv">Nơi làm việc mong muốn</p>
+                                       
+                                        <input type="text" placeholder="Nơi làm việc mong muốn" class="sub-cv-des" name="city_want_to_work" value="{{$sub_cv->city_want_to_work}}">
+                                        <style>
+                                            .sub-cv-des{
+                                                width: 100%;
+                                                padding: 5px;
+                                                border-radius: 5px;
+                                                border: 2px solid green;
+                                                margin: 5px 0;
+                                            }
+                                        </style>
+                                        </br>
+                                        <button class="btn-success" style="margin:10px 0;padding:3px 10px;border-radius:5px">Lưu</button>
+                                </div>
+                        </form> 
+
+                    @else
+                    <form action="{{route('update.sub_cv.applicant')}}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <div class="manager_status_cv">
+                            <div class="form-check form-switch">
+                                    @if($user->status_public_cv == 1)
+                                    <input class="form-check-input" type="checkbox" role="switch" id="check_allow" checked>
+                                    <label class="form-check-label" for="check_allow">Trạng thái tìm việc đang bật</label>
+                                    @else
+                                    <input class="form-check-input" type="checkbox" role="switch" id="check_allow">
+                                    <label class="form-check-label" for="check_allow">Trạng thái tìm việc đang tắt</label>
+                                    @endif
                             </div>
-                            <div class="profile_cv">
-                                <input type="radio" >
-                                <span>TopCV Profile</span>
+                            
+                            <p>Bật tìm việc giúp hồ sơ của bạn nổi bật hơn và được chú ý nhiều hơn trong danh sách tìm kiếm của NTD.</p>
+                            <div class="sub-cv">
+                                <p>Nhà tuyển dụng sẽ thấy bạn qua</p>
+                                    <div class="choice_cv">
+                                        <div class="cv_online">
+                                            <input type="radio" name="typeCV" value="CV Upload">
+                                            <span>CV Upload</span>
+                                        </div>
+                                        <div class="profile_cv">
+                                            <input type="radio" name="typeCV" value="CV Profile">
+                                            <span>TopCV Profile</span>
+                                        </div>
+                                    </div>
+                                    <p class="tiltle_subcv">Số năm kinh nghiệm</p>
+                                    <input type="text" placeholder="Số năm kinh nghiệm" class="sub-cv-des" name="exp_year_work">
+                                    <p class="tiltle_subcv">Vị trí ứng tuyển</p>
+                                    <input type="text" placeholder="Vị trí ứng tuyển" class="sub-cv-des" name="position_want_to_apply">
+                                    <p class="tiltle_subcv">Ngôn ngữ ứng tuyển</p>
+                                    <input type="text" placeholder="Ngôn ngữ ứng tuyển" class="sub-cv-des" name="languages_want_to_apply">
+                                    <p class="tiltle_subcv">Nơi làm việc mong muốn</p>
+                                    <input type="text" placeholder="Nơi làm việc mong muốn" class="sub-cv-des" name="city_want_to_work">
+
+                                    <style>
+                                        .sub-cv-des{
+                                            width: 100%;
+                                            padding: 5px;
+                                            border-radius: 5px;
+                                            border: 1px solid #ccc;
+                                            margin: 5px 0;
+                                        }
+                                    </style>
+                                    </br>
+                                    <button class="btn-success" style="margin:10px 0;padding:3px 10px;border-radius:5px">Lưu</button>
+                            </div>
+                            </form>
+                    @endif 
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="check" checked>
+                                <label class="form-check-label-allow" for="check">Cho phép NTD tìm kiếm hồ sơ</label>
+                            </div>
+                            <div class="choice_cv">
+                                <div class="cv_online">
+                                    <span style="font-size:14px">Khi có cơ hội việc làm phù hợp, NTD sẽ liên hệ và trao đổi với bạn qua:</span>
+                                </div>
+                            </div>
+                            <div class="remind">
+                                <div style="margin-bottom:10px">
+                                    <i class="fa-sharp fa-solid fa-envelope"></i>
+                                    <span>Nhắn tin qua Top Connect trên TopCV</span>
+                                </div>
+                                <div>
+                                    <i class="fa-sharp fa-solid fa-phone"></i>
+                                    <span>Email và Số điện thoại của bạn</span>
+                                </div>
+                                
                             </div>
                         </div>
-                        <div class="remind">
-                            <span>
-                                TopCV Profile của bạn đang hoàn thiện dưới 70%, vui lòng cập nhật thêm thông tin hoặc chọn CV Online để Nhà tuyển dụng có thể tiếp cận bạn
-                            </span>
-                        </div>
-                    </div>
+                   
                     <div class="list_company_viewed">
                         <h5>Ai đã xem hồ sơ của bạn</h5>
                         <ul>
+                            @foreach($company_watch_cv as $company)
                             <li>
                                 <div class="company">
                                     <div class="logo_company_viewed">
-                                        <img src="../assets/image/2.jpg" alt="">
+                                        <img src="{{asset('storage/'.$company->company_logo)}}" alt="">
                                     </div>
                                     <div class="name">
-                                        <a href="#">TopCV</a>
-                                        <div class="time_viewed">1 giờ trước</div>
+                                        <a href="#">{{$company->company_name}}</a>
+                                        <div class="time_viewed">
+                                        <span>{{ \Carbon\Carbon::parse($company->date_watch)->locale('vi')->diffForHumans() }}</span>
+                                        </div>
                                     </div>
                                 </div>
-
-                            </li>
-                            <li>
-                                <div class="company">
-                                    <div class="logo_company_viewed">
-                                        <img src="../assets/image/2.jpg" alt="">
-                                    </div>
-                                    <div class="name">
-                                        <a href="#">TopCV</a>
-                                        <div class="time_viewed">1 giờ trước</div>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li>
-                                <div class="company">
-                                    <div class="logo_company_viewed">
-                                        <img src="../assets/image/2.jpg" alt="">
-                                    </div>
-                                    <div class="name">
-                                        <a href="#">TopCV</a>
-                                        <div class="time_viewed">1 giờ trước</div>
-                                    </div>
-                                </div>
- 
-                            </li>
-                            <li>
-                                <div class="company">
-                                    <div class="logo_company_viewed">
-                                        <img src="../assets/image/2.jpg" alt="">
-                                    </div>
-                                    <div class="name">
-                                        <a href="#">TopCV</a>
-                                        <div class="time_viewed">1 giờ trước</div>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li>
-                                <div class="company">
-                                    <div class="logo_company_viewed">
-                                        <img src="../assets/image/2.jpg" alt="">
-                                    </div>
-                                    <div class="name">
-                                        <a href="#">TopCV</a>
-                                        <div class="time_viewed">1 giờ trước</div>
-                                    </div>
-                                </div>
-
+                            @endforeach
                             </li>
                         </ul>
                     </div>
@@ -285,17 +347,54 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
+        let check_allow = $('#check_allow').prop('checked');
+        if(check_allow == false){
+            $('.sub-cv').hide();
+        }
+        else{
+            $('.sub-cv').show();
+        }
     var checked = true;
     $('#check_allow').click(function(){
         if(checked == true){
             $('#check_allow').prop('checked', false);
             $('.form-check-label').html('');
             $('.form-check-label').append('<label class="form-check-label" for="check_allow" style=" font-size: 16px;font-weight: 600; color: #e74c3c;">Trạng thái tìm việc đang tắt</label>');
+            $('.sub-cv').hide();
+            $.ajax({
+                url: "{{route('update.status.public.cv')}}",
+                type: "PUT",
+                data: {
+                    _token: "{{csrf_token()}}",
+                    status_public_cv: 0
+                },
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            })
             checked = false;
         }else{
             $('#check_allow').prop('checked', true);
             $('.form-check-label').html('');
-            $('.form-check-label').append('<label class="form-check-label" style=" font-size: 16px;font-weight: 600;color: #00b14f;" for="check_allow">Đã bật trạng thái tìm việc</label>');
+            $('.form-check-label').append('<label class="form-check-label" style=" font-size: 16px;font-weight: 600;color: #00b14f;" for="check_allow">Trạng thái tìm việc đang bật</label>');
+            $('.sub-cv').show();
+            $.ajax({
+                url: "{{route('update.status.public.cv')}}",
+                type: "PUT",
+                data: {
+                    _token: "{{csrf_token()}}",
+                    status_public_cv: 1
+                },
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            })
             checked = true;
         }
     });
@@ -322,6 +421,24 @@
             list_link[i].style.backgroundColor = "red";
         });
     }
+    const radioButtons = document.querySelectorAll('.choice_cv input[type="radio"]');
+
+// Lặp qua từng input radio và thêm sự kiện change
+    radioButtons.forEach(radioButton => {
+        radioButton.addEventListener('change', function() {
+            // Nếu input radio này được chọn
+            if (this.checked) {
+                // Lặp qua tất cả các input radio khác
+                radioButtons.forEach(otherRadioButton => {
+                    // Nếu input radio này khác input radio được chọn và được chọn
+                    if (otherRadioButton !== radioButton && otherRadioButton.checked) {
+                        // Bỏ chọn input radio khác
+                        otherRadioButton.checked = false;
+                    }
+                });
+            }
+        });
+    });
 
 });
     </script>

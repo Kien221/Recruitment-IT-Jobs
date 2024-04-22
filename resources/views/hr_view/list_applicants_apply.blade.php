@@ -51,7 +51,7 @@
                                       @if($applicant->type_cv === 'cv_web')
                                       <td><span style="color:blue;cursor:pointer;text-decoration:underline;" class="text_center" id="cv_web">{{$applicant->name}}-{{$applicant->email}}</span></td>
                                       @else
-                                      <td class="text_center"><a href="{{asset('storage/'.$applicant->file_cv)}}"  target="blank">{{$applicant->file_cv}}</a></td>
+                                      <td class="text_center"><a href="{{asset('storage/'.$applicant->file_cv)}}"  target="blank" onClick="watch_file_cv_upload()" class="cv_upload">{{$applicant->file_cv}}</a></td>
                                       @endif
                                       <td>
                                         <div class="btn-group success_accept" role="group" aria-label="Basic example">
@@ -78,7 +78,7 @@
             </div>
 
               <div class="form-apply" id="form-apply">
-                <div id="content-cv">
+                <div id="content-cv_profile_topcv">
                 </div>
             </div>
         </div>
@@ -87,17 +87,19 @@
    $(document).ready(function(){
       $('#cv_web').click(function(){
         $('#form-apply').css('display','block');
-        $applicant_id = $('.applicant_id').val();
+        let applicant_id = $('.applicant_id').val();
+        console.log(applicant_id);
         let route = '{{route('applicant.show.cv_web')}}';
         $.ajax({
             url:route,
             method:'get',
             data:{
-              applicant_id:$applicant_id,
+              applicant_id: applicant_id,
             },
             dataType: 'json',
             success:function(data){
-                $('#content-cv').html(data);
+              console.log(data);
+                $('#content-cv_profile_topcv').html(data);
                 $('.close').click(function(){
                   $('#form-apply').css('display','none');
                 })

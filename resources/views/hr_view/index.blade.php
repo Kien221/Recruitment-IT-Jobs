@@ -1,3 +1,4 @@
+
 @section('title')- {{'Nhà Tuyển Dụng'}} @endsection
     @include('layout.hrview.header_hr')
     <div class="main_hr_view">
@@ -13,6 +14,23 @@
                     </div>
                     <div class="main_content_hr_view">
                         <h5>Bảng Tin</h5>
+                        @if (\Session::has('success'))
+                        <div class="form-apply" id="form-apply" style="display:block">
+                            <div class="content-form" style="margin-top:120px">
+                                <div class="job_apply" style="float:right;font-size:25px;color:red;cursor:pointer">
+                                    <span onclick="close_apply_form()">
+                                        <i class="fa-sharp fa-solid fa-xmark"></i>
+                                    </span>
+                                </div>
+                                <div class="method-apply" style="text-align:center">
+                                    <img src="https://www.shutterstock.com/image-vector/partying-emoji-emoticon-party-horn-600nw-1992128765.jpg" alt="" style="width:200px">
+                                    <div>
+                                        <span style="color:#01b14f;font-size:20px">{!! \Session::get('success') !!}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="banner_hr_view">
@@ -80,19 +98,27 @@
                                         </div>
                                     </div>
                                     <div class="level_account">
-                                        <p class="current_level">Tài khoản xác thực: <span>Cấp 1/5</span></p>
+                                        @if($level_account_hr != null)
+                                        <p class="current_level">Gói dịch vụ đang sử dụng: <span>{{$level_account_hr->name}}</span></p>
                                         <div class="required_up_acctount">
                                             <i class="fa-regular fa-user"></i>
-                                            <p><b>Nâng cấp tài khoản</b>: Để đạt cấp <span>2/5</span>, Quý khách cần <span>xác thực số điện thoại</span>.</p>
+                                            <p><b>Nâng cấp tài khoản</b>: Mua các gói dịch vụ để <span>được lợi ích tuyển dụng tốt nhất</span>.</p>
                                         </div>
                                         <div class="required_up_acctount">
                                             <i class="fa-solid fa-bullhorn"></i>
-                                            <p><b>Quyền lợi</b>: Khi đạt <span>2/5</span>, nhà tuyển dụng có 30 lượt tìm kiếm CV và 10 lượt xem CV từ công cụ tìm kiếm CV ứng viên.</p>
+                                            <div>
+                                                <p><b>Lượt xem CV hôm nay : </b><span>{{$level_account_hr->used_views}}/{{$level_account_hr->view_every_day}}</span></p>
+                
+                                                <p><b>Lượt tìm kiếm CV hôm nay : </b><span>{{$level_account_hr->used_search}}/{{$level_account_hr->search_every_day}}</span></p>
+                                            </div>
                                         </div>
+                                        @endif
                                         <div class="button_confirm_up_account">
-                                            <button class="btn_update_infor">
-                                                Cập nhật thông tin xác thực
-                                            </button>
+                                            <a href="{{route('buy_service_view')}}">
+                                                <button class="btn_update_infor">
+                                                    Nâng cấp tài khoản
+                                                </button>
+                                            </a>
                                             <button class="more_infor">
                                                 Tìm hiểu thêm
                                             </button>
@@ -124,7 +150,9 @@
                             </div>
                         </div>
                     </div>
+    
                 </div>
+
                 <div id="footer">
                     <div class="infor-partnership">
                         <div class="container-fluid">

@@ -61,7 +61,7 @@
                     <div class="different">Hoặc</div>
                     <div class="login_social">
                         <div class="social github">
-                            <a href="{{route('auth.github','github')}}">
+                            <a href="{{route('auth.social','github')}}">
                                 <i class="fab fa-github"></i>
                                 Github
                             </a>
@@ -73,7 +73,7 @@
                             </a>
                         </div>
                         <div class="social facebook">
-                            <a href="">
+                            <a href="{{route('auth.social','facebook')}}">
                                 <i class="fab fa-facebook-f"></i>
                                 Facebook
                             </a>

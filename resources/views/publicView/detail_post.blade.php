@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css "/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>TopCv-{{$detail_post->title}}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 <body>
     @if(session('success_login_applicant'))
@@ -35,8 +36,12 @@
 
     <div id="main-post_detail">
         <div class="container-fluid">
+            @if($detail_post->borderpost == 1)
+            <div class="row post_introduce" style="border:solid 5px red">
+            @else
             <div class="row post_introduce">
-                <div class="col-sm-9 post_company_introduce">   
+            @endif   
+                <div class="col-sm-9 post_company_introduce">
                     <div class="img-post">
     
                         <img src="{{asset('storage/'.$detail_post->logo)}}" alt="">
@@ -63,7 +68,7 @@
                     <div class="button-save_post">
                         <i class="fa-regular fa-heart"></i>
                         @if(session('id_applicant') != null)
-                        <a href="#">LƯU TIN</a>
+                        <span class="save_post" style="cursor:pointer">LƯU TIN</span>
                         @else
                         <a href="{{route('login')}}">LƯU TIN</a>
                         @endif
@@ -207,6 +212,10 @@
                     <div class="attention">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                         <p>Báo cáo tin tuyển dụng: Nếu bạn thấy rằng tin tuyển dụng này không đúng hoặc có dấu hiệu lừa đảo, <a href="#">hãy phản ánh với chúng tôi</a>.</p>
+                        <br>
+                    </div>
+                    <div class="report_btn">
+                                <span class="report-button">Báo Cáo Tin Tuyển Dụng</span>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -257,11 +266,6 @@
                                     <span class="visually-hidden">Next</span>
                                     </button>
                             </div>
-                            @if(session('id_hr') == null)
-                              <div class="report_btn">
-                                    <a href="#">Báo Cáo Tin Tuyển Dụng</a>
-                              </div>
-                            @endif
                         </div>
                     </div>
                 </div>
@@ -542,6 +546,201 @@
             </div>
         </div>
     </div>
+
+    <div class="form_report">
+            <div class="content_report">
+                <div class="report">
+                    <h4><span>Báo cáo tin tuyển dụng</span> <a href="#"> {{$detail_post->title}}</a></h4>
+                    <span class="close" onclick="close_report_form()">
+                        <i class="fa-sharp fa-solid fa-xmark"></i>
+                    </span>
+                </div>
+                <div class="reason_report">
+                    <h5><b>Lý do báo cáo:</b></h5>
+                    <div class="reason">
+                        <input type="radio" name="reason_report" id="reason1" value="Lừa đảo">
+                        <label for="reason1">Lừa đảo</label>
+                    </div>
+                    <div class="reason">
+                        <input type="radio" name="reason_report" id="reason2" value="Tin không đúng">
+                        <label for="reason2">Tin không đúng</label>
+                    </div>
+                    <div class="reason">
+                        <input type="radio" name="reason_report" id="reason3" value="Tin không phù hợp">
+                        <label for="reason3">Tin không phù hợp</label>
+                    </div>
+                    <div class="reason">
+                        <input type="radio" name="reason_report" id="reason4" value="Khác">
+                        <label for="reason4">Khác</label>
+                    </div>
+                </div>
+                <div class="detail_report">
+                    <h5><b>Chi tiết:</b></h5>
+                    <textarea name="detail_report" id="detail_report" cols="96" rows="3" placeholder="Mô tả chi tiết lý do bạn báo cáo tin tuyển dụng này."></textarea>
+                </div>
+                <div class="button">
+                    <button class="close_btn" onclick="close_report_form()"> Đóng lại</button>
+                    <button class="send_btn">Gửi báo cáo</button>
+                </div>
+            </div>
+            <style>
+                .send_btn_apply_cv{
+                    margin-left: 20px;
+                    padding: 6px 13px;
+                    background-color: #00b14f;;
+                    border: 1px solid #00b14f;
+                    color: white;
+                    font-weight: 700;
+                    border-radius: 5px;
+                }
+                .form_report{
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    z-index: 1000;
+                    display: none;
+                }
+                .content_report{
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    width: 50%;
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                }
+                .content_report .report{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .content_report .report h4{
+                    font-size: 20px;
+                }
+                .content_report .report .close{
+                    font-size: 20px;
+                    cursor: pointer;
+                }
+                .content_report .reason_report{
+                    margin-top: 20px;
+                }
+                .content_report .reason_report .reason{
+                    margin-bottom: 10px;
+                }
+                .content_report .reason_report .reason input{
+                    margin-right: 10px;
+                }
+                .content_report .detail_report{
+                    margin-top: 20px;
+                }
+                .content_report .detail_report textarea{
+                    width: 100%;
+                    height: 100px;
+                    border-radius: 10px;
+                    padding: 10px;
+                }
+                .content_report .button{
+                    margin-top: 20px;
+                }
+                .content_report .button .close_btn{
+                    padding: 10px 20px;
+                    background-color: #f0f0f0;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                }
+                .content_report .button .send_btn{
+                    padding: 10px 20px;
+                    background-color: #0d6efd;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    color: white;
+                }
+            </style>
+            <script>
+                function close_report_form(){
+                    document.querySelector('.form_report').style.display = 'none';
+                }
+            </script>
+        </div>
+
+        <div class="notify_report_success">
+            <div class="content_notify">
+                <div class="notify">
+                    <h4><span>Báo cáo tin tuyển dụng</span> <a href="#"> {{$detail_post->title}}</a></h4>
+                    <span class="close" onclick="close_notify_report()">
+                        <i class="fa-sharp fa-solid fa-xmark"></i>
+                    </span>
+                </div>
+                <div class="notify_report">
+                    <span></span>
+                </div>
+                <div class="button">
+                    <button class="close_btn" onclick="close_notify_report()"> Đóng lại</button>
+                </div>
+            </div>
+            <style>
+                .notify_report_success{
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    z-index: 1000;
+                    display: none;
+                }
+                .content_notify{
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    width: 50%;
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                }
+                .content_notify .notify{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .content_notify .notify h4{
+                    font-size: 20px;
+                }
+                .content_notify .notify .close{
+                    font-size: 20px;
+                    cursor: pointer;
+                }
+                .content_notify .notify_report{
+                    margin-top: 20px;
+                }
+                .content_notify .notify_report span{
+                    font-size: 18px;
+                }
+                .content_notify .button{
+                    margin-top: 20px;
+                }
+                .content_notify .button .close_btn{
+                    padding: 10px 20px;
+                    background-color: #f0f0f0;
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                }
+            </style>
+            <script>
+                function close_notify_report(){
+                    document.querySelector('.notify_report_success').style.display = 'none';
+                }
+            </script>
+        </div>
+
     <div class="form-apply" id="form-apply">
         <div class="content-form">
             <div class="job_apply">
@@ -552,7 +751,7 @@
             </div>
             @if(session()->get('id_applicant') != null)
             <div class="method-apply">
-                <form action="{{route('apply.cv',[$detail_post->post_id,session()->get('id_applicant')])}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('apply.cv',[$detail_post->id,session()->get('id_applicant')])}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md-7">
@@ -566,7 +765,7 @@
                                     </div>
                                     <br>
                                     <input type="radio" id="check" name="type_cv" value="cv_web">
-                                    <span class="cv_online">Chọn hồ sơ online <a href="../applicant_view/index.html" target="_blank">(Xem)</a></span>
+                                    <span class="cv_online">Chọn hồ sơ Profile TopCV <a href="../applicant_view/index.html" target="_blank">(Xem)</a></span>
                                     <br>
                                     <span class="attend">Hồ sơ chưa hoàn thiện. Vui lòng cập nhật <a href="../applicant_view/edit_cv_profile.html"> Tại đây</a></span>
         
@@ -592,7 +791,7 @@
                     </div>
                     <div class="button">
                         <button class="close_btn" onclick="close_apply_form()"> Đóng lại</button>
-                        <button class="send_btn">Nộp CV</button>
+                        <button class="send_btn_apply_cv">Nộp CV</button>
                     </div>
                 </form>
 
@@ -615,7 +814,6 @@
             </div>
             @endif
         </div>
-
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -629,7 +827,29 @@
             });
     </script>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function(){   
+            $('.save_post').click(function(){
+               $post_id = {{$detail_post->id}};
+               $.ajax({
+                   headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                   url: "{{route('save.post')}}",
+                   type: "POST",
+                   data: {
+                       post_id: $post_id,
+                   },
+                   success: function(data){
+                    console.log(data);
+                        if(data.save_post_success){
+                            alert(data.save_post_success);
+                          }
+                          else{
+                            alert(data.save_post_fail);
+                          }
+                   }
+               });
+           });
+
+
             $(document).on('click','.list_posts>nav>ul a', function(e){
                 e.preventDefault();
                 let page = $(this).attr('href').split('page=')[1]
@@ -656,6 +876,44 @@
                     console.log(err);
                 }
            });
+
+           $('.report-button').click(function(){
+             console.log('click');
+               $('.form_report').css('display','block');
+           });
+           if({{session('id_applicant')}} != null){
+               $('.send_btn').click(function(){
+                    let reason_be_choice = $('input[name="reason_report"]:checked').val();
+                    let post_id = {{$detail_post->id}};
+                    let person_report = {{session('id_applicant')}};
+                    $.ajax({
+                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                        url:'{{route('report.post')}}',
+                        type:'post',
+                        data:{
+                            reason:reason_be_choice,
+                            post_id:post_id,
+                            person_report:person_report
+                        },
+                        success:function(res){
+                            console.log(res);
+                            $('.form_report').css('display','none');
+                            $('.notify_report_success').css('display','block');
+                            $('.content_notify .notify_report span').html(res.data);
+                        },
+                        error:function(err){
+                            console.log(err);
+                        }
+                    });
+               });
+           }
+           else{
+                $('.send_btn').click(function(){
+                      alert('Bạn cần đăng nhập để báo cáo tin tuyển dụng');
+                });
+           }
+           
+
         });
     </script>
 </body>

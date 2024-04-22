@@ -1,5 +1,5 @@
 
-                                <ul>
+                               <ul>
                                     @if($list_message->count() != 0)
                                         @foreach($list_message as $message)
                                         @if($message->status == 0)

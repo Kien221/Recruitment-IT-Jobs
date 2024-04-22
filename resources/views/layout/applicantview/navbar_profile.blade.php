@@ -10,7 +10,7 @@
                     <a href="{{route('jobs.apply.view')}}">Việc đã ứng tuyển</a>
                 </li>
                 <li class="link_profile">
-                    <a href="#">Việc Đã Lưu</a>
+                    <a href="{{route('save.post.view')}}">Việc Đã Lưu</a>
                 </li>
             </ul>
         </div>

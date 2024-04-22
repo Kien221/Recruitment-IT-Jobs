@@ -95,9 +95,11 @@
                                                                 </label>
                                                                 <input type="file" id="up_images" name="images[]" multiple="true" accept="image/gif, image/jpeg, image/png"/>
                                                                 <br>
+                                                                @if($company['image'] != null)
                                                                 @foreach($images as $image)
                                                                 <img src="{{asset('storage/'.$image->image)}}" alt="" class="images_company" style="width: 40px;height: 40px;margin:10px 10px">
                                                                 @endforeach
+                                                                @endif
                                                                 </br>
                                                            </div>
                                                         </div>

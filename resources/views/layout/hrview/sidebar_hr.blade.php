@@ -6,7 +6,7 @@
                         <div class="hr_infor_basic">
                             <span class="hr_name">{{session('hr_name')}}</span>
                             <p>Employer</p>
-                            <p>Tài khoản xác thực: <span>Cấp 1/5</span></p>
+                            <p>Level account: <span>Cấp 1/5</span></p>
                         </div>
                     </div>
                     @endif
@@ -25,7 +25,7 @@
                             <a href="{{route('create.company.view')}}" class="icon_link"><i class="fa-solid fa-gear"></i>Cài đặt tài khoản</a>
                         </li>
                         <li class="list_nav_hr_view_item">
-                            <a href="#" class="icon_link"><i class="fa-regular fa-bell"></i>Hệ thống thông báo</a>
+                            <a href="{{route('email.from.admin')}}" class="icon_link"><i class="fa-regular fa-bell"></i>Hệ thống thông báo</a>
                         </li>
                         <li class="list_nav_hr_view_item">
                             <a href="#" class="icon_link"><i class="fa-regular fa-envelope"></i>Hộp thư hỗ trợ</a>

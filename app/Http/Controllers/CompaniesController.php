@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\companies;
 use App\Models\imagesCompany;
@@ -11,8 +10,8 @@ class CompaniesController extends Controller
 {
     public function create_Company_View(){
         $company = companies::where('hr_id',session()->get('id_hr'))->first();
-        $images = imagesCompany::where('company_id',$company->id)->get();
-        if($company){
+        if($company ){
+            $images = imagesCompany::where('company_id',$company->id)->get();
             return view('hr_view.create_company',compact('company','images'));
         }
         else{
@@ -37,6 +36,23 @@ class CompaniesController extends Controller
             }
             $company->fill($data);
             $company->save();
+            if($request->hasFile('images')){
+                $delete_images = imagesCompany::where('company_id',$company->id)->get();
+                foreach($delete_images as $delete_image){
+                    Storage::delete(['public/'.$delete_image->image]);
+                    $delete_image->delete();
+                }
+                foreach($request->file('images') as $image){
+                    $image_company = $image->store('company/images_company','public');
+                    $data_image = [
+                        'company_id' => $company->id,
+                        'image' => $image_company,
+                    ];
+                    $image = new imagesCompany;
+                    $image->fill($data_image);
+                    $image->save();
+                }
+            }
             return redirect()->route('create.company.view')->with('success_update','Cập nhật công ty thành công');
         }
         else{

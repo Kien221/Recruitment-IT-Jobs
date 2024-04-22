@@ -9,7 +9,7 @@ use App\Models\Post;
 class hr extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','avatar','email','password','phoneNumber','address','status','token'];
+    protected $fillable = ['name','avatar','email','password','phoneNumber','address','status','num_faul','token'];
     public $timestamps = false;
     protected $table = 'hrs';
     public function company(){

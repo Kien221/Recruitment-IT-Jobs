@@ -51,9 +51,6 @@ function show_apply_form(){
     }
 
 }
-function file_cv(){
-    
-}
 function close_choice_role_form(){
     document.getElementById("choice_role").style.display = "none";
 }
@@ -62,5 +59,6 @@ function show_choice_role_form(){
     var choice_role = document.getElementById("choice_role");
     choice_role.style.display = "block"; 
 }
+
 
 

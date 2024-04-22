@@ -1,6 +1,10 @@
 <div class="post_by_city">
     @foreach($posts_by_city as $post_by_city)
+        @if($post_by_city->borderpost == 1)
+                            <div class="post_item" style="border:solid 5px green">
+                            @else
                             <div class="post_item">
+                            @endif
                                 <div class="row">
                                     <div class="col-md-8 img-title_job-description">    
                                         <img src="{{asset('storage/'.$post_by_city->company_logo)}}" alt="">

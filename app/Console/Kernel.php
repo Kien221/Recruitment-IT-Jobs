@@ -13,9 +13,12 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+    protected $commands = [
+        'App\Console\Commands\ResetViewsSearchLimit'
+    ];
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('posts:status')->hourly();
+        $schedule->command('reset:views-search-limit')->everyMinute();;
     }
     /**
      * Register the commands for the application.

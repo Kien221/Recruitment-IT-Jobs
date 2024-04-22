@@ -27,6 +27,7 @@ class Post extends Model
         'description',
         'requirement',
         'benefit',
+        'num_report'
     ];
     public function company(){
         return $this->belongsTo(companies::class,'company_id','id');

@@ -384,6 +384,17 @@
     margin-top: -20px;
     overflow: hidden;
 }
+#content-cv{
+    position: relative;
+    box-sizing: border-box;
+    margin: 30px auto;
+    overflow: hidden;
+    background-color: white;
+    display: block;
+    width: 900px;
+    border-radius: 5px;
+    padding: 20px;
+}
 .header_name{
     margin-left: 10px;
 }
@@ -974,6 +985,19 @@ p span{
    margin-top: 50px;
 }
 .form-apply{
+    position:fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    animation: form ease-in 0.4s;
+}
+#search_results{
     position:fixed;
     top: 0;
     right: 0;

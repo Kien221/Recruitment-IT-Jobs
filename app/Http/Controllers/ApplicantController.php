@@ -13,11 +13,22 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Carbon\Carbon;
+use Yajra\DataTables\DataTables;
 class ApplicantController extends Controller
 {
     public function index(){
         $user = applicant::find(session('id_applicant'));
-        return view('applicantview.index',compact('user'));
+        $sub_cv = DB::table('sub_cv')->where('applicant_id',session('id_applicant'))->first();
+        $company_watch_cv = DB::table('watch_cv')
+                            ->join('applicants','watch_cv.applicant_id','=','applicants.id')
+                            ->join('hrs','watch_cv.hr_id','=','hrs.id')
+                            ->join('companies','hrs.id','=','companies.hr_id')
+                            ->select('companies.name as company_name','companies.logo as company_logo','watch_cv.created_at as date_watch')
+                            ->where('watch_cv.applicant_id',session('id_applicant'))
+                            ->groupBy('companies.name','companies.logo','watch_cv.created_at')
+                            ->orderBy('watch_cv.created_at','desc')
+                            ->get();
+        return view('applicantview.index',compact('user','sub_cv','company_watch_cv'));
     }
     public function edit_cv_view(Request $request){
         $cv_user = applicant::find(session::get('id_applicant'));
@@ -45,10 +56,22 @@ class ApplicantController extends Controller
                 session()->put('avatar',$avatar);
             }
         }
+        if($request->file_cv != null){
+            $name_file_cv = $request->file('file_cv')->store('fileCv','public');
+            $update_user->filecv = $name_file_cv;
+        }
         $update_user->fill($input);
         $update_user->perfection_level = 40;
         $update_user->save();
         return redirect()->route('applicantView');
+    }
+
+    public function update_status_public_cv(Request $request){
+        $update_status = applicant::find(session('id_applicant'));
+        $update_status->update([
+            'status_public_cv' => $request->status_public_cv
+        ]);
+        return response()->json(['message'=>'Cập nhật thành công']);
     }
 
     public function jobs_apply_view(){
@@ -77,6 +100,58 @@ class ApplicantController extends Controller
         }
         DB::table('apply_cvs')->where('id',$request->job_apply_cv_id)->delete();
         return response()->json(['message'=>'Xóa thành công']);
+    }
+
+    public function save_post(Request $request){
+        $check_save = DB::table('save_post')->where('applicant_id',session('id_applicant'))->where('post_id',$request->post_id)->first();
+        if($check_save == null){
+            DB::table('save_post')->insert([
+                'applicant_id' => session('id_applicant'),
+                'post_id' => $request->post_id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+            return response()->json(['save_post_success'=>'Lưu bài viết thành công']);
+        }
+        else{
+            return response()->json(['save_post_fail'=>'Bạn đã lưu bài viết này rồi']);
+        }
+
+    }
+    public function save_post_view(){
+        return view('applicantview.save_post');
+    }    public function save_post_indexApi(){
+        $save_post = DB::table('save_post')
+                    ->join('posts','save_post.post_id','=','posts.id')
+                    ->join('companies','posts.company_id','=','companies.id')
+                    ->select('posts.title as post_title','posts.id as post_id','companies.name as company_name','companies.logo as company_logo','posts.slug as slug','save_post.created_at as created_at')
+                    ->where('save_post.applicant_id',session('id_applicant'))
+                    ->orderBy('save_post.created_at','desc')
+                    ->get();            
+                    return DataTables::of($save_post)
+                    ->editColumn('company', function ($save_post) {
+                        return '<img src="'.asset('storage/'.$save_post->company_logo).'" width="100px" height="100px">
+                        '.$save_post->company_name;
+                    })
+                    ->editColumn('id',function($save_post){
+                        return 1;
+                    })
+                    ->editColumn('title', function($save_post) {
+                        $title = '<a href="'.route('post.detail', [$save_post->post_id, $save_post->slug]).'">'.$save_post->post_title.'</a>';
+                        return $title;
+                    })
+                    ->editColumn('time_saved',function($save_post){
+                        return Carbon::parse($save_post->created_at)->locale('vi')->diffForHumans();
+                    })
+                    ->addColumn('delete',function($save_post){
+                        return route('save.post.destroy',$save_post->post_id);
+                    })
+                    ->rawColumns(['company','title','delete'])
+                    ->make(true);
+    }
+    public function save_post_destroy($id){
+        DB::table('save_post')->where('post_id',$id)->where('applicant_id',session('id_applicant'))->delete();
+        return redirect()->route('save.post.view');
     }
 
     /**

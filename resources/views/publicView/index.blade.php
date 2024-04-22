@@ -88,8 +88,12 @@
                             <div class="job-content">
                                 <div class="list_hot_job">
                                     @foreach($hot_jobs as $hot_job)
+                                    @if($hot_job->borderpost == 1)
+                                    <div class="job_item" style="border:solid 5px red">
+                                    @else
                                     <div class="job_item">
-                                        <span class="name-company-job">{{$hot_job->company->name}}</span>
+                                    @endif
+                                        <span class="name-company-job">{{$hot_job->company_name}}</span>
                                         <div class="job_title"><a href="{{route('post.detail',[$hot_job->id,$hot_job->slug])}}">{{$hot_job->title}}</a></div>
                                         <div class="salary">{{$hot_job->min_salary}}{{$hot_job->unit_money}}-{{$hot_job->max_salary}}{{$hot_job->unit_money}} <i class="fa-solid fa-bookmark"></i></div>
                                     </div>
@@ -114,6 +118,12 @@
                 <div class="row post_company">
                     <div class="col-md-9">
                       <h5 class="header_name">Bài Tuyển Dụng Mới Nhất</h5>
+                    @if(session('save_post_success'))
+                        <div class="alert alert-success">{{session('save_post_success')}}</div>
+                    @endif
+                    @if(session('save_post_fail'))
+                            <div class="alert alert-danger">{{session('save_post_fail')}}</div>
+                    @endif
                       <div class="list_posts">
                       </div>
                     </div>

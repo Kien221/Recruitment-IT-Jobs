@@ -39,7 +39,7 @@
                                             {{$applicant->city}}
                                         </td>
                                         <td>
-                                            <a href="" class="btn btn-primary btn-sm" style="color:white"><i class="fas fa-envelope"></i></a>
+                                            <a href="{{route('contact_applicant',[$applicant->id])}}" class="btn btn-primary btn-sm" style="color:white"><i class="fas fa-envelope"></i></a>
                                         </td>
                                       </tr>
                                     @endforeach
